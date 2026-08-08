@@ -719,6 +719,59 @@ a.back:hover { color: var(--brass); }
 .refcard-missing { border-left-color: var(--stamp); }
 .refcard-missing .refcard-head { color: var(--stamp); }
 
+/* ---- Evidence Room tiers (NESC-09) ----------------------- */
+
+.tier {
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--ink-soft);
+  background: var(--paper-3);
+  padding: 16px 18px;
+  margin-top: 16px;
+}
+.tier-label {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-bottom: 12px;
+}
+.tier-entry { padding: 8px 0; border-top: 1px solid var(--line-soft); }
+.tier-entry:first-of-type { border-top: 0; padding-top: 0; }
+/* the honest gap tier is the one that draws the eye */
+.tier-unknown {
+  border-left-color: var(--stamp);
+  background:
+    repeating-linear-gradient(45deg, rgba(154,51,39,0.045) 0 12px, transparent 12px 24px),
+    var(--paper-3);
+}
+.tier-unknown .tier-label { color: var(--stamp); }
+
+/* ---- Open Questions (NESC-10) ---------------------------- */
+
+.openq {
+  border-top: 2px solid var(--ink);
+  padding-top: 18px;
+  margin-top: 26px;
+}
+.openq-q { font-family: var(--serif); font-size: 21px; line-height: 1.4; letter-spacing: 0; margin-bottom: 12px; }
+.openq-row {
+  display: grid;
+  grid-template-columns: 210px 1fr;
+  gap: 16px;
+  padding: 9px 0;
+  border-bottom: 1px solid var(--line-soft);
+}
+.openq-k {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  padding-top: 3px;
+}
+.openq-v { font-family: var(--serif); font-size: 16px; color: var(--ink-soft); }
+
 @media (max-width: 820px) {
   .wrap { padding: 40px 26px 60px; margin: 22px auto 44px; }
   .wrap::after { display: none; }
@@ -726,6 +779,7 @@ a.back:hover { color: var(--brass); }
   .ledger { flex-wrap: wrap; }
   .ledger div { flex: 1 1 45%; }
   .fields .row { grid-template-columns: 1fr; gap: 4px; }
+  .openq-row { grid-template-columns: 1fr; gap: 3px; }
   .masthead nav { display: none; }
   .masthead-inner { flex-wrap: wrap; }
   .drawer { grid-template-columns: 1fr; }

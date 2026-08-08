@@ -21,6 +21,7 @@ from flask import (
     Flask, render_template, request, jsonify, abort, url_for, redirect, session
 )
 
+import bibliography
 import database
 import identity
 from protocol import INTERVIEW_PROTOCOL
@@ -351,16 +352,28 @@ def atlas_index():
     return render_template("atlas.html", defined=defined, stubs=stubs)
 
 
+def _case_number_for(name):
+    """A concept's case number from its position in the atlas (Memory -> 001)."""
+    order = list(concepts.keys())
+    return f"{order.index(name) + 1:03d}"
+
+
 @app.route("/atlas/<name>")
 def atlas_concept(name):
     if name not in concepts:
         abort(404)
+    concept = concepts[name]
+    next_case = concept.get("next_case")
     return render_template(
         "concept.html",
         name=name,
-        concept=concepts[name],
+        concept=concept,
         defined=is_defined(name),
         all_concepts=concepts,
+        citations=bibliography.index_for(name),
+        case_number=_case_number_for(name),
+        next_case=next_case if next_case in concepts else None,
+        next_case_number=_case_number_for(next_case) if next_case in concepts else None,
     )
 
 

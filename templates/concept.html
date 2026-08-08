@@ -1,6 +1,7 @@
 {% extends "base.html" %}
+{% from "macros.html" import citation_note %}
 {% block wrapclass %}wrap-narrow{% endblock %}
-{% block title %}NESCIENCE — {{ name }}{% endblock %}
+{% block title %}NESCIENCE — Case {{ case_number }} · {{ name }}{% endblock %}
 
 {% macro listing(title, items) %}
   {% if items %}
@@ -12,14 +13,15 @@
 {% endmacro %}
 
 {% block content %}
-<a class="back" href="{{ url_for('atlas_index') }}">← Back to atlas</a>
+<a class="back" href="{{ url_for('atlas_index') }}">← Back to the atlas</a>
 
-<div style="display:flex; align-items:baseline; justify-content:space-between; margin-top:18px; gap:16px; flex-wrap:wrap">
+<div class="filehead">
   <div>
-    <div class="overline">Concept file</div>
-    <h1 class="display" style="font-size:48px">{{ name | upper }}</h1>
+    <div class="overline">Case File No. {{ case_number }}</div>
+    <h1 class="display" style="font-size:clamp(32px,7vw,54px)">{{ name | upper }}</h1>
   </div>
-  {% if defined %}<div class="stamp">Exhibit</div>{% else %}<div class="stamp">Open · Unknown</div>{% endif %}
+  {% if defined %}<span class="exhibit">EXHIBIT {{ case_number }}/A</span>
+  {% else %}<div class="stamp">Open · Unknown</div>{% endif %}
 </div>
 
 {% if not defined %}
@@ -32,7 +34,30 @@
     </div>
   </div>
 {% else %}
-  <p class="lede" style="margin-top:22px">{{ concept.definition }}</p>
+
+  {% if concept.investigators_note %}
+    <div class="marginalia" style="margin-top:20px; max-width:640px">{{ concept.investigators_note }}</div>
+  {% endif %}
+
+  {% if concept.primary_question %}
+    <div class="card" style="margin-top:22px">
+      <div class="card-head"><span>Primary question</span><span>The case</span></div>
+      <div class="card-body">
+        <p class="serif" style="font-size:clamp(20px,3vw,26px); line-height:1.45; margin:0; color:var(--ink)">
+          {{ concept.primary_question }}
+        </p>
+      </div>
+    </div>
+  {% endif %}
+
+  <p class="lede" style="margin-top:24px">{{ concept.definition }}</p>
+
+  {% if concept.why_it_matters %}
+    <div class="section">
+      <h3>Why it matters</h3>
+      <p class="prose" style="margin:0">{{ concept.why_it_matters }}</p>
+    </div>
+  {% endif %}
 
   {% if concept.narrative_role %}
     <div class="section">
@@ -48,32 +73,91 @@
     </div>
   {% endif %}
 
-  {{ listing('Brain regions', concept.brain_regions) }}
-  {{ listing('Key experiments', concept.key_experiments) }}
-  {{ listing('Landmark researchers', concept.landmark_researchers) }}
-  {{ listing('Real-world examples', concept.real_world_examples) }}
+  {# ---- Neural systems ---- #}
+  {% if concept.neural_systems %}
+    <div class="section">
+      <h3>Neural systems</h3>
+      <div class="grid grid-2">
+        {% for ns in concept.neural_systems %}
+          <div class="lead" style="box-shadow:none">
+            <h4 style="font-size:15px">{{ ns.system }}</h4>
+            <p class="prose" style="font-size:14px; margin:6px 0 0">{{ ns.role }}</p>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  {% else %}
+    {{ listing('Brain regions', concept.brain_regions) }}
+  {% endif %}
 
+  {# ---- Evidence Room · four epistemic tiers (NESC-09) ---- #}
+  {% if concept.evidence_room %}
+    <hr class="rule-strong">
+    <div class="overline">Evidence Room · what we know → what we don't</div>
+    {% set tiers = [
+      ('what_we_know', 'What we know', false),
+      ('evidence_suggests', 'What the evidence suggests', false),
+      ('disagreement', 'What researchers disagree about', false),
+      ('unknown', "What we don't know", true)
+    ] %}
+    {% for key, label, is_unknown in tiers %}
+      {% set entries = concept.evidence_room.get(key) %}
+      {% if entries %}
+        <div class="tier {% if is_unknown %}tier-unknown{% endif %}">
+          <div class="tier-label">{{ label }}</div>
+          {% for entry in entries %}
+            <div class="tier-entry">
+              <p class="serif" style="font-size:16px; margin:0; color:var(--ink)">{{ entry.claim }}</p>
+              {{ citation_note(entry.citation, citations) }}
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endfor %}
+  {% endif %}
+
+  {# ---- Legacy collected evidence (short labels) ---- #}
   {% if concept.evidence %}
     <div class="section">
-      <h3>Evidence on file</h3>
-      <div class="grid grid-2">
+      <h3>Also on file</h3>
+      <div class="pill-row">
         {% for ex in concept.evidence %}
-          <div class="lead" style="box-shadow:none">
-            <div class="score">{{ ex.type }}{% if ex.year %} · {{ ex.year }}{% endif %}</div>
-            <h4 style="font-size:15px; margin-top:6px">{{ ex.title }}</h4>
-          </div>
+          <span class="pill">{{ ex.title }}{% if ex.year %} · {{ ex.year }}{% endif %}</span>
         {% endfor %}
       </div>
     </div>
   {% endif %}
 
-  {{ listing('Questions we are asking', concept.questions) }}
+  {{ listing('Landmark researchers', concept.landmark_researchers) }}
+  {{ listing('Real-world examples', concept.real_world_examples) }}
 
-  {% if concept.connects_to %}
+  {# ---- Open Questions · structured (NESC-10) ---- #}
+  {% if concept.open_questions %}
+    <hr class="rule-strong">
+    <div class="overline">Open Questions · the philosophical heart</div>
+    {% for q in concept.open_questions %}
+      <div class="openq">
+        <h3 class="openq-q">{{ q.question }}</h3>
+        <div class="openq-row"><span class="openq-k">What science knows</span><span class="openq-v">{{ q.what_science_knows }}</span></div>
+        <div class="openq-row"><span class="openq-k">What the evidence suggests</span><span class="openq-v">{{ q.what_evidence_suggests }}</span></div>
+        <div class="openq-row"><span class="openq-k">Where the evidence disagrees</span><span class="openq-v">{{ q.where_evidence_disagrees }}</span></div>
+        <div class="unknown-block" style="margin-top:12px">
+          <div class="label">What remains unknown</div>
+          <div class="body" style="font-size:16px">{{ q.what_remains_unknown }}</div>
+        </div>
+      </div>
+    {% endfor %}
+  {% elif concept.questions %}
+    {{ listing('Questions we are asking', concept.questions) }}
+  {% endif %}
+
+  {# ---- Connected files ---- #}
+  {% set connected = concept.connected_files or concept.connects_to %}
+  {% if connected %}
     <div class="section">
-      <h3>Connects to</h3>
+      <h3>Connected files</h3>
       <div class="pill-row">
-        {% for other in concept.connects_to %}
+        {% for other in connected %}
           {% if other in all_concepts %}
             <a class="pill" href="{{ url_for('atlas_concept', name=other) }}">{{ other }} →</a>
           {% else %}
@@ -94,10 +178,18 @@
   {% endif %}
 
   {% if concept.unresolved %}
-    <hr class="rule-strong">
+    <hr class="rule">
     <div class="unknown-block">
-      <div class="label">What we still do not know</div>
+      <div class="label">The headline still unknown</div>
       <div class="body">{{ concept.unresolved }}</div>
+    </div>
+  {% endif %}
+
+  {# ---- Next case ---- #}
+  {% if next_case %}
+    <div class="controls" style="margin-top:34px">
+      <a class="back" href="{{ url_for('atlas_index') }}">← The atlas</a>
+      <a class="btn" href="{{ url_for('atlas_concept', name=next_case) }}">Next case · {{ next_case_number }} {{ next_case | upper }} →</a>
     </div>
   {% endif %}
 {% endif %}
