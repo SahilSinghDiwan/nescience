@@ -81,3 +81,48 @@ def test_private_name_never_reaches_the_matcher(client):
     evidence = [e.lower() for lead in match_interview(record) for e in lead["evidence"]]
     assert "family" in evidence          # legitimate hit from the answer
     assert "memory" not in evidence      # would appear only if the name were scanned
+
+
+# ---- NESC-11: public witness accounts (code-only, published-only) --------
+
+def test_unpublished_testimony_absent_from_public_list(client):
+    _file(client, "Bea", published=False, answer="childhood memory of family")
+    html = client.get("/archive/witnesses").get_data(as_text=True)
+    assert "None published" in html or "No testimony has been published" in html
+    assert "Memory" not in html  # its lead would show only if it were published
+
+
+def test_published_testimony_shows_by_code_only(client):
+    code = _file(client, "Bea", published=True).get_json()["code"]
+    html = client.get("/archive/witnesses").get_data(as_text=True)
+    assert code in html            # identified by code
+    assert "Bea" not in html       # never by name
+    assert "Memory" in html        # its lead appears
+
+
+def test_witness_detail_is_code_only_and_nameless(client):
+    code = _file(client, "Bea", published=True).get_json()["code"]
+    r = client.get(f"/archive/witnesses/{code}")
+    assert r.status_code == 200
+    body = r.get_data(as_text=True)
+    assert code in body
+    assert "Bea" not in body
+    # an unknown / unpublished code is not found
+    assert client.get("/archive/witnesses/ZZ").status_code == 404
+
+
+def test_index_case_route_no_longer_leaks_full_records(client):
+    # unpublished record: bare index must 404 (no public full transcript)
+    _file(client, "Cid", published=False)
+    assert client.get("/archive/0").status_code == 404
+    # published record: index redirects to the code-based witness view
+    code = _file(client, "Dot", published=True).get_json()["code"]
+    r = client.get("/archive/1", follow_redirects=False)
+    assert r.status_code in (301, 302)
+    assert f"/archive/witnesses/{code}" in r.headers["Location"]
+
+
+def test_name_appears_on_no_public_route(client):
+    _file(client, "Zelda", published=True)
+    for path in ["/archive", "/archive/witnesses", "/archive/witnesses/ZE"]:
+        assert "Zelda" not in client.get(path).get_data(as_text=True)

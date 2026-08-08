@@ -142,9 +142,8 @@ def api_interview():
             "case_number": _case_number(index),
             "case_index": index,
             "matches": matches,
-            # Public link only exists once NESC-11 lands and only if published;
-            # None keeps the completion screen honest until then.
-            "public_url": None,
+            # Public, code-only record — surfaced only if the participant published.
+            "public_url": url_for("archive_witness", code=code) if published else None,
         }
     )
 
@@ -252,47 +251,57 @@ def archive_pending(section):
 
 @app.route("/archive/witnesses")
 def archive_witnesses():
-    """Witness Accounts — the public list of testimony on record.
+    """Witness Accounts — public, code-only (NESC-11 / §11a).
 
-    Per the privacy spec (§11a / NESC-01), only records the participant chose
-    to publish appear on this public surface; unpublished testimony is
-    investigator-only. The full public/investigator split — code-only
-    projection and the password-gated view — lands with NESC-11 / NESC-02."""
-    interviews = database.load_interviews()
+    Built strictly from identity.public_projection: only *published* records,
+    each reduced to a code + responses. The private Case File (real name,
+    timestamp, mapping) is dropped at the source, so no private field can
+    reach this surface — identified by code alone."""
+    published = identity.public_projection(database.load_interviews())
     cases = []
-    for index, interview_record in enumerate(interviews):
-        if not identity.is_published(interview_record):
-            continue
-        matches = match_interview(interview_record)
+    for entry in published:
+        responses = entry["responses"]
         cases.append(
             {
-                "index": index,
-                "number": _case_number(index),
-                "recorded": interview_record.get("Case File", {}).get("Recorded", "—"),
-                "info": interview_record.get("Participant Information", {}),
-                "leads": [m["concept"] for m in matches],
+                "code": entry["code"],
+                "info": responses.get("Participant Information", {}),
+                "leads": [m["concept"] for m in match_interview(responses)],
             }
         )
     cases.reverse()  # newest first
     return render_template("archive.html", cases=cases)
 
 
+@app.route("/archive/witnesses/<code>")
+def archive_witness(code):
+    """A single published witness account, under its code only."""
+    published = identity.public_projection(database.load_interviews())
+    entry = next((e for e in published if e["code"] == code), None)
+    if entry is None:
+        abort(404)
+    responses = entry["responses"]
+    return render_template(
+        "witness.html",
+        code=entry["code"],
+        info=responses.get("Participant Information", {}),
+        info_fields=INTERVIEW_PROTOCOL["Participant Information"],
+        responses=responses,
+        modules=_numbered_protocol(),
+        matches=match_interview(responses),
+    )
+
+
 @app.route("/archive/<int:index>")
 def archive_case(index):
+    """A bare index is public only for *published* records, and redirects to
+    the code-based witness view. Full case detail across all records (with
+    private fields) belongs to the gated investigator surface (NESC-02)."""
     interviews = database.load_interviews()
-    if index < 0 or index >= len(interviews):
-        abort(404)
-    record = interviews[index]
-    return render_template(
-        "case.html",
-        number=_case_number(index),
-        record=record,
-        info=record.get("Participant Information", {}),
-        info_fields=INTERVIEW_PROTOCOL["Participant Information"],
-        modules=_numbered_protocol(),
-        recorded=record.get("Case File", {}).get("Recorded", "—"),
-        matches=match_interview(record),
-    )
+    if 0 <= index < len(interviews) and identity.is_published(interviews[index]):
+        code = identity.get_code(interviews[index])
+        if code:
+            return redirect(url_for("archive_witness", code=code))
+    abort(404)
 
 
 # ----------------------------------------------------------

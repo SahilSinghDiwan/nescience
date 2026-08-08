@@ -8,28 +8,29 @@
   <span class="exhibit">EXHIBIT 002</span>
 </div>
 <h1 class="display" style="font-size:clamp(30px,5.5vw,44px)">WITNESS ACCOUNTS</h1>
-<p class="prose" style="max-width:640px">
-  Every testimony on record, newest first. Each file is cross-checked against the
-  concept atlas; the leads are the questions of the mind the account appears to touch.
+<p class="prose" style="max-width:660px">
+  Testimony from consenting participants, filed under an anonymised code only —
+  no names are ever shown. Each account is cross-checked against the concept
+  atlas; the leads are the questions of the mind it appears to touch.
 </p>
 
 <hr class="rule">
 
 {% if not cases %}
   <div class="card" style="margin-top:8px">
-    <div class="card-head"><span>Archive</span><span>Empty</span></div>
+    <div class="card-head"><span>Witness Accounts</span><span>None published</span></div>
     <div class="card-body">
-      <p class="prose" style="margin:0">No testimony has been filed yet.
-      <a class="back" href="{{ url_for('interview') }}" style="color:var(--stamp)">Open the first case →</a></p>
+      <p class="prose" style="margin:0">No testimony has been published to the public archive yet.
+      <a class="back" href="{{ url_for('interview') }}" style="color:var(--stamp)">Give testimony →</a></p>
     </div>
   </div>
 {% else %}
   <div class="grid grid-2">
     {% for c in cases %}
-      <a class="card" href="{{ url_for('archive_case', index=c.index) }}" style="text-decoration:none; color:inherit">
+      <a class="card" href="{{ url_for('archive_witness', code=c.code) }}" style="text-decoration:none; color:inherit">
         <div class="card-head">
-          <span>Case <span class="case-no">{{ c.number }}</span></span>
-          <span>{{ c.recorded }}</span>
+          <span>Witness <span class="case-no">{{ c.code }}</span></span>
+          <span>Filed under code</span>
         </div>
         <div class="card-body">
           <div class="muted" style="font-size:12px; letter-spacing:0.06em">
