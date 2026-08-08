@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+{% block wrapclass %}wrap-narrow{% endblock %}
+{% block title %}NESCIENCE — {{ name }}{% endblock %}
+
+{% macro listing(title, items) %}
+  {% if items %}
+    <div class="section">
+      <h3>{{ title }}</h3>
+      <ul>{% for item in items %}<li>{{ item }}</li>{% endfor %}</ul>
+    </div>
+  {% endif %}
+{% endmacro %}
+
+{% block content %}
+<a class="back" href="{{ url_for('atlas_index') }}">← Back to atlas</a>
+
+<div style="display:flex; align-items:baseline; justify-content:space-between; margin-top:18px; gap:16px; flex-wrap:wrap">
+  <div>
+    <div class="overline">Concept file</div>
+    <h1 class="display" style="font-size:48px">{{ name | upper }}</h1>
+  </div>
+  {% if defined %}<div class="stamp">Exhibit</div>{% else %}<div class="stamp">Open · Unknown</div>{% endif %}
+</div>
+
+{% if not defined %}
+  <div class="unknown-block" style="margin-top:24px">
+    <div class="label">Not yet investigated</div>
+    <div class="body">
+      This node is on the map but the file is empty. It is part of the loop —
+      {% if concept.connects_to %}connected in principle to others —{% endif %}
+      but the evidence has not yet been gathered. For now the record reads: UNKNOWN.
+    </div>
+  </div>
+{% else %}
+  <p class="lede" style="margin-top:22px">{{ concept.definition }}</p>
+
+  {% if concept.narrative_role %}
+    <div class="section">
+      <h3>Role in the narrative loop</h3>
+      <p class="prose" style="margin:0">{{ concept.narrative_role }}</p>
+    </div>
+  {% endif %}
+
+  {% if concept.paradox %}
+    <div class="card" style="margin-top:24px">
+      <div class="card-head"><span>The paradox</span><span>Note</span></div>
+      <div class="card-body"><p class="serif" style="font-size:19px; margin:0; font-style:italic">{{ concept.paradox }}</p></div>
+    </div>
+  {% endif %}
+
+  {{ listing('Brain regions', concept.brain_regions) }}
+  {{ listing('Key experiments', concept.key_experiments) }}
+  {{ listing('Landmark researchers', concept.landmark_researchers) }}
+  {{ listing('Real-world examples', concept.real_world_examples) }}
+
+  {% if concept.evidence %}
+    <div class="section">
+      <h3>Evidence on file</h3>
+      <div class="grid grid-2">
+        {% for ex in concept.evidence %}
+          <div class="lead" style="box-shadow:none">
+            <div class="score">{{ ex.type }}{% if ex.year %} · {{ ex.year }}{% endif %}</div>
+            <h4 style="font-size:15px; margin-top:6px">{{ ex.title }}</h4>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  {% endif %}
+
+  {{ listing('Questions we are asking', concept.questions) }}
+
+  {% if concept.connects_to %}
+    <div class="section">
+      <h3>Connects to</h3>
+      <div class="pill-row">
+        {% for other in concept.connects_to %}
+          {% if other in all_concepts %}
+            <a class="pill" href="{{ url_for('atlas_concept', name=other) }}">{{ other }} →</a>
+          {% else %}
+            <span class="pill stub">{{ other }}</span>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  {% endif %}
+
+  {% if concept.interview_themes %}
+    <div class="section">
+      <h3>Testimony themes · what to listen for</h3>
+      <div class="pill-row">
+        {% for theme in concept.interview_themes %}<span class="pill">{{ theme }}</span>{% endfor %}
+      </div>
+    </div>
+  {% endif %}
+
+  {% if concept.unresolved %}
+    <hr class="rule-strong">
+    <div class="unknown-block">
+      <div class="label">What we still do not know</div>
+      <div class="body">{{ concept.unresolved }}</div>
+    </div>
+  {% endif %}
+{% endif %}
+{% endblock %}

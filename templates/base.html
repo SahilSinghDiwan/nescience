@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}NESCIENCE{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/nescience.css') }}">
+</head>
+<body>
+  <header class="masthead">
+    <div class="masthead-inner">
+      <div>
+        <a class="wordmark" href="{{ url_for('landing') }}">NESC<span>·</span>IENCE</a>
+        <div class="dept">Bureau for the Study of the Not-Yet-Known</div>
+      </div>
+      <nav>
+        <a href="{{ url_for('interview') }}">Testimony</a>
+        <a href="{{ url_for('archive') }}">Archive</a>
+        <a href="{{ url_for('atlas_index') }}">Atlas</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap {% block wrapclass %}{% endblock %}">
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="pagefoot">
+    <span>Nescience — the study of what we do not yet know</span>
+    <span>Case system · confidential · for research</span>
+  </footer>
+  {% block scripts %}{% endblock %}
+</body>
+</html>

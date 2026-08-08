@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+{% block title %}NESCIENCE — Testimony{% endblock %}
+
+{% block content %}
+<div class="stage" id="stage">
+
+  <div class="progress">
+    <span id="progress-label">Intake</span>
+    <span id="progress-count"></span>
+  </div>
+  <div class="progress-bar"><span id="progress-fill"></span></div>
+
+  <!-- Step 0 — Intro -->
+  <section class="step active" data-step="intro">
+    <div style="margin-top:34px">
+      <div class="stamp">Confidential</div>
+    </div>
+    <div class="overline" style="margin-top:24px">{{ intro.title }}</div>
+    <h1 class="qtext" style="font-size:28px">{{ intro.question }}</h1>
+    <p class="prose">{{ intro.message }}</p>
+    <div class="controls">
+      <span class="hint">Approx. 15 questions · you may skip any</span>
+      <button class="btn" type="button" data-advance>Begin the investigation →</button>
+    </div>
+  </section>
+
+  <!-- Participant information -->
+  <section class="step" data-step="participant">
+    <div class="qnum">Intake · Participant Information</div>
+    <h2 class="qtext" style="font-size:22px">For the record.</h2>
+    <p class="muted" style="font-size:13px">Only what you are comfortable sharing. All fields may be left blank.</p>
+    {% for field in participant_fields %}
+      <label class="field-label" for="pf-{{ loop.index }}">{{ field }}</label>
+      <input type="text" id="pf-{{ loop.index }}" data-field="{{ field }}" autocomplete="off">
+    {% endfor %}
+    <div class="controls">
+      <button class="btn btn-ghost" type="button" data-back>← Back</button>
+      <button class="btn" type="button" data-advance>Continue →</button>
+    </div>
+  </section>
+
+  <!-- One step per question -->
+  {% for module, questions in modules %}
+    {% for number, question in questions %}
+      <section class="step" data-step="q{{ number }}" data-module="{{ module }}">
+        <div class="qnum">{{ module }} · Question {{ '%02d' % number }}</div>
+        <div class="qtext">{{ question }}</div>
+        <textarea data-module="{{ module }}" data-key="Question {{ number }}"
+                  placeholder="Type your answer… or leave blank"></textarea>
+        <div class="controls">
+          <button class="btn btn-ghost" type="button" data-back>← Back</button>
+          <button class="btn" type="button" data-advance>Next →</button>
+        </div>
+      </section>
+    {% endfor %}
+  {% endfor %}
+
+  <!-- Seal -->
+  <section class="step" data-step="seal">
+    <div style="margin-top:20px"><div class="stamp">Ready to file</div></div>
+    <h2 class="qtext" style="margin-top:24px; font-size:24px">That is the end of the interview.</h2>
+    <p class="prose">
+      When you seal the file, your testimony is added to the record and cross-checked
+      against the concept atlas — the investigation looks for which questions of the mind
+      your account appears to touch.
+    </p>
+    <div class="controls">
+      <button class="btn btn-ghost" type="button" data-back>← Back</button>
+      <button class="btn" type="button" id="submit-btn">Seal &amp; file the case →</button>
+    </div>
+    <p class="muted" id="submit-error" style="color:var(--stamp); margin-top:14px; display:none"></p>
+  </section>
+
+  <!-- Completion (filled by JS) -->
+  <section class="step" data-step="done">
+    <div class="overline">Case filed</div>
+    <h1 class="display" style="font-size:44px">CASE <span id="done-number" class="case-no">—</span></h1>
+    <p class="prose">Your testimony is on record. Cross-checking against the concept atlas returned the following leads.</p>
+    <div id="leads" class="grid" style="margin-top:26px"></div>
+    <div class="controls" style="margin-top:32px">
+      <a class="btn btn-ghost" id="view-case" href="#">Read the case file →</a>
+      <a class="btn" href="{{ url_for('atlas_index') }}">Explore the atlas →</a>
+    </div>
+  </section>
+
+</div>
+
+<script id="post-url" type="application/json">{{ url_for('api_interview') | tojson }}</script>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/interview.js') }}"></script>
+{% endblock %}

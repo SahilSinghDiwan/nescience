@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}NESCIENCE — Not on file{% endblock %}
+{% block content %}
+<div class="overline">Bureau records</div>
+<h1 class="display" style="font-size:48px">NO SUCH FILE</h1>
+<div class="unknown-block" style="margin-top:24px">
+  <div class="label">Unknown</div>
+  <div class="body">The record you asked for is not in the archive. It may never have existed.</div>
+</div>
+<p style="margin-top:26px"><a class="btn btn-ghost" href="{{ url_for('landing') }}">← Return to the bureau</a></p>
+{% endblock %}

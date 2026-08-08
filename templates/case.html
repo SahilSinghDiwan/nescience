@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% block wrapclass %}wrap-narrow{% endblock %}
+{% block title %}NESCIENCE — Case {{ number }}{% endblock %}
+
+{% block content %}
+<a class="back" href="{{ url_for('archive') }}">← Back to archive</a>
+
+<div style="display:flex; align-items:baseline; justify-content:space-between; margin-top:18px; gap:16px; flex-wrap:wrap">
+  <h1 class="display" style="font-size:44px">CASE <span class="case-no">{{ number }}</span></h1>
+  <div class="stamp">On record</div>
+</div>
+<div class="muted" style="letter-spacing:0.18em; text-transform:uppercase; font-size:11px">Recorded {{ recorded }}</div>
+
+<div class="card" style="margin-top:26px">
+  <div class="card-head"><span>Participant Information</span><span>Intake</span></div>
+  <div class="card-body">
+    <div class="fields">
+      {% for field in info_fields %}
+        <div class="row">
+          <div class="k">{{ field }}</div>
+          {% set val = info.get(field) %}
+          <div class="v {% if not val %}empty{% endif %}">{{ val or 'Withheld' }}</div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+<hr class="rule">
+
+<div class="overline">Transcript</div>
+{% for module, questions in modules %}
+  <h2 style="font-size:15px; letter-spacing:0.2em; text-transform:uppercase; margin-top:30px; color:var(--stamp)">{{ module }}</h2>
+  <div class="qa">
+    {% for number_q, question in questions %}
+      {% set answer = record.get(module, {}).get('Question ' ~ number_q) %}
+      <div class="q">Question {{ '%02d' % number_q }}</div>
+      <div class="prompt">{{ question }}</div>
+      {% if answer %}
+        <div class="a">{{ answer }}</div>
+      {% else %}
+        <div class="a blank">— no answer given —</div>
+      {% endif %}
+    {% endfor %}
+  </div>
+{% endfor %}
+
+<hr class="rule-strong">
+
+<div class="overline">Cross-reference · Concept atlas</div>
+{% if matches %}
+  <p class="prose" style="margin-top:0">The account appears to touch the following questions of the mind.</p>
+  <div class="grid grid-2" style="margin-top:18px">
+    {% for m in matches %}
+      <div class="lead">
+        <h4>{{ m.concept }}{% if not m.defined %} <span class="tag tag-unknown" style="font-size:9px">Not yet investigated</span>{% endif %}</h4>
+        <div class="score">Signal strength · {{ m.score | int }}</div>
+        <div class="chips">
+          {% for e in m.evidence %}<span class="chip">{{ e }}</span>{% endfor %}
+        </div>
+        {% if m.unresolved %}<p class="qmark">Still unknown: {{ m.unresolved }}</p>{% endif %}
+        <div style="margin-top:12px"><a href="{{ url_for('atlas_concept', name=m.concept) }}">Open concept file →</a></div>
+      </div>
+    {% endfor %}
+  </div>
+{% else %}
+  <div class="unknown-block">
+    <div class="label">Inconclusive</div>
+    <div class="body">The account did not resolve onto a mapped concept. The record reads: UNKNOWN.</div>
+  </div>
+{% endif %}
+{% endblock %}

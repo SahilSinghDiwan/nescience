@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}NESCIENCE — Archive{% endblock %}
+
+{% block content %}
+<div class="overline">Investigator access · Case archive</div>
+<h1 class="display" style="font-size:40px">THE ARCHIVE</h1>
+<p class="prose" style="max-width:640px">
+  Every testimony on record, newest first. Each file is cross-checked against the
+  concept atlas; the leads are the questions of the mind the account appears to touch.
+</p>
+
+<hr class="rule">
+
+{% if not cases %}
+  <div class="card" style="margin-top:8px">
+    <div class="card-head"><span>Archive</span><span>Empty</span></div>
+    <div class="card-body">
+      <p class="prose" style="margin:0">No testimony has been filed yet.
+      <a class="back" href="{{ url_for('interview') }}" style="color:var(--stamp)">Open the first case →</a></p>
+    </div>
+  </div>
+{% else %}
+  <div class="grid grid-2">
+    {% for c in cases %}
+      <a class="card" href="{{ url_for('archive_case', index=c.index) }}" style="text-decoration:none; color:inherit">
+        <div class="card-head">
+          <span>Case <span class="case-no">{{ c.number }}</span></span>
+          <span>{{ c.recorded }}</span>
+        </div>
+        <div class="card-body">
+          <div class="muted" style="font-size:12px; letter-spacing:0.06em">
+            {{ c.info.get('Age') or '—' }} ·
+            {{ c.info.get('Country') or 'Location withheld' }} ·
+            {{ c.info.get('Current Occupation') or 'Occupation withheld' }}
+          </div>
+          <div class="overline" style="margin-top:16px">Leads</div>
+          {% if c.leads %}
+            <div class="pill-row">
+              {% for lead in c.leads %}<span class="pill" style="font-size:11px">{{ lead }}</span>{% endfor %}
+            </div>
+          {% else %}
+            <span class="tag tag-unknown">Inconclusive</span>
+          {% endif %}
+        </div>
+      </a>
+    {% endfor %}
+  </div>
+{% endif %}
+{% endblock %}

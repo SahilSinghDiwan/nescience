@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}NESCIENCE — Concept Atlas{% endblock %}
+
+{% block content %}
+<div class="overline">The concept atlas · the map of the inquiry</div>
+<h1 class="display" style="font-size:40px">THE ATLAS</h1>
+<p class="prose" style="max-width:660px">
+  The mind is not a chain of causes but a loop that feeds itself. These are the nodes
+  the investigation tracks. Some have been researched; most are still only mapped —
+  marked, waiting, unknown.
+</p>
+
+<hr class="rule">
+
+<div class="overline">Investigated</div>
+<div class="atlas-grid">
+  {% for name, concept in defined %}
+    <a class="atlas-card" href="{{ url_for('atlas_concept', name=name) }}">
+      <div class="crosshair">＋</div>
+      <h4>{{ name }}</h4>
+      <p>{{ concept.definition }}</p>
+    </a>
+  {% endfor %}
+</div>
+
+<div class="overline" style="margin-top:40px">Mapped · not yet investigated</div>
+<div class="pill-row">
+  {% for name in stubs %}
+    <a class="pill stub" href="{{ url_for('atlas_concept', name=name) }}">{{ name }}</a>
+  {% endfor %}
+</div>
+{% endblock %}
