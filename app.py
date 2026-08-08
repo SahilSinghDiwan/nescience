@@ -13,7 +13,9 @@
 # ==========================================================
 
 import datetime
+import hashlib
 import hmac
+import math
 import os
 from functools import wraps
 
@@ -216,11 +218,9 @@ _ARCHIVE_SECTIONS = [
     {
         "idx": "003",
         "name": "Connections",
-        "slug": "connections",
         "desc": "The corkboard — threads strung between concepts across the "
                 "investigation.",
-        "blurb": "The corkboard of threads — how each concept pins to the "
-                 "others — is still being strung.",
+        "endpoint": "connections",
     },
     {
         "idx": "004",
@@ -367,6 +367,59 @@ def evidence_room():
             {"key": key, "label": label, "unknown": key == "unknown", "entries": items}
         )
     return render_template("evidence_room.html", grouped=grouped)
+
+
+def _connection_layout():
+    """A deterministic corkboard layout for the concept graph (NESC-12).
+
+    Nodes are pinned around an ellipse with a stable per-name jitter (so the
+    board looks hand-arranged but never moves between requests), and threads
+    are the de-duplicated edges between connected concepts. Computed
+    server-side so the view needs no physics engine and is reduced-motion safe."""
+    names = list(concepts.keys())
+    count = len(names) or 1
+    cx, cy, rx, ry = 500.0, 330.0, 410.0, 250.0
+
+    pos = {}
+    for i, name in enumerate(names):
+        angle = (2 * math.pi * i) / count - math.pi / 2
+        seed = int(hashlib.md5(name.encode()).hexdigest(), 16)
+        squeeze = 0.80 + (seed % 1000) / 1000 * 0.20  # 0.80–1.00, stable
+        pos[name] = (
+            round(cx + rx * math.cos(angle) * squeeze, 1),
+            round(cy + ry * math.sin(angle) * squeeze, 1),
+        )
+
+    def links(name):
+        raw = concepts[name].get("connected_files") or concepts[name].get("connects_to") or []
+        return [o for o in raw if o in concepts]
+
+    nodes = [
+        {"name": name, "x": pos[name][0], "y": pos[name][1],
+         "defined": is_defined(name), "neighbors": links(name)}
+        for name in names
+    ]
+
+    seen, edges = set(), []
+    for name in names:
+        for other in links(name):
+            key = tuple(sorted((name, other)))
+            if key not in seen:
+                seen.add(key)
+                edges.append(
+                    {"a": name, "b": other,
+                     "x1": pos[name][0], "y1": pos[name][1],
+                     "x2": pos[other][0], "y2": pos[other][1]}
+                )
+    return nodes, edges
+
+
+@app.route("/archive/connections")
+def connections():
+    """[003] Connections — the dark corkboard: concepts pinned, threads strung
+    between them, traversable into each case file."""
+    nodes, edges = _connection_layout()
+    return render_template("connections.html", nodes=nodes, edges=edges)
 
 
 @app.route("/archive/open-questions")

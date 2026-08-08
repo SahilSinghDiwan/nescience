@@ -37,9 +37,24 @@ def test_hub_wires_the_two_surfaces_live():
 
 def test_retired_placeholder_slugs_are_gone():
     c = flaskapp.app.test_client()
-    # these two moved from placeholder to real routes
-    assert c.get("/archive/pending/evidence-room").status_code == 404
-    assert c.get("/archive/pending/open-questions").status_code == 404
-    # connections / notes are still honest placeholders
-    assert c.get("/archive/pending/connections").status_code == 200
+    # these moved from placeholder to real routes
+    for slug in ("evidence-room", "open-questions", "connections"):
+        assert c.get(f"/archive/pending/{slug}").status_code == 404
+    # investigation notes is still an honest placeholder (needs-info)
     assert c.get("/archive/pending/notes").status_code == 200
+
+
+# ---- NESC-12: connections corkboard --------------------------------------
+
+def test_connections_corkboard_has_nodes_and_threads():
+    html = _html("/archive/connections")
+    assert 'viewBox="0 0 1000 660"' in html
+    assert 'class="thread"' in html          # threads strung
+    assert '/atlas/Memory' in html           # nodes link into case files
+    assert "connections.js" in html
+
+
+def test_connection_layout_is_deterministic():
+    a, ea = flaskapp._connection_layout()
+    b, eb = flaskapp._connection_layout()
+    assert a == b and ea == eb   # stable between requests (no jitter drift)
