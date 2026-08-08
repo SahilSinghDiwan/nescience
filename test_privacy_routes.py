@@ -126,3 +126,45 @@ def test_name_appears_on_no_public_route(client):
     _file(client, "Zelda", published=True)
     for path in ["/archive", "/archive/witnesses", "/archive/witnesses/ZE"]:
         assert "Zelda" not in client.get(path).get_data(as_text=True)
+
+
+# ---- NESC-02: gated investigator surface ---------------------------------
+
+@pytest.fixture
+def gated_client(tmp_path, monkeypatch):
+    data = tmp_path / "participants.json"
+    data.write_text("[]")
+    monkeypatch.setattr(database, "FILE_NAME", str(data))
+    monkeypatch.setenv("NESCIENCE_INVESTIGATOR_PASSWORD", "letmein")
+    return flaskapp.app.test_client()
+
+
+def test_investigator_disabled_when_no_password(client, monkeypatch):
+    monkeypatch.delenv("NESCIENCE_INVESTIGATOR_PASSWORD", raising=False)
+    assert client.get("/investigator").status_code == 404
+    assert client.get("/investigator/case/0").status_code == 404
+    assert client.post("/investigator/login", data={"password": "x"}).status_code == 404
+
+
+def test_investigator_requires_password(gated_client):
+    r = gated_client.get("/investigator")
+    assert r.status_code == 401
+    assert "INVESTIGATOR" in r.get_data(as_text=True)
+    assert gated_client.post("/investigator/login", data={"password": "wrong"}).status_code == 401
+
+
+def test_investigator_login_grants_full_access(gated_client):
+    gated_client.post("/api/interview", json={
+        "name": "Alex", "published": False,
+        "Module I — Experience": {"Question 1": "secret private testimony"},
+    })
+    # gated before login
+    assert gated_client.get("/investigator/case/0").status_code == 401
+    # log in
+    r = gated_client.post("/investigator/login", data={"password": "letmein"})
+    assert r.status_code in (301, 302)
+    ledger = gated_client.get("/investigator").get_data(as_text=True)
+    assert "Alex" in ledger  # real name visible only to the investigator
+    # full case detail incl unpublished testimony + name
+    detail = gated_client.get("/investigator/case/0").get_data(as_text=True)
+    assert "Alex" in detail and "secret private testimony" in detail

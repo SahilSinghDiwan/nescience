@@ -116,6 +116,24 @@ Then open **http://127.0.0.1:5001** in your browser.
 
 > During development you can enable auto-reload with `flask --app app run --port 5001 --debug`.
 
+### Configuration (environment variables)
+
+Nescience runs with no configuration for the public exhibit. Two optional variables enable and secure the **investigator surface** — never commit real values:
+
+| Variable | Purpose |
+|---|---|
+| `NESCIENCE_INVESTIGATOR_PASSWORD` | Password for `/investigator`. **If unset, the entire investigator surface is disabled (404)** — it can never sit open by default. |
+| `NESCIENCE_SECRET_KEY` | Signs the investigator session cookie. Set a stable random value in any real deployment; if unset, a random key is used and investigator sessions simply don't survive a restart. |
+
+```bash
+# enable the private investigator surface for a local session
+NESCIENCE_INVESTIGATOR_PASSWORD='choose-a-strong-password' \
+NESCIENCE_SECRET_KEY="$(python3 -c 'import secrets; print(secrets.token_hex(32))')" \
+flask --app app run --port 5001
+```
+
+**Privacy model:** participants' real names are stored privately and never rendered on any public route; published testimony appears under a two-letter code only. `/investigator` (password-gated) is the only surface that shows real names, unpublished responses, and the name→code mapping.
+
 ---
 
 ## Project structure

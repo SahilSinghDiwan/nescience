@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% block title %}NESCIENCE — Investigator ledger{% endblock %}
+
+{% block content %}
+<div class="filehead">
+  <div class="overline">Restricted · Full record · Investigator only</div>
+  <span class="stamp">Confidential</span>
+</div>
+<div style="display:flex; align-items:baseline; justify-content:space-between; gap:16px; flex-wrap:wrap">
+  <h1 class="display" style="font-size:clamp(28px,5vw,40px)">CASE LEDGER</h1>
+  <a class="back" href="{{ url_for('investigator_logout') }}">Sign out →</a>
+</div>
+<p class="prose" style="max-width:640px">
+  Every record on file — {{ count }} in total — including real names, publication
+  state, and unpublished testimony. Nothing here may be surfaced on a public route.
+</p>
+
+<hr class="rule">
+
+{% if not rows %}
+  <p class="prose">No testimony on file yet.</p>
+{% else %}
+  <div class="card">
+    <div class="card-head"><span>All records</span><span>{{ count }} on file</span></div>
+    <div class="card-body" style="overflow-x:auto">
+      <table style="width:100%; border-collapse:collapse; font-size:14px">
+        <thead>
+          <tr style="text-align:left; color:var(--ink-faint); font-family:var(--mono); font-size:11px; letter-spacing:0.14em; text-transform:uppercase">
+            <th style="padding:8px 10px">Code</th>
+            <th style="padding:8px 10px">Name (private)</th>
+            <th style="padding:8px 10px">Published</th>
+            <th style="padding:8px 10px">Recorded</th>
+            <th style="padding:8px 10px">Leads</th>
+            <th style="padding:8px 10px"></th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for r in rows %}
+            <tr style="border-top:1px solid var(--line)">
+              <td style="padding:9px 10px" class="case-no">{{ r.code }}</td>
+              <td style="padding:9px 10px; font-family:var(--serif)">{{ r.name }}</td>
+              <td style="padding:9px 10px">
+                {% if r.published %}<span class="tag">Published</span>
+                {% else %}<span class="tag tag-unknown">Private</span>{% endif %}
+              </td>
+              <td style="padding:9px 10px; color:var(--ink-soft)">{{ r.recorded }}</td>
+              <td style="padding:9px 10px; color:var(--ink-soft)">{{ r.leads | join(', ') or '—' }}</td>
+              <td style="padding:9px 10px"><a href="{{ url_for('investigator_case', index=r.index) }}">Open →</a></td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="section" style="margin-top:30px">
+    <h3>Name → code mapping (private)</h3>
+    <div class="pill-row">
+      {% for name, code in mapping.items() %}
+        <span class="pill">{{ name }} → {{ code }}</span>
+      {% else %}
+        <span class="muted">No named records yet.</span>
+      {% endfor %}
+    </div>
+  </div>
+{% endif %}
+{% endblock %}

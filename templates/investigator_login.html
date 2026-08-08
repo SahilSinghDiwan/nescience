@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block wrapclass %}wrap-narrow{% endblock %}
+{% block title %}NESCIENCE — Investigator{% endblock %}
+
+{% block content %}
+<div class="filehead">
+  <div class="overline">Restricted · Investigator access</div>
+  <span class="stamp">Confidential</span>
+</div>
+<h1 class="display" style="font-size:clamp(28px,5vw,40px)">INVESTIGATOR</h1>
+<p class="prose" style="max-width:560px">
+  This surface shows the full record — real names, unpublished testimony, and the
+  code mapping. It is owner-only. Enter the investigator password to continue.
+</p>
+
+{% if error %}
+  <p class="muted" style="color:var(--stamp); margin-top:14px">{{ error }}</p>
+{% endif %}
+
+<form method="post" action="{{ url_for('investigator_login') }}" style="margin-top:22px; max-width:420px">
+  <label class="field-label" for="password">Password</label>
+  <input type="password" id="password" name="password" autocomplete="off" autofocus>
+  <div class="controls">
+    <a class="back" href="{{ url_for('landing') }}">← Leave</a>
+    <button class="btn" type="submit">Enter →</button>
+  </div>
+</form>
+{% endblock %}

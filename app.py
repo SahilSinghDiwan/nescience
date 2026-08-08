@@ -13,8 +13,13 @@
 # ==========================================================
 
 import datetime
+import hmac
+import os
+from functools import wraps
 
-from flask import Flask, render_template, request, jsonify, abort, url_for, redirect
+from flask import (
+    Flask, render_template, request, jsonify, abort, url_for, redirect, session
+)
 
 import database
 import identity
@@ -23,8 +28,39 @@ from atlas import concepts, is_defined
 from matcher import match_interview
 
 app = Flask(__name__)
+# Needed only to sign the investigator session cookie. Supply a stable value
+# via NESCIENCE_SECRET_KEY in any real deployment; the random fallback just
+# means investigator sessions don't survive a dev-server restart.
+app.secret_key = os.environ.get("NESCIENCE_SECRET_KEY") or os.urandom(32)
 
 MAX_ANSWER_LEN = 5000
+
+
+# ----------------------------------------------------------
+# Investigator auth (NESC-02)
+#
+# The investigator surface is owner-only: it shows everything public routes
+# must never reveal — real names, unpublished testimony, the name->code map.
+# It is gated by a password read from the environment; if that variable is
+# unset the whole surface is disabled (404), so it can never sit open by
+# default. No user accounts — a single shared password + a signed session.
+# ----------------------------------------------------------
+
+def _investigator_password():
+    """The configured password, or None when the surface is disabled."""
+    return os.environ.get("NESCIENCE_INVESTIGATOR_PASSWORD") or None
+
+
+def investigator_required(view):
+    """Gate a view: 404 when unconfigured, login prompt when unauthenticated."""
+    @wraps(view)
+    def wrapped(*args, **kwargs):
+        if _investigator_password() is None:
+            abort(404)
+        if not session.get("investigator"):
+            return render_template("investigator_login.html", error=None), 401
+        return view(*args, **kwargs)
+    return wrapped
 
 
 # ----------------------------------------------------------
@@ -325,6 +361,76 @@ def atlas_concept(name):
         concept=concepts[name],
         defined=is_defined(name),
         all_concepts=concepts,
+    )
+
+
+# ----------------------------------------------------------
+# Routes — investigator surface (password-gated, NESC-02)
+# ----------------------------------------------------------
+
+@app.route("/investigator/login", methods=["POST"])
+def investigator_login():
+    if _investigator_password() is None:
+        abort(404)
+    supplied = request.form.get("password", "")
+    if hmac.compare_digest(supplied, _investigator_password()):
+        session["investigator"] = True
+        return redirect(url_for("investigator"))
+    return render_template("investigator_login.html", error="Incorrect password."), 401
+
+
+@app.route("/investigator/logout")
+def investigator_logout():
+    session.pop("investigator", None)
+    return redirect(url_for("landing"))
+
+
+@app.route("/investigator")
+@investigator_required
+def investigator():
+    """The full case ledger — everything, including private fields."""
+    interviews = database.load_interviews()
+    rows = []
+    for index, record in enumerate(interviews):
+        rows.append(
+            {
+                "index": index,
+                "code": identity.get_code(record) or "—",
+                "name": identity.get_name(record) or "—",
+                "published": identity.is_published(record),
+                "recorded": record.get("Case File", {}).get("Recorded", "—"),
+                "leads": [m["concept"] for m in match_interview(record)],
+            }
+        )
+    rows.reverse()  # newest first
+    return render_template(
+        "investigator.html",
+        rows=rows,
+        count=len(interviews),
+        mapping=identity.name_code_mapping(interviews),
+    )
+
+
+@app.route("/investigator/case/<int:index>")
+@investigator_required
+def investigator_case(index):
+    """A full case file — real name, publication state, complete transcript."""
+    interviews = database.load_interviews()
+    if index < 0 or index >= len(interviews):
+        abort(404)
+    record = interviews[index]
+    return render_template(
+        "investigator_case.html",
+        index=index,
+        code=identity.get_code(record) or "—",
+        name=identity.get_name(record) or "—",
+        published=identity.is_published(record),
+        recorded=record.get("Case File", {}).get("Recorded", "—"),
+        record=record,
+        info=record.get("Participant Information", {}),
+        info_fields=INTERVIEW_PROTOCOL["Participant Information"],
+        modules=_numbered_protocol(),
+        matches=match_interview(record),
     )
 
 
