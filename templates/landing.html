@@ -1,61 +1,34 @@
 {% extends "base.html" %}
-{% block title %}NESCIENCE — the study of what we do not yet know{% endblock %}
+{% block title %}NESCIENCE — The Study of What We Do Not Yet Know{% endblock %}
 
 {% block content %}
-<div class="overline">Current Investigation · File No. 001 · Status: Open</div>
-
-<svg class="brainmark" width="72" height="72" viewBox="0 0 100 100" fill="none"
-     stroke="#1a1815" stroke-width="1.6" aria-hidden="true">
-  <path d="M50 14c-14 0-24 8-24 20 0 3 1 6 3 8-3 3-5 7-5 12 0 12 11 20 26 20s26-8 26-20c0-5-2-9-5-12 2-2 3-5 3-8 0-12-10-20-24-20z"/>
-  <path d="M50 14v72M38 30c4 2 4 8 0 10M62 30c-4 2-4 8 0 10M34 54c6 0 8 6 4 10M66 54c-6 0-8 6-4 10"/>
-  <circle cx="50" cy="50" r="46" stroke-dasharray="2 5" opacity="0.5"/>
-</svg>
+<div class="filehead">
+  <div class="overline">Case File No. 001 · Central Investigation · Status: Open</div>
+  <span class="exhibit">EXHIBIT 001/A</span>
+</div>
 
 <h1 class="display">NESCIENCE</h1>
-<p class="lede" style="margin-top:20px; max-width:640px;">
-  {{ intro.message }}
-</p>
+<div class="subtitle">The Study of What We Do Not Yet Know</div>
 
 <hr class="rule-strong">
 
-<div class="overline">The question under investigation</div>
-<p class="serif" style="font-size:24px; line-height:1.5; max-width:720px;">
-  {{ intro.question }}
-</p>
-<p class="prose" style="max-width:720px; margin-top:18px;">
-  Narrative is only one mechanism. The larger inquiry follows a living loop —
-  experience, memory, perception, emotion, learning, the stories we tell,
-  identity, belief, value, expectation, decision, behaviour — and back into
-  new experience. We are not claiming an answer. We are reading the evidence,
-  comparing it, looking for pattern, and marking
-  <span class="tag tag-unknown">UNKNOWN</span> where the science stops.
-</p>
-
-<div class="entrances">
-  <a class="entrance" href="{{ url_for('interview') }}">
-    <div class="overline">Entrance A</div>
-    <h3>Give Testimony</h3>
-    <p class="prose" style="font-size:15px;">
-      Sit for the interview. Answer as you remember and make sense of things —
-      only what you are comfortable sharing. Your account becomes part of the record.
+<div class="card" style="margin-top:6px">
+  <div class="card-head"><span>Current Investigation</span><span>Primary Question</span></div>
+  <div class="card-body">
+    <p class="serif" style="font-size:clamp(21px,3vw,27px); line-height:1.5; margin:0; color:var(--ink)">
+      {{ intro.question }}
     </p>
-    <div class="arrow">Begin the interview →</div>
-  </a>
-  <a class="entrance" href="{{ url_for('archive') }}">
-    <div class="overline">Entrance B</div>
-    <h3>Enter the Archive</h3>
-    <p class="prose" style="font-size:15px;">
-      Take the investigator's chair. Read the case files, follow the leads into
-      the concept atlas, and see where the evidence runs out.
+    <p class="marginalia" style="margin-top:20px; max-width:560px">
+      Where the evidence runs out, the record reads
+      <span class="tag tag-unknown">UNKNOWN</span> — that is the subject, not a failure.
     </p>
-    <div class="arrow">Open the archive →</div>
-  </a>
+  </div>
 </div>
 
-<div class="ledger">
-  <div><div class="n case-no">{{ '%03d' % case_count }}</div><div class="l">Cases on record</div></div>
-  <div><div class="n case-no">{{ '%02d' % defined_count }}</div><div class="l">Concepts investigated</div></div>
-  <div><div class="n case-no">{{ '%02d' % concept_count }}</div><div class="l">Concepts mapped</div></div>
-  <div><div class="n" style="color:var(--stamp)">∞</div><div class="l">Questions remaining</div></div>
+<p class="status-line" style="margin-top:28px">Status: Evidence continues to be collected.</p>
+
+<div style="margin-top:34px; display:flex; align-items:center; gap:18px; flex-wrap:wrap">
+  <a class="btn btn-stamp" href="{{ url_for('archive') }}">Enter the Archive →</a>
+  <a class="back" href="{{ url_for('interview') }}">or give testimony to the investigation →</a>
 </div>
 {% endblock %}

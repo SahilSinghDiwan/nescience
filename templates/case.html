@@ -3,10 +3,10 @@
 {% block title %}NESCIENCE — Case {{ number }}{% endblock %}
 
 {% block content %}
-<a class="back" href="{{ url_for('archive') }}">← Back to archive</a>
+<a class="back" href="{{ url_for('archive_witnesses') }}">← Back to witness accounts</a>
 
-<div style="display:flex; align-items:baseline; justify-content:space-between; margin-top:18px; gap:16px; flex-wrap:wrap">
-  <h1 class="display" style="font-size:44px">CASE <span class="case-no">{{ number }}</span></h1>
+<div class="filehead">
+  <h1 class="display" style="font-size:clamp(30px,6vw,44px)">CASE <span class="case-no">{{ number }}</span></h1>
   <div class="stamp">On record</div>
 </div>
 <div class="muted" style="letter-spacing:0.18em; text-transform:uppercase; font-size:11px">Recorded {{ recorded }}</div>

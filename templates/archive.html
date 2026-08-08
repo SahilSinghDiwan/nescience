@@ -1,9 +1,13 @@
 {% extends "base.html" %}
-{% block title %}NESCIENCE — Archive{% endblock %}
+{% block title %}NESCIENCE — Witness Accounts{% endblock %}
 
 {% block content %}
-<div class="overline">Investigator access · Case archive</div>
-<h1 class="display" style="font-size:40px">THE ARCHIVE</h1>
+<a class="back" href="{{ url_for('archive') }}">← Back to the archive</a>
+<div class="filehead">
+  <div class="overline">Archive · Section 002 · Witness Accounts</div>
+  <span class="exhibit">EXHIBIT 002</span>
+</div>
+<h1 class="display" style="font-size:clamp(30px,5.5vw,44px)">WITNESS ACCOUNTS</h1>
 <p class="prose" style="max-width:640px">
   Every testimony on record, newest first. Each file is cross-checked against the
   concept atlas; the leads are the questions of the mind the account appears to touch.

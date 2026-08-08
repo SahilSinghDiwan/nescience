@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}NESCIENCE — The Archive{% endblock %}
+
+{% block content %}
+<div class="filehead">
+  <div class="overline">Investigator access · The Archive</div>
+  <span class="exhibit">DOSSIER 001–006</span>
+</div>
+<h1 class="display" style="font-size:clamp(34px,6vw,52px)">THE ARCHIVE</h1>
+<p class="prose hub-lede" style="margin-top:14px">
+  Six ways into the same question. Pull a drawer to follow the evidence — some files
+  are open for reading, others are still being collected.
+</p>
+
+<hr class="rule">
+
+<div class="drawers">
+  {% for e in entries %}
+    <a class="drawer" href="{{ e.url }}">
+      <span class="idx">{{ e.idx }}</span>
+      <span>
+        <span class="name">{{ e.name }}</span>
+        <span class="desc">{{ e.desc }}</span>
+        <span class="go">
+          {% if e.status %}<span class="tag tag-progress">{{ e.status }}</span>{% else %}Open file →{% endif %}
+        </span>
+      </span>
+    </a>
+  {% endfor %}
+</div>
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block wrapclass %}wrap-narrow{% endblock %}
+{% block title %}NESCIENCE — {{ name }}{% endblock %}
+
+{% block content %}
+<a class="back" href="{{ url_for('archive') }}">← Back to the archive</a>
+
+<div class="filehead">
+  <div>
+    <div class="overline">Archive · Section {{ idx }}</div>
+    <h1 class="display" style="font-size:clamp(30px,5.5vw,46px)">{{ name | upper }}</h1>
+  </div>
+  <span class="stamp">Pending</span>
+</div>
+
+<div class="unknown-block" style="margin-top:24px">
+  <div class="label">In progress · evidence being collected</div>
+  <div class="body">{{ blurb }}</div>
+</div>
+
+<p class="prose" style="margin-top:26px">
+  This drawer of the investigation is not yet open for reading. Its file is being
+  assembled from the collected evidence and will be filed here when the record is
+  ready. For now, the honest status is: still under investigation.
+</p>
+
+<p style="margin-top:26px"><a class="btn btn-ghost" href="{{ url_for('archive') }}">← Return to the archive</a></p>
+{% endblock %}

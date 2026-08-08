@@ -17,6 +17,7 @@ import datetime
 from flask import Flask, render_template, request, jsonify, abort, url_for, redirect
 
 import database
+import identity
 from protocol import INTERVIEW_PROTOCOL
 from atlas import concepts, is_defined
 from matcher import match_interview
@@ -91,13 +92,9 @@ def _case_number(index):
 
 @app.route("/")
 def landing():
-    interviews = database.load_interviews()
     return render_template(
         "landing.html",
         intro=INTERVIEW_PROTOCOL["Introduction"],
-        case_count=len(interviews),
-        defined_count=len([c for c in concepts if is_defined(c)]),
-        concept_count=len(concepts),
     )
 
 
@@ -139,14 +136,119 @@ def api_interview():
 
 
 # ----------------------------------------------------------
-# Routes — investigator: the archive
+# Routes — investigator: the archive hub (NESC-07)
+#
+# `/archive` is the hub: six numbered ways into the investigation.
+# Surfaces that already exist are wired directly; those still to be
+# built (NESC-09/10/12/13) resolve to an honest "in progress"
+# placeholder rather than a dead link.
 # ----------------------------------------------------------
+
+# The six ways into the archive, in order — a single source of truth for
+# both the hub and the placeholder route. A section with an `endpoint` is a
+# built surface; one with a `slug` is not yet built (NESC-09/10/12/13) and
+# resolves to the honest "in progress" placeholder.
+_ARCHIVE_SECTIONS = [
+    {
+        "idx": "001",
+        "name": "Case Files",
+        "desc": "Deep investigations into single concepts of the mind, "
+                "mapped and cross-referenced.",
+        "endpoint": "atlas_index",
+    },
+    {
+        "idx": "002",
+        "name": "Witness Accounts",
+        "desc": "Testimony on record from consenting participants, filed "
+                "under code only.",
+        "endpoint": "archive_witnesses",
+    },
+    {
+        "idx": "003",
+        "name": "Connections",
+        "slug": "connections",
+        "desc": "The corkboard — threads strung between concepts across the "
+                "investigation.",
+        "blurb": "The corkboard of threads — how each concept pins to the "
+                 "others — is still being strung.",
+    },
+    {
+        "idx": "004",
+        "name": "Open Questions",
+        "slug": "open-questions",
+        "desc": "Where the evidence runs out — the philosophical heart of the "
+                "inquiry.",
+        "blurb": "The philosophical heart: each question set beside what "
+                 "science knows, what the evidence suggests, where it "
+                 "disagrees, and what remains unknown.",
+    },
+    {
+        "idx": "005",
+        "name": "Evidence Room",
+        "slug": "evidence-room",
+        "desc": "Exhibits sorted by what we know, suspect, dispute, and do not "
+                "know.",
+        "blurb": "Exhibits sorted into four tiers — what we know, what the "
+                 "evidence suggests, what researchers disagree about, and what "
+                 "we don't know.",
+    },
+    {
+        "idx": "006",
+        "name": "Investigation Notes",
+        "slug": "notes",
+        "desc": "The investigator's working margins and running log.",
+        "blurb": "The investigator's working margins — method, doubts, and the "
+                 "running log of the inquiry.",
+    },
+]
+
 
 @app.route("/archive")
 def archive():
+    """The archive hub — six ways into the question."""
+    entries = []
+    for section in _ARCHIVE_SECTIONS:
+        if "endpoint" in section:
+            url, status = url_for(section["endpoint"]), None
+        else:
+            url = url_for("archive_pending", section=section["slug"])
+            status = "In progress"
+        entries.append(
+            {
+                "idx": section["idx"],
+                "name": section["name"],
+                "desc": section["desc"],
+                "url": url,
+                "status": status,
+            }
+        )
+    return render_template("archive_hub.html", entries=entries)
+
+
+@app.route("/archive/pending/<section>")
+def archive_pending(section):
+    """Honest placeholder for archive surfaces not yet built."""
+    meta = next((s for s in _ARCHIVE_SECTIONS if s.get("slug") == section), None)
+    if meta is None:
+        abort(404)
+    return render_template(
+        "placeholder.html", idx=meta["idx"], name=meta["name"], blurb=meta["blurb"]
+    )
+
+
+@app.route("/archive/witnesses")
+def archive_witnesses():
+    """Witness Accounts — the public list of testimony on record.
+
+    Per the privacy spec (§11a / NESC-01), only records the participant chose
+    to publish appear on this public surface; unpublished testimony is
+    investigator-only. The full public/investigator split — code-only
+    projection and the password-gated view — lands with NESC-11 / NESC-02."""
     interviews = database.load_interviews()
     cases = []
     for index, interview_record in enumerate(interviews):
+        if not identity.is_published(interview_record):
+            continue
         matches = match_interview(interview_record)
         cases.append(
             {
