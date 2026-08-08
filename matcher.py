@@ -54,14 +54,18 @@ def _signals_for(concept_name):
     return list(signals.items())
 
 
-def _collect_answers(interview):
-    """Flatten every free-text answer in an interview into one blob.
+# Blocks that are not testimony and must never enter matching: demographics
+# (so a country named 'Turkey' can't be mistaken for content) and the private
+# Case File block (real name, code, timestamp — never scan or surface these).
+_NON_TESTIMONY = ("Participant Information", "Case File")
 
-    Participant Information (age, country, ...) is skipped so a country
-    named 'Turkey' can't get mistaken for testimony content."""
+
+def _collect_answers(interview):
+    """Flatten every free-text answer in an interview into one blob,
+    skipping the non-testimony blocks in `_NON_TESTIMONY`."""
     parts = []
     for module, responses in interview.items():
-        if module == "Participant Information":
+        if module in _NON_TESTIMONY:
             continue
         if isinstance(responses, dict):
             parts.extend(str(v) for v in responses.values())

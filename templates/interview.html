@@ -18,6 +18,12 @@
     <div class="overline" style="margin-top:24px">{{ intro.title }}</div>
     <h1 class="qtext" style="font-size:28px">{{ intro.question }}</h1>
     <p class="prose">{{ intro.message }}</p>
+
+    <label class="field-label" for="participant-name">{{ intro.name_prompt }}</label>
+    <input type="text" id="participant-name" data-name autocomplete="off"
+           placeholder="A name, or leave blank">
+    <p class="marginalia" style="margin-top:8px; max-width:520px">{{ intro.name_note }}</p>
+
     <div class="controls">
       <span class="hint">Approx. 15 questions · you may skip any</span>
       <button class="btn" type="button" data-advance>Begin the investigation →</button>
@@ -55,30 +61,42 @@
     {% endfor %}
   {% endfor %}
 
-  <!-- Seal -->
+  <!-- Seal + publication consent -->
   <section class="step" data-step="seal">
     <div style="margin-top:20px"><div class="stamp">Ready to file</div></div>
     <h2 class="qtext" style="margin-top:24px; font-size:24px">That is the end of the interview.</h2>
     <p class="prose">
-      When you seal the file, your testimony is added to the record and cross-checked
-      against the concept atlas — the investigation looks for which questions of the mind
-      your account appears to touch.
+      When you file, your testimony is cross-checked against the concept atlas —
+      the investigation looks for which questions of the mind your account appears to touch.
     </p>
+
+    <div class="card" style="margin-top:22px">
+      <div class="card-head"><span>Publication</span><span>Consent</span></div>
+      <div class="card-body">
+        <p class="serif" style="font-size:19px; margin:0 0 10px; color:var(--ink)">{{ publication.question }}</p>
+        <p class="marginalia" style="margin:0 0 18px; max-width:560px">{{ publication.note }}</p>
+        <div class="controls" style="margin-top:0; gap:14px; flex-wrap:wrap">
+          <button class="btn" type="button" id="submit-publish" data-published="true">{{ publication.yes }} →</button>
+          <button class="btn btn-ghost" type="button" id="submit-private" data-published="false">{{ publication.no }} →</button>
+        </div>
+      </div>
+    </div>
+
     <div class="controls">
       <button class="btn btn-ghost" type="button" data-back>← Back</button>
-      <button class="btn" type="button" id="submit-btn">Seal &amp; file the case →</button>
     </div>
     <p class="muted" id="submit-error" style="color:var(--stamp); margin-top:14px; display:none"></p>
   </section>
 
   <!-- Completion (filled by JS) -->
   <section class="step" data-step="done">
-    <div class="overline">Case filed</div>
-    <h1 class="display" style="font-size:44px">CASE <span id="done-number" class="case-no">—</span></h1>
-    <p class="prose">Your testimony is on record. Cross-checking against the concept atlas returned the following leads.</p>
+    <div class="overline">Testimony filed</div>
+    <h1 class="display" style="font-size:44px">CODE <span id="done-code" class="case-no">—</span></h1>
+    <p class="prose" id="done-publication">Your testimony is on record.</p>
+    <p class="prose" style="margin-top:-6px">Cross-checking against the concept atlas returned the following leads.</p>
     <div id="leads" class="grid" style="margin-top:26px"></div>
     <div class="controls" style="margin-top:32px">
-      <a class="btn btn-ghost" id="view-case" href="#">Read the case file →</a>
+      <a class="btn btn-ghost" id="view-case" href="#" style="display:none">Read the public record →</a>
       <a class="btn" href="{{ url_for('atlas_index') }}">Explore the atlas →</a>
     </div>
   </section>

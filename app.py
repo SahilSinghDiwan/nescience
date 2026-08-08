@@ -36,7 +36,7 @@ def _module_order():
     sections that are not question modules."""
     return [
         name for name in INTERVIEW_PROTOCOL
-        if name not in ("Introduction", "Participant Information")
+        if name not in ("Introduction", "Participant Information", "Publication")
     ]
 
 
@@ -108,6 +108,7 @@ def interview():
         "interview.html",
         intro=INTERVIEW_PROTOCOL["Introduction"],
         participant_fields=INTERVIEW_PROTOCOL["Participant Information"],
+        publication=INTERVIEW_PROTOCOL["Publication"],
         modules=_numbered_protocol(),
     )
 
@@ -119,18 +120,31 @@ def api_interview():
         return jsonify({"error": "Invalid submission."}), 400
 
     record = _sanitise_interview(payload)
+
+    # Identity & consent (NESC-01/05): the real name is collected up front but
+    # kept private — it is stamped into the Case File block, never into the
+    # public Participant Information. A code is assigned from the records that
+    # already exist, and the participant's publication choice is recorded.
+    name = str(payload.get("name", ""))[:MAX_ANSWER_LEN].strip()
+    published = bool(payload.get("published", False))
+    existing = database.load_interviews()
+    code = identity.apply_identity(record, name, published, existing)
+
     database.save_interview(record)
 
-    interviews = database.load_interviews()
-    index = len(interviews) - 1
+    index = len(existing)  # position of the record just appended
     matches = match_interview(record)
 
     return jsonify(
         {
+            "code": code,
+            "published": published,
             "case_number": _case_number(index),
             "case_index": index,
             "matches": matches,
-            "archive_url": url_for("archive_case", index=index),
+            # Public link only exists once NESC-11 lands and only if published;
+            # None keeps the completion screen honest until then.
+            "public_url": None,
         }
     )
 

@@ -20,7 +20,31 @@ INTERVIEW_PROTOCOL = {
 
         "message":
 
-        "There's no right answer here. I'm interested in how you remember and make sense of things... whatever that looks like for you. Only share what you're comfortable with."
+        "There's no right answer here. I'm interested in how you remember and make sense of things... whatever that looks like for you. Only share what you're comfortable with.",
+
+        "name_prompt":
+
+        "Before we begin — what may I call you?",
+
+        "name_note":
+
+        "Your name is kept private. It is never shown on any public page; published testimony appears under a two-letter code only."
+
+    },
+
+    "Publication": {
+
+        "question":
+
+        "Would you like your responses displayed in the public archive?",
+
+        "note":
+
+        "Either way, your real name is never shown. If you publish, your responses appear under an anonymised two-letter code. If you decline, they are kept for the investigation only.",
+
+        "yes": "Yes — publish under a code",
+
+        "no": "No — keep private to the investigation"
 
     },
 

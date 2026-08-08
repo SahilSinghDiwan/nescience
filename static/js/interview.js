@@ -61,6 +61,11 @@
   function collect() {
     var payload = { "Participant Information": {} };
 
+    // Name is private (NESC-01/05): sent top-level, never inside
+    // Participant Information, so it can't reach a public template.
+    var nameEl = stage.querySelector("[data-name]");
+    if (nameEl) payload.name = nameEl.value.trim();
+
     stage.querySelectorAll("[data-field]").forEach(function (input) {
       payload["Participant Information"][input.getAttribute("data-field")] = input.value.trim();
     });
@@ -121,31 +126,52 @@
     });
   }
 
-  function submit() {
-    var btn = document.getElementById("submit-btn");
+  var submitButtons = ["submit-publish", "submit-private"].map(function (id) {
+    return document.getElementById(id);
+  });
+
+  function submit(published, btn) {
     var err = document.getElementById("submit-error");
     err.style.display = "none";
-    btn.disabled = true;
+    submitButtons.forEach(function (b) { if (b) b.disabled = true; });
+    var original = btn.textContent;
     btn.textContent = "Filing…";
+
+    var payload = collect();
+    payload.published = !!published;
 
     fetch(postUrl, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(collect()),
+      body: JSON.stringify(payload),
     })
       .then(function (r) {
         if (!r.ok) throw new Error("The bureau could not file the case.");
         return r.json();
       })
       .then(function (data) {
-        document.getElementById("done-number").textContent = data.case_number;
-        document.getElementById("view-case").setAttribute("href", data.archive_url);
+        document.getElementById("done-code").textContent = data.code || "—";
+        var pub = document.getElementById("done-publication");
+        var link = document.getElementById("view-case");
+        if (data.published) {
+          pub.textContent =
+            "Your testimony is published under the code " + (data.code || "") +
+            " — your name is not shown.";
+          if (data.public_url) {
+            link.setAttribute("href", data.public_url);
+            link.style.display = "";
+          }
+        } else {
+          pub.textContent =
+            "Your testimony is kept private to the investigation. " +
+            "It will not appear in the public archive.";
+        }
         renderLeads(data.matches);
         show(steps.indexOf(stage.querySelector('[data-step="done"]')));
       })
       .catch(function (e) {
-        btn.disabled = false;
-        btn.textContent = "Seal & file the case →";
+        submitButtons.forEach(function (b) { if (b) b.disabled = false; });
+        btn.textContent = original;
         err.textContent = e.message || "Something went wrong. Please try again.";
         err.style.display = "block";
       });
@@ -158,7 +184,12 @@
   stage.querySelectorAll("[data-back]").forEach(function (b) {
     b.addEventListener("click", function () { show(current - 1); });
   });
-  document.getElementById("submit-btn").addEventListener("click", submit);
+  submitButtons.forEach(function (b) {
+    if (!b) return;
+    b.addEventListener("click", function () {
+      submit(b.getAttribute("data-published") === "true", b);
+    });
+  });
 
   // Ctrl/Cmd+Enter advances from a textarea.
   stage.addEventListener("keydown", function (e) {
