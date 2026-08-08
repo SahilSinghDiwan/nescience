@@ -693,6 +693,32 @@ a.back:hover { color: var(--brass); }
 
 /* ---- Responsive ------------------------------------------ */
 
+/* ---- Reference cards (citations · NESC-04) --------------- */
+
+.refcard {
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--brass);
+  background: var(--paper-4);
+  padding: 10px 14px;
+  margin-top: 12px;
+  font-size: 13px;
+  line-height: 1.5;
+}
+.refcard-head {
+  font-family: var(--mono);
+  font-size: 9.5px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--brass);
+  margin-bottom: 5px;
+}
+.refcard-body { font-family: var(--serif); color: var(--ink-soft); }
+.refcard-author { color: var(--ink); }
+.refcard-year { color: var(--ink-faint); }
+.refcard-title { font-style: italic; }
+.refcard-missing { border-left-color: var(--stamp); }
+.refcard-missing .refcard-head { color: var(--stamp); }
+
 @media (max-width: 820px) {
   .wrap { padding: 40px 26px 60px; margin: 22px auto 44px; }
   .wrap::after { display: none; }

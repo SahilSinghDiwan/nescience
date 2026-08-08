@@ -1,0 +1,34 @@
+{# Reusable Jinja macros. Import with:
+   {% from "macros.html" import reference_card, citation_note %} #}
+
+{# A citation rendered as a filed reference card (an artifact in the UI).
+   `cit` is a citation dict; `citations` is the concept's {key: cit} index. #}
+{% macro reference_card(cit) %}
+  {% if cit %}
+    <div class="refcard">
+      <div class="refcard-head">Reference</div>
+      <div class="refcard-body">
+        <span class="refcard-author">{{ cit.author }}</span>
+        {% if cit.year %}<span class="refcard-year">({{ cit.year }})</span>{% endif %}
+        <span class="refcard-title">{{ cit.title }}.</span>
+        {% if cit.source %}<span class="refcard-source">{{ cit.source }}.</span>{% endif %}
+      </div>
+    </div>
+  {% endif %}
+{% endmacro %}
+
+{# Resolve a citation key against a concept's citation index and render it,
+   or an honest 'missing reference' marker if the key does not resolve. #}
+{% macro citation_note(key, citations) %}
+  {% if key %}
+    {% set cit = citations.get(key) %}
+    {% if cit %}
+      {{ reference_card(cit) }}
+    {% else %}
+      <div class="refcard refcard-missing">
+        <div class="refcard-head">Reference missing</div>
+        <div class="refcard-body">Citation <code>{{ key }}</code> is not on file.</div>
+      </div>
+    {% endif %}
+  {% endif %}
+{% endmacro %}
