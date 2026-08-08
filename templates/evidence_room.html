@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% from "macros.html" import reference_card %}
+{% block title %}NESCIENCE — Evidence Room{% endblock %}
+
+{% block content %}
+<a class="back" href="{{ url_for('archive') }}">← Back to the archive</a>
+<div class="filehead">
+  <div class="overline">Archive · Section 005 · Evidence Room</div>
+  <span class="exhibit">EXHIBIT 005</span>
+</div>
+<h1 class="display" style="font-size:clamp(30px,5.5vw,44px)">EVIDENCE ROOM</h1>
+<p class="prose" style="max-width:670px">
+  Every exhibit on file, sorted by how much we actually know — from settled
+  findings through contested ground to the honest gaps. Each claim traces to a
+  real, cited paper; where the evidence runs out, the record reads
+  <span class="tag tag-unknown">UNKNOWN</span>.
+</p>
+
+<hr class="rule">
+
+{% for tier in grouped %}
+  <div class="tier {% if tier.unknown %}tier-unknown{% endif %}" style="margin-top:22px">
+    <div class="tier-label">{{ tier.label }}</div>
+    {% if tier.entries %}
+      {% for item in tier.entries %}
+        <div class="tier-entry">
+          <div class="overline" style="margin-bottom:6px">
+            <a href="{{ url_for('atlas_concept', name=item.concept) }}" style="color:var(--brass); text-decoration:none">Case · {{ item.concept }}</a>
+          </div>
+          <p class="serif" style="font-size:16px; margin:0; color:var(--ink)">{{ item.claim }}</p>
+          {{ reference_card(item.citation) }}
+        </div>
+      {% endfor %}
+    {% else %}
+      <p class="muted" style="font-size:13px; margin:0">Nothing filed under this tier yet.</p>
+    {% endif %}
+  </div>
+{% endfor %}
+{% endblock %}

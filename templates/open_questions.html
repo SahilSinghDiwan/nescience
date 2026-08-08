@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}NESCIENCE — Open Questions{% endblock %}
+
+{% block content %}
+<a class="back" href="{{ url_for('archive') }}">← Back to the archive</a>
+<div class="filehead">
+  <div class="overline">Archive · Section 004 · Open Questions</div>
+  <span class="exhibit">EXHIBIT 004</span>
+</div>
+<h1 class="display" style="font-size:clamp(30px,5.5vw,44px)">OPEN QUESTIONS</h1>
+<p class="prose" style="max-width:670px">
+  The philosophical heart of the inquiry. Each question is set beside what
+  science knows, what the evidence suggests, and where researchers disagree —
+  and always ends where the evidence does: with what remains unknown.
+</p>
+
+<hr class="rule">
+
+{% if not groups %}
+  <p class="prose">No open questions on file yet.</p>
+{% else %}
+  {% for g in groups %}
+    <h2 style="font-size:14px; letter-spacing:0.2em; text-transform:uppercase; margin-top:34px; color:var(--stamp)">
+      <a href="{{ url_for('atlas_concept', name=g.concept) }}" style="color:inherit; text-decoration:none">Case {{ g.case_number }} · {{ g.concept }} →</a>
+    </h2>
+    {% for q in g.questions %}
+      <div class="openq">
+        <h3 class="openq-q">{{ q.question }}</h3>
+        <div class="openq-row"><span class="openq-k">What science knows</span><span class="openq-v">{{ q.what_science_knows }}</span></div>
+        <div class="openq-row"><span class="openq-k">What the evidence suggests</span><span class="openq-v">{{ q.what_evidence_suggests }}</span></div>
+        <div class="openq-row"><span class="openq-k">Where the evidence disagrees</span><span class="openq-v">{{ q.where_evidence_disagrees }}</span></div>
+        <div class="unknown-block" style="margin-top:12px">
+          <div class="label">What remains unknown</div>
+          <div class="body" style="font-size:16px">{{ q.what_remains_unknown }}</div>
+        </div>
+      </div>
+    {% endfor %}
+  {% endfor %}
+{% endif %}
+{% endblock %}

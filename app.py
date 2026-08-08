@@ -225,22 +225,16 @@ _ARCHIVE_SECTIONS = [
     {
         "idx": "004",
         "name": "Open Questions",
-        "slug": "open-questions",
         "desc": "Where the evidence runs out — the philosophical heart of the "
                 "inquiry.",
-        "blurb": "The philosophical heart: each question set beside what "
-                 "science knows, what the evidence suggests, where it "
-                 "disagrees, and what remains unknown.",
+        "endpoint": "open_questions",
     },
     {
         "idx": "005",
         "name": "Evidence Room",
-        "slug": "evidence-room",
         "desc": "Exhibits sorted by what we know, suspect, dispute, and do not "
                 "know.",
-        "blurb": "Exhibits sorted into four tiers — what we know, what the "
-                 "evidence suggests, what researchers disagree about, and what "
-                 "we don't know.",
+        "endpoint": "evidence_room",
     },
     {
         "idx": "006",
@@ -339,6 +333,60 @@ def archive_case(index):
         if code:
             return redirect(url_for("archive_witness", code=code))
     abort(404)
+
+
+# Evidence Room tiers, in epistemic order (weakest claim of certainty last).
+_EVIDENCE_TIERS = [
+    ("what_we_know", "What we know"),
+    ("evidence_suggests", "What the evidence suggests"),
+    ("disagreement", "What researchers disagree about"),
+    ("unknown", "What we don't know"),
+]
+
+
+@app.route("/archive/evidence-room")
+def evidence_room():
+    """[005] Evidence Room — every exhibit across the investigated concepts,
+    sorted into the four epistemic tiers, each traced to a real reference."""
+    grouped = []
+    for key, label in _EVIDENCE_TIERS:
+        items = []
+        for name in concepts:
+            if not is_defined(name):
+                continue
+            room = concepts[name].get("evidence_room", {}) or {}
+            for entry in room.get(key, []) or []:
+                items.append(
+                    {
+                        "concept": name,
+                        "claim": entry.get("claim"),
+                        "citation": bibliography.get(entry.get("citation")),
+                    }
+                )
+        grouped.append(
+            {"key": key, "label": label, "unknown": key == "unknown", "entries": items}
+        )
+    return render_template("evidence_room.html", grouped=grouped)
+
+
+@app.route("/archive/open-questions")
+def open_questions():
+    """[004] Open Questions — the structured, unresolved questions gathered
+    from every investigated concept."""
+    groups = []
+    for name in concepts:
+        if not is_defined(name):
+            continue
+        questions = concepts[name].get("open_questions", []) or []
+        if questions:
+            groups.append(
+                {
+                    "concept": name,
+                    "case_number": _case_number_for(name),
+                    "questions": questions,
+                }
+            )
+    return render_template("open_questions.html", groups=groups)
 
 
 # ----------------------------------------------------------
