@@ -340,7 +340,7 @@
 
   // --------------------------------------------------------
   // 6. Ambient audio toggle — visible, labelled, OFF by default
-  //    (no assets ship yet; see static/audio/README.md)
+  //    Cues are synthesised at runtime; see static/audio/README.md
   // --------------------------------------------------------
   function mountAudioToggle() {
     var slot = document.querySelector("[data-audio-slot]");
@@ -357,13 +357,18 @@
       btn.setAttribute("aria-pressed", on ? "true" : "false");
       label.textContent = on ? "Ambient audio · on" : "Ambient audio · off";
       btn.title = on
-        ? "Ambient analog audio is on (quiet). No sound assets are installed in this build."
+        ? "Ambient analog audio is on (quiet) — paper, ink and the clip."
         : "Ambient analog audio is off. Turn on for quiet paper and pen sounds.";
       btn.setAttribute("aria-label", label.textContent);
     }
 
     foley.onChange(render);
-    btn.addEventListener("click", function () { foley.toggle(); });
+    btn.addEventListener("click", function () {
+      // Turning it on plays one cue immediately. Without it the control
+      // gives no evidence it did anything — the next sound waits on a card
+      // being dragged, which reads as a broken toggle.
+      if (foley.toggle()) foley.play("drawer");
+    });
     slot.appendChild(btn);
   }
 

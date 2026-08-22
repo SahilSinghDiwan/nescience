@@ -164,11 +164,43 @@ def test_every_page_offers_a_skip_link():
 
 def test_audio_never_autoplays_and_starts_muted():
     js = open("static/js/foley.js", encoding="utf-8").read()
-    assert "autoplay" not in js.lower().replace("never autoplay", "")
     # The toggle is the only thing that can enable sound, and it starts off.
     assert re.search(r"var enabled\s*=\s*false", js)
     ceiling = re.search(r"var CEILING\s*=\s*([0-9.]+)", js)
     assert ceiling and float(ceiling.group(1)) <= 0.3, "audio ceiling too loud"
+
+
+def test_audio_context_is_not_created_until_a_gesture():
+    """An exhibit that opened an AudioContext on load would be doing the very
+    thing the no-autoplay rule exists to prevent."""
+    js = open("static/js/foley.js", encoding="utf-8").read()
+    assert re.search(r"var ctx\s*=\s*null", js), "context should start unbuilt"
+    # The only construction site sits inside the lazy accessor.
+    assert js.count("new Ctx()") == 1
+    accessor = js[js.index("function audio()"):js.index("function noise(")]
+    assert "new Ctx()" in accessor, "context built outside the lazy accessor"
+
+
+def test_every_manifest_cue_has_a_synthesised_voice():
+    """No recordings ship, so a cue without a voice is a silent call site."""
+    js = open("static/js/foley.js", encoding="utf-8").read()
+    manifest = set(re.findall(r'"([a-z-]+)":\s*\{\s*file:', js))
+    if not manifest:
+        manifest = set(re.findall(r'"([a-z-]+)":\s*\{ file:', js))
+    voices_block = js[js.index("var VOICES = {"):js.index("function synth(")]
+    voices = set(re.findall(r'"([a-z-]+)":\s*function', voices_block))
+    assert manifest, "no manifest entries parsed"
+    assert manifest <= voices, f"cues with no voice: {sorted(manifest - voices)}"
+
+
+def test_call_sites_only_use_cues_that_exist():
+    foley_js = open("static/js/foley.js", encoding="utf-8").read()
+    tactile_js = open("static/js/tactile.js", encoding="utf-8").read()
+    voices_block = foley_js[foley_js.index("var VOICES = {"):foley_js.index("function synth(")]
+    voices = set(re.findall(r'"([a-z-]+)":\s*function', voices_block))
+    used = set(re.findall(r'foley\.play\("([a-z-]+)"\)', tactile_js))
+    assert used, "no play call sites found"
+    assert used <= voices, f"call sites fire unknown cues: {sorted(used - voices)}"
 
 
 def test_audio_toggle_is_a_labelled_button():

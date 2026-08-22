@@ -2,20 +2,25 @@
 // NESCIENCE — foley hook (NESC-15)
 //
 // The ambient analog layer: paper slides, pen scratches, the
-// soft snap of a clip. NO AUDIO SHIPS WITH THIS BUILD — the
-// assets have not been sourced yet. This module is the empty
-// socket they plug into:
+// soft snap of a clip.
 //
-//   1. drop files into /static/audio using the names in
-//      MANIFEST below (any of .mp3/.ogg/.wav — set the name),
-//   2. nothing else changes; the toggle already exists and the
-//      call sites already fire Foley.play("snap") etc.
+// No recordings ship. The cues are SYNTHESISED at runtime from
+// shaped noise through the Web Audio API — which suits an exhibit
+// that makes no network requests and vendors every asset: there
+// is no file to licence, fetch, or forget to commit. Paper is
+// filtered noise with an envelope; a clip seating is a short
+// transient over a low thud. It is foley, not a field recording,
+// and it is honest about being made rather than captured.
+//
+// Recordings still win if they ever arrive: drop files into
+// /static/audio under the MANIFEST names and each one takes over
+// its cue automatically. Nothing else changes.
 //
 // Rules kept here so they cannot be forgotten later:
 //   * muted by default, always — the toggle starts OFF and only
 //     a deliberate click (persisted in localStorage) turns it on,
-//   * never autoplay: the first sound can only follow a user
-//     gesture, because nothing plays while disabled,
+//   * never autoplay: the audio context is not even created until
+//     a deliberate gesture, and nothing plays while disabled,
 //   * quiet: a hard volume ceiling, well under conversational,
 //   * a missing asset is silence, never an error.
 // ==========================================================
@@ -38,6 +43,124 @@
   var cache = {};
   var enabled = false;
   var listeners = [];
+
+  // --------------------------------------------------------
+  // Synthesised foley
+  //
+  // One AudioContext, created on the first deliberate gesture and
+  // never before — an exhibit that opened an audio context on load
+  // would be doing the thing the no-autoplay rule exists to prevent.
+  // --------------------------------------------------------
+
+  var ctx = null;
+  var noiseBuffer = null;
+
+  function audio() {
+    if (ctx) return ctx;
+    var Ctx = global.AudioContext || global.webkitAudioContext;
+    if (!Ctx) return null;
+    try { ctx = new Ctx(); } catch (e) { ctx = null; }
+    return ctx;
+  }
+
+  /** Two seconds of white noise, made once and reused by every cue. */
+  function noise(ac) {
+    if (noiseBuffer) return noiseBuffer;
+    var frames = Math.floor(ac.sampleRate * 2);
+    noiseBuffer = ac.createBuffer(1, frames, ac.sampleRate);
+    var data = noiseBuffer.getChannelData(0);
+    for (var i = 0; i < frames; i++) data[i] = Math.random() * 2 - 1;
+    return noiseBuffer;
+  }
+
+  /** A burst of filtered noise with an attack/decay envelope. */
+  function burst(ac, out, opts) {
+    var src = ac.createBufferSource();
+    src.buffer = noise(ac);
+    src.loop = true;
+    src.playbackRate.value = opts.rate || 1;
+
+    var filter = ac.createBiquadFilter();
+    filter.type = opts.type || "bandpass";
+    filter.frequency.value = opts.from;
+    filter.Q.value = opts.q || 1;
+
+    var gain = ac.createGain();
+    var t = ac.currentTime;
+    var attack = opts.attack || 0.005;
+    var dur = opts.duration;
+
+    gain.gain.setValueAtTime(0.0001, t);
+    gain.gain.linearRampToValueAtTime(opts.peak, t + attack);
+    // Exponential tails read as physical; linear ones read as electronic.
+    gain.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+
+    if (opts.to && opts.to !== opts.from) {
+      filter.frequency.exponentialRampToValueAtTime(opts.to, t + dur);
+    }
+
+    src.connect(filter); filter.connect(gain); gain.connect(out);
+    src.start(t);
+    src.stop(t + dur + 0.02);
+  }
+
+  /** A short pitched body — the wooden part of a knock or a snap. */
+  function thud(ac, out, opts) {
+    var osc = ac.createOscillator();
+    osc.type = "sine";
+    var gain = ac.createGain();
+    var t = ac.currentTime;
+
+    osc.frequency.setValueAtTime(opts.from, t);
+    osc.frequency.exponentialRampToValueAtTime(opts.to, t + opts.duration);
+    gain.gain.setValueAtTime(opts.peak, t);
+    gain.gain.exponentialRampToValueAtTime(0.0001, t + opts.duration);
+
+    osc.connect(gain); gain.connect(out);
+    osc.start(t);
+    osc.stop(t + opts.duration + 0.02);
+  }
+
+  // Each voice is a small recipe for a physical event. Levels are
+  // relative; the master gain applies the ceiling.
+  var VOICES = {
+    // A parchment sheet dragged across a desk: broad, breathy, brief.
+    "sheet-slide": function (ac, out) {
+      burst(ac, out, { from: 1800, to: 700, q: 0.7, peak: 0.5,
+                       attack: 0.03, duration: 0.26 });
+    },
+    // A card seating under a brass clip: a tight tick over a small body.
+    "snap": function (ac, out) {
+      burst(ac, out, { from: 3200, to: 2000, q: 1.4, peak: 0.85,
+                       attack: 0.001, duration: 0.055 });
+      thud(ac, out, { from: 220, to: 90, peak: 0.28, duration: 0.07 });
+    },
+    // A nib crossing paper: narrower, grainier, slightly longer.
+    "ink": function (ac, out) {
+      burst(ac, out, { from: 2600, to: 1500, q: 3.5, peak: 0.42,
+                       attack: 0.004, duration: 0.14, rate: 1.4 });
+    },
+    // A drawer pulled open: low, rolling, with a soft stop at the end.
+    "drawer": function (ac, out) {
+      burst(ac, out, { type: "lowpass", from: 900, to: 300, q: 0.6,
+                       peak: 0.55, attack: 0.05, duration: 0.42 });
+      thud(ac, out, { from: 150, to: 70, peak: 0.2, duration: 0.16 });
+    }
+  };
+
+  function synth(name, volume) {
+    var ac = audio();
+    if (!ac || !VOICES[name]) return false;
+    // A context can start suspended until the page has been interacted
+    // with; resuming here is safe because we only get called from a click.
+    if (ac.state === "suspended" && ac.resume) { ac.resume(); }
+
+    var master = ac.createGain();
+    master.gain.value = CEILING * (volume || 1);
+    master.connect(ac.destination);
+    try { VOICES[name](ac, master); } catch (e) { return false; }
+    return true;
+  }
 
   try {
     enabled = global.localStorage &&
@@ -71,11 +194,16 @@
 
     isEnabled: function () { return enabled; },
 
-    /** Any asset actually on disk? Today: no. */
+    /** Any recording actually on disk? Today: no — the cues are synthesised. */
     hasAssets: function () {
       var name;
       for (name in cache) { if (cache[name]) return true; }
       return false;
+    },
+
+    /** Whether this browser can synthesise at all (Web Audio present). */
+    canSynthesise: function () {
+      return !!(global.AudioContext || global.webkitAudioContext);
     },
 
     set: function (on) {
@@ -89,16 +217,27 @@
 
     onChange: function (fn) { listeners.push(fn); fn(enabled); },
 
-    /** Fire a cue. Silent (and harmless) while off or unsourced. */
+    /** Fire a cue. Silent (and harmless) while off.
+     *
+     *  A committed recording takes the cue if one exists; otherwise the
+     *  synthesised voice plays. Either way a failure is silence. */
     play: function (name) {
       if (!enabled) return;
+
       var el = load(name);
-      if (!el) return;
-      try {
-        el.currentTime = 0;
-        var p = el.play();
-        if (p && typeof p.catch === "function") { p.catch(function () {}); }
-      } catch (e) { /* silence beats a console full of noise */ }
+      if (el) {
+        try {
+          el.currentTime = 0;
+          var p = el.play();
+          if (p && typeof p.catch === "function") {
+            // A 404'd or undecodable file falls through to the synth.
+            p.catch(function () { synth(name, (MANIFEST[name] || {}).volume); });
+          }
+          return;
+        } catch (e) { /* fall through to the synth */ }
+      }
+
+      synth(name, (MANIFEST[name] || {}).volume);
     }
   };
 
