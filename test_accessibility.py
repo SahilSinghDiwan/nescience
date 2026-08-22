@@ -127,6 +127,27 @@ def test_brass_is_not_used_as_text_on_parchment():
 # Motion, keyboard, audio, network
 # ----------------------------------------------------------
 
+def test_the_cursor_lamp_stays_behind_the_page():
+    """The lamp is a light on the desk, not a filter over the file.
+
+    Painted above the sheet it measurably washed out the text it crossed —
+    --ink-faint labels fell under 4.5:1 at every alpha where the pool was
+    visible at all. A negative z-index keeps it beneath the parchment, so
+    atmosphere can never cost legibility again."""
+    css = open(CSS_PATH, encoding="utf-8").read()
+    block = css[css.index(".vault-lamp {"):]
+    block = block[:block.index("}")]
+    # Strip comments — they discuss `transparent`, they do not declare it.
+    block = re.sub(r"/\*.*?\*/", "", block, flags=re.S)
+    z = re.search(r"z-index:\s*(-?\d+)", block)
+    assert z, "the lamp has no explicit z-index"
+    assert int(z.group(1)) < 0, (
+        f"lamp z-index is {z.group(1)}; it must stay behind the sheet"
+    )
+    # `transparent` is rgba(0,0,0,0) — fading to it leaves a grey ring.
+    assert "transparent" not in block, "lamp gradient fades through black"
+
+
 def test_reduced_motion_is_honoured_wherever_motion_exists():
     css = open(CSS_PATH, encoding="utf-8").read()
     assert "@media (prefers-reduced-motion: reduce)" in css
@@ -201,7 +222,9 @@ def test_manifest_clips_exist_and_the_app_serves_them():
 
     js = open("static/js/foley.js", encoding="utf-8").read()
     files = re.findall(r'file:\s*"([^"]+)"', js)
-    assert len(files) == 4, f"expected four cues, parsed {files}"
+    # Every cue in MANIFEST plus the looping ambient bed.
+    assert len(files) >= 5, f"expected the full cue set, parsed {files}"
+    assert "ambient-bed.wav" in files, "the ambient bed is not declared"
 
     client = app.test_client()
     for name in files:
@@ -210,7 +233,8 @@ def test_manifest_clips_exist_and_the_app_serves_them():
         with wave.open(path) as clip:
             assert clip.getnframes() > 0, f"{name} is empty"
             seconds = clip.getnframes() / clip.getframerate()
-            assert 0.05 < seconds < 3.0, f"{name} is {seconds:.2f}s — not a cue"
+            limit = 30.0 if "bed" in name else 3.0
+            assert 0.02 < seconds < limit, f"{name} is {seconds:.2f}s — implausible"
         assert client.get(f"/static/audio/{name}").status_code == 200
 
 

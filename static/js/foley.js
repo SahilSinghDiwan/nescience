@@ -4,7 +4,7 @@
 // The ambient analog layer: paper slides, pen scratches, the
 // soft snap of a clip.
 //
-// The four clips in /static/audio are GENERATED, not recorded —
+// The clips in /static/audio are GENERATED, not recorded —
 // rendered by tools/make_foley.py and committed, so there is
 // nothing to licence, fetch, or forget. That keeps the exhibit's
 // promise that it makes no network requests and vendors every
@@ -33,13 +33,19 @@
   var BASE = "/static/audio/";
 
   // name -> { file, volume }. The files are generated, not recorded —
-  // see tools/make_foley.py, which renders exactly these four.
+  // see tools/make_foley.py, which renders exactly these.
   var MANIFEST = {
     "sheet-slide": { file: "sheet-slide.wav", volume: 0.7 },  // paper dragged across the desk
     "snap":        { file: "clip-snap.wav",   volume: 1.0 },  // a card seating under the clip
     "ink":         { file: "pen-scratch.wav", volume: 0.6 },  // redaction dissolving
-    "drawer":      { file: "drawer.wav",      volume: 0.8 }   // a folder pulled open
+    "drawer":      { file: "drawer.wav",      volume: 0.8 },  // a folder pulled open
+    "nav":         { file: "nav-click.wav",   volume: 0.75 }, // moving to another section
+    "flip":        { file: "page-flip.wav",   volume: 0.8 }   // opening a file
   };
+
+  // The ambient bed is not a cue — it loops underneath everything, at its
+  // own much lower level, and fades rather than starting and stopping dead.
+  var BED = { file: "ambient-bed.wav", volume: 0.42, fade: 2.2 };
 
   var cache = {};
   var enabled = false;
@@ -146,6 +152,19 @@
       burst(ac, out, { type: "lowpass", from: 900, to: 300, q: 0.6,
                        peak: 0.55, attack: 0.05, duration: 0.42 });
       thud(ac, out, { from: 150, to: 70, peak: 0.2, duration: 0.16 });
+    },
+    // Moving to another section: a dry switch, over almost immediately.
+    "nav": function (ac, out) {
+      burst(ac, out, { from: 5000, to: 2800, q: 1.6, peak: 0.7,
+                       attack: 0.0005, duration: 0.03 });
+      thud(ac, out, { from: 1250, to: 620, peak: 0.18, duration: 0.035 });
+    },
+    // Opening a file: air over the turn, then the sheet landing.
+    "flip": function (ac, out) {
+      burst(ac, out, { from: 900, to: 2400, q: 0.8, peak: 0.5,
+                       attack: 0.07, duration: 0.24 });
+      burst(ac, out, { from: 1800, to: 600, q: 1.0, peak: 0.42,
+                       attack: 0.004, duration: 0.16 });
     }
   };
 
@@ -191,6 +210,82 @@
     return el;
   }
 
+  // --------------------------------------------------------
+  // The ambient bed
+  //
+  // A looping room tone rather than music with a beginning: the exhibit is
+  // a place you are standing in, and a track that started would eventually
+  // have to end. It fades in and out so switching sound on is not a jolt.
+  //
+  // This is a multi-page app, so the bed necessarily restarts on each
+  // navigation. It fades in each time rather than cutting in, which makes
+  // the seam read as a room you re-entered instead of a bug.
+  // --------------------------------------------------------
+
+  var bed = null;
+  var bedTimer = null;
+
+  function bedElement() {
+    if (bed !== null) return bed;
+    if (typeof global.Audio !== "function") { bed = false; return bed; }
+    bed = new global.Audio();
+    bed.loop = true;
+    bed.preload = "auto";
+    bed.src = BASE + BED.file;
+    bed.volume = 0;
+    bed.addEventListener("error", function () { bed = false; });
+    return bed;
+  }
+
+  /** Ramp the bed's volume; `to` is a fraction of the ceiling. */
+  function fadeBed(to, seconds, done) {
+    var el = bedElement();
+    if (!el) return;
+    if (bedTimer) { clearInterval(bedTimer); bedTimer = null; }
+
+    var target = CEILING * BED.volume * to;
+    var step = 40;
+    var steps = Math.max(1, Math.round((seconds * 1000) / step));
+    var delta = (target - el.volume) / steps;
+    var left = steps;
+
+    bedTimer = setInterval(function () {
+      left -= 1;
+      var next = el.volume + delta;
+      el.volume = Math.max(0, Math.min(1, left <= 0 ? target : next));
+      if (left <= 0) {
+        clearInterval(bedTimer);
+        bedTimer = null;
+        if (done) done();
+      }
+    }, step);
+  }
+
+  function startBed() {
+    var el = bedElement();
+    if (!el) return;
+    var p = el.play();
+    if (p && typeof p.catch === "function") {
+      // Blocked for want of a gesture — wait for the next one and retry.
+      p.catch(function () {
+        var retry = function () {
+          global.removeEventListener("pointerdown", retry);
+          global.removeEventListener("keydown", retry);
+          if (enabled) startBed();
+        };
+        global.addEventListener("pointerdown", retry, { once: true });
+        global.addEventListener("keydown", retry, { once: true });
+      });
+    }
+    fadeBed(1, BED.fade);
+  }
+
+  function stopBed() {
+    var el = bedElement();
+    if (!el) return;
+    fadeBed(0, 0.6, function () { try { el.pause(); } catch (e) {} });
+  }
+
   var Foley = {
     manifest: MANIFEST,
 
@@ -201,6 +296,20 @@
       var name;
       for (name in cache) { if (cache[name]) return true; }
       return false;
+    },
+
+    /** The bed's live state — exposed so it can be verified from outside
+     *  rather than inferred, since the element is never in the DOM. */
+    bedState: function () {
+      var el = bedElement();
+      if (!el) return { available: false };
+      return {
+        available: true,
+        playing: !el.paused,
+        volume: Math.round(el.volume * 1000) / 1000,
+        loop: el.loop,
+        seconds: Math.round(el.currentTime * 100) / 100
+      };
     },
 
     /** Whether this browser can synthesise at all (Web Audio present). */
@@ -219,6 +328,9 @@
           var el = load(name);
           if (el) { el.preload = "auto"; try { el.load(); } catch (e) {} }
         }
+        startBed();
+      } else {
+        stopBed();
       }
       listeners.forEach(function (fn) { fn(enabled); });
       return enabled;
@@ -251,6 +363,11 @@
       synth(name, (MANIFEST[name] || {}).volume);
     }
   };
+
+  // Sound is remembered across pages, so a visitor who switched it on
+  // earlier should not have to switch it on again on every file they open.
+  // The bed handles its own retry if the browser wants a gesture first.
+  if (enabled) { startBed(); }
 
   global.Nescience = global.Nescience || {};
   global.Nescience.foley = Foley;

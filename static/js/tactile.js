@@ -8,7 +8,9 @@
 //   3. parchment sheets you can pick up by the brass clip and
 //      let go of — they spring back and seat with a soft lock,
 //   4. redacted ink that dissolves under the cursor,
-//   5. marginalia that warms as the nib passes over it.
+//   5. marginalia that warms as the nib passes over it,
+//   6. a switch when you move between sections,
+//   7. a page turning when you open a file.
 //
 // Non-negotiables, enforced below rather than documented:
 //   * prefers-reduced-motion turns every one of them into a
@@ -106,11 +108,16 @@
 
     cards.forEach(function (el) { io.observe(el); });
 
-    // Safety net: whatever has not been seen in two seconds is
-    // seated anyway. A card must never be left invisible.
+    // Safety net: a card must never be left invisible — but this used to
+    // seat *every* card two seconds after load, including everything below
+    // the fold, so by the time you scrolled there was nothing left to
+    // animate. It now only rescues cards that are actually within reach of
+    // the viewport and leaves the rest to the observer.
     setTimeout(function () {
       cards.forEach(function (el) {
-        if (el.classList.contains("snap")) { io.unobserve(el); seat(el); }
+        if (!el.classList.contains("snap")) return;
+        var box = el.getBoundingClientRect();
+        if (box.top < window.innerHeight * 1.2) { io.unobserve(el); seat(el); }
       });
     }, 2000);
   }
@@ -127,7 +134,7 @@
       el.removeEventListener("transitionend", onEnd);
       el.classList.remove("snap", "snapped");
       el.style.removeProperty("--snap-rot");
-      lock(el);
+      lock(el, true);
     }
     function onEnd(ev) { if (ev.propertyName === "transform") finish(); }
     el.addEventListener("transitionend", onEnd);
@@ -372,8 +379,65 @@
     slot.appendChild(btn);
   }
 
+  // --------------------------------------------------------
+  // 7. Navigation cues — a switch between sections, a page turn
+  //    into a file
+  //
+  //    This is a multi-page app, so a link click tears the document
+  //    down. A cue started here would be cut off mid-transient, so
+  //    when sound is on the navigation is held back by the length of
+  //    the cue's onset — 70ms for the switch, 170ms for the turn.
+  //    Both are under the threshold where a delay reads as lag, and
+  //    with sound off nothing is delayed at all.
+  // --------------------------------------------------------
+
+  // A "file" is a single record you open. Everything else — the hub,
+  // the atlas index, the interview — is a section you move between.
+  var FILE_PATHS = [
+    /^\/atlas\/.+/,               // a case file
+    /^\/archive\/witnesses\/.+/,  // one witness account
+    /^\/archive\/notes\/.+/,      // one methodology note
+    /^\/archive\/\d+$/            // one case by index
+  ];
+
+  function isFile(pathname) {
+    return FILE_PATHS.some(function (re) { return re.test(pathname); });
+  }
+
+  function mountNavigationCues() {
+    document.addEventListener("click", function (e) {
+      // Let the browser own anything that is not a plain left click on a
+      // same-tab, same-origin link.
+      if (e.defaultPrevented || e.button !== 0) return;
+      if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+
+      var link = e.target.closest && e.target.closest("a[href]");
+      if (!link || link.target === "_blank" || link.hasAttribute("download")) return;
+
+      // getAttribute, not .href: on an SVG anchor — every node on the
+      // corkboard — .href is an SVGAnimatedString rather than a string,
+      // and those links would silently miss their cue.
+      var raw = link.getAttribute("href");
+      if (!raw) return;
+
+      var url;
+      try { url = new URL(raw, location.href); } catch (err) { return; }
+      if (url.origin !== location.origin) return;
+      // In-page anchors (the skip link) are not a navigation.
+      if (url.pathname === location.pathname && url.hash) return;
+
+      var cue = isFile(url.pathname) ? "flip" : "nav";
+      if (!foley.isEnabled()) return;      // no sound, no delay
+
+      foley.play(cue);
+      e.preventDefault();
+      setTimeout(function () { location.href = url.href; }, cue === "flip" ? 170 : 70);
+    });
+  }
+
   function boot() {
     mountAudioToggle();
+    mountNavigationCues();
     mountRedactions();
     mountSheets();
     mountSnap();

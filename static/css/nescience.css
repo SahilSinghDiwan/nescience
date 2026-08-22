@@ -953,18 +953,31 @@ a.back:hover { color: var(--brass-ink); }
 .vault-lamp {
   position: fixed;
   top: 0; left: 0;
-  width: 460px; height: 460px;
-  margin: -230px 0 0 -230px;
+  width: 560px; height: 560px;
+  margin: -280px 0 0 -280px;
   border-radius: 50%;
   pointer-events: none;
-  z-index: 5;
+  /* Behind the parchment sheet, not over it. A lamp bright enough to see
+     was measurably washing out the text it crossed — --ink-faint labels
+     dropped under 4.5:1 at every alpha where the pool was visible at all.
+     At z-index -1 it paints above the desk but beneath the sheet and the
+     masthead, so it lights the vault around the file and can be as warm as
+     it likes without touching a word. */
+  z-index: -1;
   opacity: 0;
-  mix-blend-mode: soft-light;
+  /* Two bugs lived here. `transparent` is rgba(0,0,0,0), so fading to it
+     dragged the gradient through black and left a grey ring — every stop
+     now fades to a transparent *warm* instead, and the pool has no edge.
+     And `will-change: transform` promotes this to its own compositing
+     layer, which isolates it: mix-blend-mode had no backdrop to blend
+     with and did nothing. Plain alpha compositing is predictable, and
+     since the pool now sits behind the sheet it can be properly warm. */
   background: radial-gradient(circle at 50% 50%,
-      rgba(255, 236, 196, 0.55) 0%,
-      rgba(255, 226, 170, 0.22) 34%,
-      rgba(255, 220, 160, 0.07) 58%,
-      transparent 72%);
+      rgba(255, 236, 196, 0.46) 0%,
+      rgba(255, 228, 176, 0.26) 32%,
+      rgba(255, 223, 165, 0.11) 56%,
+      rgba(255, 221, 162, 0.03) 76%,
+      rgba(255, 220, 160, 0) 100%);
   transition: opacity 420ms ease, width 260ms ease, height 260ms ease;
   will-change: transform;
 }
@@ -1074,10 +1087,12 @@ a.back:hover { color: var(--brass-ink); }
   --glow: 0;
   position: relative;
   transition: color 260ms ease, text-shadow 260ms ease;
-  color: color-mix(in srgb, var(--hand) calc(100% - var(--glow) * 26%), #0d1b3d);
+  color: color-mix(in srgb, var(--hand) calc(100% - var(--glow) * 40%), #0d2a6b);
+  opacity: calc(0.92 + var(--glow) * 0.08);
   text-shadow:
-    0 0 calc(var(--glow) * 10px) rgba(58, 92, 168, calc(var(--glow) * 0.42)),
-    0 0 calc(var(--glow) * 26px) rgba(156, 124, 67, calc(var(--glow) * 0.22));
+    0 0 calc(var(--glow) * 6px) rgba(74, 118, 214, calc(var(--glow) * 0.55)),
+    0 0 calc(var(--glow) * 18px) rgba(198, 152, 74, calc(var(--glow) * 0.45)),
+    0 0 calc(var(--glow) * 38px) rgba(255, 226, 170, calc(var(--glow) * 0.30));
 }
 
 /* ---- Corkboard threads: sag, then pull taut --------------- */

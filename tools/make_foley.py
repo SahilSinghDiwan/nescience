@@ -115,7 +115,9 @@ def declick(signal, ms=4.0):
 
 
 def write(name, signal):
-    signal = declick(normalise(signal))
+    signal = normalise(signal, PEAKS.get(name, 0.72))
+    if name not in NO_DECLICK:
+        signal = declick(signal)
     path = os.path.join(OUT, name)
     with wave.open(path, "wb") as w:
         w.setnchannels(1)
@@ -204,12 +206,90 @@ def drawer(rng):
     return mix(roll, padded)
 
 
+def nav_click(rng):
+    """Navigating to a new section: a dry switch, closer to a typewriter key
+    than to a UI beep. Very short — it must not sit under the next page."""
+    n = frames(0.055)
+    tick = apply_env(
+        svf(noise(n, rng), sweep(n, 5200, 2800), q=1.6, mode="band"),
+        envelope(n, 0.0005, 0.018, curve=4.0),
+    )
+    body = apply_env(sine(n, 1250, 620), envelope(n, 0.0008, 0.03, curve=3.5))
+    return mix(tick, [b * 0.42 for b in body])
+
+
+def page_flip(rng):
+    """Opening a file: a sheet turning over — air first, then the settle as
+    it lands. Two gestures, not one, or it reads as a swipe."""
+    n = frames(0.46)
+
+    # The turn: broadband air that rises as the page lifts and falls as it
+    # comes over. A single downward sweep sounds like a drag instead.
+    half = n // 2
+    rise = svf(noise(half, rng), sweep(half, 700, 2600), q=0.8, mode="band")
+    fall = svf(noise(n - half, rng), sweep(n - half, 2600, 900), q=0.8, mode="band")
+    turn = apply_env(rise + fall, envelope(n, 0.06, 0.34, curve=1.6))
+
+    # The landing: a soft slap late in the sound.
+    at = frames(0.33)
+    ln = n - at
+    land = apply_env(
+        svf(noise(ln, rng), sweep(ln, 1600, 500), q=1.0, mode="band"),
+        envelope(ln, 0.002, 0.10, curve=3.0),
+    )
+    return mix(turn, [0.0] * at + [x * 0.7 for x in land])
+
+
+def ambient_bed(rng):
+    """A room tone for the vault: a low drone that drifts, under a breath of
+    air. Written to loop seamlessly — the tail is crossfaded into the head,
+    so it can run indefinitely without a seam."""
+    seconds = 12.0
+    n = frames(seconds)
+
+    # A minor-flavoured stack, detuned slightly so it beats slowly rather
+    # than sitting still. Low enough to sit under reading without competing.
+    layers = []
+    for freq, level, drift in ((55.0, 0.55, 0.06), (82.41, 0.34, 0.09),
+                               (110.0, 0.22, 0.05), (130.81, 0.13, 0.11)):
+        tone = sine(n, freq, freq * (1.0 + drift / 100.0))
+        # Each partial breathes on its own slow cycle, so the stack never
+        # repeats audibly inside the loop.
+        rate = rng.uniform(0.03, 0.07)
+        phase = rng.uniform(0, math.pi * 2)
+        swell = [0.6 + 0.4 * math.sin(2 * math.pi * rate * (i / RATE) + phase)
+                 for i in range(n)]
+        layers.append([t * s * level for t, s in zip(tone, swell)])
+
+    # Air: heavily filtered noise, barely there, to stop the drone sounding
+    # synthetic. A room is never silent.
+    air = svf(noise(n, rng), 420, q=0.5, mode="low")
+    layers.append([a * 0.16 for a in air])
+
+    bed = mix(*layers)
+
+    # Seamless loop: crossfade the last `x` seconds over the first `x`.
+    x = frames(1.5)
+    for i in range(x):
+        t = i / x
+        bed[i] = bed[i] * t + bed[n - x + i] * (1 - t)
+    return bed[: n - x]
+
+
 CUES = {
     "sheet-slide.wav": sheet_slide,
     "clip-snap.wav": clip_snap,
     "pen-scratch.wav": pen_scratch,
     "drawer.wav": drawer,
+    "nav-click.wav": nav_click,
+    "page-flip.wav": page_flip,
+    "ambient-bed.wav": ambient_bed,
 }
+
+# The bed loops under everything else, so it must not be tail-faded (that
+# would punch a hole in the loop) and it sits much lower in level.
+NO_DECLICK = {"ambient-bed.wav"}
+PEAKS = {"ambient-bed.wav": 0.55}
 
 
 def main():
@@ -218,7 +298,7 @@ def main():
     rng = random.Random(20260822)
     for name, render in CUES.items():
         path, size = write(name, render(rng))
-        print(f"{os.path.basename(path):18} {size:>7,} bytes")
+        print(f"{os.path.basename(path):18} {size:>9,} bytes")
 
 
 if __name__ == "__main__":
