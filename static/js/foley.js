@@ -4,17 +4,17 @@
 // The ambient analog layer: paper slides, pen scratches, the
 // soft snap of a clip.
 //
-// No recordings ship. The cues are SYNTHESISED at runtime from
-// shaped noise through the Web Audio API — which suits an exhibit
-// that makes no network requests and vendors every asset: there
-// is no file to licence, fetch, or forget to commit. Paper is
-// filtered noise with an envelope; a clip seating is a short
-// transient over a low thud. It is foley, not a field recording,
-// and it is honest about being made rather than captured.
+// The four clips in /static/audio are GENERATED, not recorded —
+// rendered by tools/make_foley.py and committed, so there is
+// nothing to licence, fetch, or forget. That keeps the exhibit's
+// promise that it makes no network requests and vendors every
+// asset. It is foley, not a field recording, and it is honest
+// about being made rather than captured.
 //
-// Recordings still win if they ever arrive: drop files into
-// /static/audio under the MANIFEST names and each one takes over
-// its cue automatically. Nothing else changes.
+// If a clip is missing or fails to decode, the same cue is
+// SYNTHESISED here at runtime through the Web Audio API, so the
+// exhibit is never silent for want of a file. Replacing a clip is
+// just dropping a new file under its MANIFEST name.
 //
 // Rules kept here so they cannot be forgotten later:
 //   * muted by default, always — the toggle starts OFF and only
@@ -32,12 +32,13 @@
   var CEILING = 0.22;              // hard quiet ceiling
   var BASE = "/static/audio/";
 
-  // name -> { file, volume }. Files are intentionally absent.
+  // name -> { file, volume }. The files are generated, not recorded —
+  // see tools/make_foley.py, which renders exactly these four.
   var MANIFEST = {
-    "sheet-slide": { file: "sheet-slide.mp3", volume: 0.7 },  // paper dragged across the desk
-    "snap":        { file: "clip-snap.mp3",   volume: 1.0 },  // a card seating under the clip
-    "ink":         { file: "pen-scratch.mp3", volume: 0.6 },  // redaction dissolving
-    "drawer":      { file: "drawer.mp3",      volume: 0.8 }   // a folder pulled open
+    "sheet-slide": { file: "sheet-slide.wav", volume: 0.7 },  // paper dragged across the desk
+    "snap":        { file: "clip-snap.wav",   volume: 1.0 },  // a card seating under the clip
+    "ink":         { file: "pen-scratch.wav", volume: 0.6 },  // redaction dissolving
+    "drawer":      { file: "drawer.wav",      volume: 0.8 }   // a folder pulled open
   };
 
   var cache = {};
@@ -183,7 +184,8 @@
     el.preload = "none";
     el.src = BASE + entry.file;
     el.volume = CEILING * (entry.volume || 1);
-    // A 404 (the current state of every asset) resolves to silence.
+    // If the clip is missing or undecodable, drop it and let the
+    // synthesised voice cover the cue from here on.
     el.addEventListener("error", function () { cache[name] = null; });
     cache[name] = el;
     return el;
@@ -194,7 +196,7 @@
 
     isEnabled: function () { return enabled; },
 
-    /** Any recording actually on disk? Today: no — the cues are synthesised. */
+    /** Whether any clip has actually loaded (vs. falling back to the synth). */
     hasAssets: function () {
       var name;
       for (name in cache) { if (cache[name]) return true; }
@@ -209,6 +211,15 @@
     set: function (on) {
       enabled = !!on;
       persist();
+      // Fetch the clips on enable rather than on first cue, so the first
+      // sound is not a beat late. This follows a click, never page load.
+      if (enabled) {
+        var name;
+        for (name in MANIFEST) {
+          var el = load(name);
+          if (el) { el.preload = "auto"; try { el.load(); } catch (e) {} }
+        }
+      }
       listeners.forEach(function (fn) { fn(enabled); });
       return enabled;
     },

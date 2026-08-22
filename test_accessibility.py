@@ -193,6 +193,35 @@ def test_every_manifest_cue_has_a_synthesised_voice():
     assert manifest <= voices, f"cues with no voice: {sorted(manifest - voices)}"
 
 
+def test_manifest_clips_exist_and_the_app_serves_them():
+    """The original bug: every manifest entry pointed at a file nobody had
+    made, so the toggle worked and the exhibit stayed silent."""
+    import os
+    import wave
+
+    js = open("static/js/foley.js", encoding="utf-8").read()
+    files = re.findall(r'file:\s*"([^"]+)"', js)
+    assert len(files) == 4, f"expected four cues, parsed {files}"
+
+    client = app.test_client()
+    for name in files:
+        path = os.path.join("static", "audio", name)
+        assert os.path.exists(path), f"{name} is in the manifest but not on disk"
+        with wave.open(path) as clip:
+            assert clip.getnframes() > 0, f"{name} is empty"
+            seconds = clip.getnframes() / clip.getframerate()
+            assert 0.05 < seconds < 3.0, f"{name} is {seconds:.2f}s — not a cue"
+        assert client.get(f"/static/audio/{name}").status_code == 200
+
+
+def test_foley_clips_are_reproducible_from_the_committed_script():
+    """The clips are generated; the generator must ship with them."""
+    import os
+    assert os.path.exists("tools/make_foley.py"), "generator missing"
+    src = open("tools/make_foley.py", encoding="utf-8").read()
+    assert "random.Random(" in src, "seed must be fixed so output is stable"
+
+
 def test_call_sites_only_use_cues_that_exist():
     foley_js = open("static/js/foley.js", encoding="utf-8").read()
     tactile_js = open("static/js/tactile.js", encoding="utf-8").read()
