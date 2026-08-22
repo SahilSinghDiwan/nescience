@@ -1,0 +1,18 @@
+# Keep the image to the exhibit itself.
+.git
+.gitignore
+.venv
+venv
+env
+__pycache__
+*.py[cod]
+.pytest_cache
+.scratch
+.claude
+.DS_Store
+.idea
+.vscode
+
+# Collected testimony never goes into an image layer (brief §11a) —
+# it lives on the mounted volume instead.
+participants.json

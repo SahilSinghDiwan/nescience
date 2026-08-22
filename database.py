@@ -1,7 +1,14 @@
 import json
 import os
 
-FILE_NAME = os.path.join(os.path.dirname(os.path.abspath(__file__)), "participants.json")
+# Collected testimony is personal (brief §11a), so where it is written has to
+# be movable: in the container it belongs on a mounted volume, never in an
+# image layer. NESCIENCE_DATA_DIR overrides the location; unset, it stays
+# exactly where it has always been, beside the code.
+_DATA_DIR = os.environ.get("NESCIENCE_DATA_DIR") or os.path.dirname(
+    os.path.abspath(__file__)
+)
+FILE_NAME = os.path.join(_DATA_DIR, "participants.json")
 
 
 def load_interviews():

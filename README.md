@@ -116,6 +116,24 @@ Then open **http://127.0.0.1:5001** in your browser.
 
 > During development you can enable auto-reload with `flask --app app run --port 5001 --debug`.
 
+### Run it in Docker
+
+No Python setup at all — the image carries the one dependency and every asset
+is already committed under `static/`:
+
+```bash
+docker compose up --build     # then open http://localhost:5001
+docker compose down           # stop it
+```
+
+The container serves through gunicorn rather than the dev server, and mounts a
+named volume at `/exhibit/data` for collected testimony, so responses survive a
+rebuild and never enter an image layer. Set `NESCIENCE_DATA_DIR` if you want
+that file somewhere else; unset, it stays beside the code as it always has.
+
+The investigator surface stays disabled in the container until you uncomment
+`NESCIENCE_INVESTIGATOR_PASSWORD` in `docker-compose.yml` and pick your own.
+
 ### Configuration (environment variables)
 
 Nescience runs with no configuration for the public exhibit. Two optional variables enable and secure the **investigator surface** — never commit real values:
@@ -124,6 +142,7 @@ Nescience runs with no configuration for the public exhibit. Two optional variab
 |---|---|
 | `NESCIENCE_INVESTIGATOR_PASSWORD` | Password for `/investigator`. **If unset, the entire investigator surface is disabled (404)** — it can never sit open by default. |
 | `NESCIENCE_SECRET_KEY` | Signs the investigator session cookie. Set a stable random value in any real deployment; if unset, a random key is used and investigator sessions simply don't survive a restart. |
+| `NESCIENCE_DATA_DIR` | Directory holding `participants.json`. Used by the container to keep testimony on a mounted volume; unset, it defaults to the project directory. |
 
 ```bash
 # enable the private investigator surface for a local session

@@ -1,0 +1,22 @@
+services:
+  exhibit:
+    build: .
+    image: nescience:latest
+    container_name: nescience
+    ports:
+      - "5001:5001"
+    environment:
+      # Signs the investigator session cookie. Any stable value works
+      # locally; supply a real secret anywhere else.
+      NESCIENCE_SECRET_KEY: "local-development-only"
+      # The investigator surface stays disabled (404) unless a password is
+      # set — uncomment to open it, and pick your own.
+      # NESCIENCE_INVESTIGATOR_PASSWORD: "change-me"
+      NESCIENCE_DATA_DIR: /exhibit/data
+    volumes:
+      # Testimony survives a rebuild and never enters an image layer.
+      - nescience-data:/exhibit/data
+    restart: unless-stopped
+
+volumes:
+  nescience-data:
