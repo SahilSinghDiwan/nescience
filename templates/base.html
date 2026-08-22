@@ -13,6 +13,10 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='css/nescience.css') }}">
 </head>
 <body>
+  {# Every page opens with a sticky masthead; a keyboard or screen-reader
+     visitor should not have to walk it to reach the file they came for. #}
+  <a class="skip-link" href="#file">Skip to the file</a>
+
   <header class="masthead">
     <div class="masthead-inner">
       <div>
@@ -31,7 +35,7 @@
     </div>
   </header>
 
-  <main class="wrap {% block wrapclass %}{% endblock %}">
+  <main id="file" tabindex="-1" class="wrap {% block wrapclass %}{% endblock %}">
     {% block content %}{% endblock %}
   </main>
 
