@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}NESCIENCE — Investigation Notes{% endblock %}
+
+{% block content %}
+<a class="back" href="{{ url_for('archive') }}">← Back to the archive</a>
+<div class="filehead">
+  <div class="overline">Archive · Section 006 · Investigation Notes</div>
+  <span class="exhibit">EXHIBIT 006</span>
+</div>
+<h1 class="display" style="font-size:clamp(30px,5.5vw,44px)">INVESTIGATION NOTES</h1>
+<p class="prose" style="max-width:670px">
+  Method, not findings. How this investigation decides what counts as evidence,
+  why the evidence is sorted the way it is, how the concepts were chosen, and
+  what happens to the testimony it collects. Filed in public, because how an
+  archive reaches its conclusions is part of what it is claiming.
+</p>
+
+<hr class="rule">
+
+{% if not notes %}
+  <p class="prose">No notes on file yet.</p>
+{% else %}
+  {% for note in notes %}
+    <div class="openq">
+      <div class="overline">Note {{ note.number }}</div>
+      <h2 class="openq-q" style="margin-top:6px">
+        <a href="{{ url_for('investigation_note', slug=note.slug) }}"
+           style="color:inherit; text-decoration:none">{{ note.title }} →</a>
+      </h2>
+      {% if note.summary %}
+        <p class="prose" style="margin-top:8px; max-width:640px">{{ note.summary }}</p>
+      {% endif %}
+    </div>
+  {% endfor %}
+{% endif %}
+{% endblock %}

@@ -26,6 +26,7 @@ from flask import (
 import bibliography
 import database
 import identity
+import notes
 from protocol import INTERVIEW_PROTOCOL
 from atlas import concepts, is_defined
 from matcher import match_interview
@@ -191,15 +192,12 @@ def api_interview():
 # Routes — investigator: the archive hub (NESC-07)
 #
 # `/archive` is the hub: six numbered ways into the investigation.
-# Surfaces that already exist are wired directly; those still to be
-# built (NESC-09/10/12/13) resolve to an honest "in progress"
-# placeholder rather than a dead link.
+# All six are now built and wired directly (the "in progress" placeholder
+# the unbuilt ones used to resolve to retired with NESC-13).
 # ----------------------------------------------------------
 
-# The six ways into the archive, in order — a single source of truth for
-# both the hub and the placeholder route. A section with an `endpoint` is a
-# built surface; one with a `slug` is not yet built (NESC-09/10/12/13) and
-# resolves to the honest "in progress" placeholder.
+# The six ways into the archive, in order — the single source of truth for
+# the hub.
 _ARCHIVE_SECTIONS = [
     {
         "idx": "001",
@@ -239,10 +237,9 @@ _ARCHIVE_SECTIONS = [
     {
         "idx": "006",
         "name": "Investigation Notes",
-        "slug": "notes",
-        "desc": "The investigator's working margins and running log.",
-        "blurb": "The investigator's working margins — method, doubts, and the "
-                 "running log of the inquiry.",
+        "desc": "How this investigation works — what it accepts as evidence, "
+                "and where it agrees to stop.",
+        "endpoint": "investigation_notes",
     },
 ]
 
@@ -250,34 +247,17 @@ _ARCHIVE_SECTIONS = [
 @app.route("/archive")
 def archive():
     """The archive hub — six ways into the question."""
-    entries = []
-    for section in _ARCHIVE_SECTIONS:
-        if "endpoint" in section:
-            url, status = url_for(section["endpoint"]), None
-        else:
-            url = url_for("archive_pending", section=section["slug"])
-            status = "In progress"
-        entries.append(
-            {
-                "idx": section["idx"],
-                "name": section["name"],
-                "desc": section["desc"],
-                "url": url,
-                "status": status,
-            }
-        )
+    entries = [
+        {
+            "idx": section["idx"],
+            "name": section["name"],
+            "desc": section["desc"],
+            "url": url_for(section["endpoint"]),
+            "status": None,
+        }
+        for section in _ARCHIVE_SECTIONS
+    ]
     return render_template("archive_hub.html", entries=entries)
-
-
-@app.route("/archive/pending/<section>")
-def archive_pending(section):
-    """Honest placeholder for archive surfaces not yet built."""
-    meta = next((s for s in _ARCHIVE_SECTIONS if s.get("slug") == section), None)
-    if meta is None:
-        abort(404)
-    return render_template(
-        "placeholder.html", idx=meta["idx"], name=meta["name"], blurb=meta["blurb"]
-    )
 
 
 @app.route("/archive/witnesses")
@@ -440,6 +420,26 @@ def open_questions():
                 }
             )
     return render_template("open_questions.html", groups=groups)
+
+
+@app.route("/archive/notes")
+def investigation_notes():
+    """[006] Investigation Notes — the archive's methodology drawer (NESC-13).
+
+    Public by design: how the investigation decides what counts as evidence
+    is part of its argument, not backstage material. Notes are hand-authored
+    markdown under docs/notes/, read fresh on each request so an edit shows
+    up without a restart."""
+    return render_template("notes.html", notes=notes.all_notes())
+
+
+@app.route("/archive/notes/<slug>")
+def investigation_note(slug):
+    """One methodology note."""
+    note = notes.get(slug)
+    if note is None:
+        abort(404)
+    return render_template("note.html", note=note)
 
 
 # ----------------------------------------------------------

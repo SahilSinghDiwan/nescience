@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block wrapclass %}wrap-narrow{% endblock %}
+{% block title %}NESCIENCE — {{ note.title }}{% endblock %}
+
+{% block content %}
+<a class="back" href="{{ url_for('investigation_notes') }}">← Back to Investigation Notes</a>
+
+<div class="filehead">
+  <div>
+    <div class="overline">Investigation Notes · Note {{ note.number }}</div>
+    <h1 class="display" style="font-size:clamp(28px,5vw,42px)">{{ note.title | upper }}</h1>
+  </div>
+  {% if note.status %}<span class="stamp">{{ note.status }}</span>{% endif %}
+</div>
+
+{% if note.summary %}
+  <p class="prose" style="margin-top:18px; max-width:640px">{{ note.summary }}</p>
+  <hr class="rule">
+{% endif %}
+
+{# Rendered from a narrow markdown subset in notes.py; the source text is
+   escaped before any tags are reintroduced, so this is safe to mark. #}
+<div class="prose note-body" style="max-width:660px">{{ note.body_html | safe }}</div>
+
+<p style="margin-top:32px">
+  <a class="btn btn-ghost" href="{{ url_for('investigation_notes') }}">← All notes</a>
+</p>
+{% endblock %}

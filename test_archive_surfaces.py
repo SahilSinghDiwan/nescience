@@ -35,13 +35,12 @@ def test_hub_wires_the_two_surfaces_live():
     assert "/archive/open-questions" in hub
 
 
-def test_retired_placeholder_slugs_are_gone():
+def test_placeholder_route_is_fully_retired():
+    """All six drawers are built (NESC-13 was the last), so the "in progress"
+    placeholder is gone — no slug may still resolve to it."""
     c = flaskapp.app.test_client()
-    # these moved from placeholder to real routes
-    for slug in ("evidence-room", "open-questions", "connections"):
+    for slug in ("evidence-room", "open-questions", "connections", "notes"):
         assert c.get(f"/archive/pending/{slug}").status_code == 404
-    # investigation notes is still an honest placeholder (needs-info)
-    assert c.get("/archive/pending/notes").status_code == 200
 
 
 # ---- NESC-12: connections corkboard --------------------------------------
