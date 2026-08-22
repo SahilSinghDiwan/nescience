@@ -2718,17 +2718,399 @@ concepts = {
     },
 
     "Language": {
-        "definition": "",
-        "narrative_role": "",
-        "paradox": "",
-        "brain_regions": [],
-        "key_experiments": [],
-        "landmark_researchers": [],
-        "connects_to": [],
-        "real_world_examples": [],
-        "questions": [],
-        "unresolved": "",
-        "interview_themes": []
+
+        "definition":
+        "The system by which a mind encodes thought into a shared signal, and "
+        "recovers thought from the signals of others.",
+
+        "narrative_role":
+        "Language is the medium the internal narrative is written in — which "
+        "makes it impossible to say where the story ends and the words begin.",
+
+        "paradox":
+        "Every speaker follows rules of grammar no speaker can state, learned "
+        "in childhood from evidence that never contained the rules.",
+
+        "brain_regions": [
+            "Left Inferior Frontal Gyrus (Broca's Area)",
+            "Posterior Superior Temporal Gyrus (Wernicke's Area)",
+            "Arcuate Fasciculus",
+            "Anterior Temporal Lobe"
+        ],
+
+        "key_experiments": [
+            "Lesion-based localisation of articulate speech (Leborgne)",
+            "FOXP2 mutation in the KE family",
+            "Statistical segmentation of a speech stream by infants",
+            "Functional localisation of the language network (fMRI)",
+            "Colour discrimination across a lexical boundary"
+        ],
+
+        "landmark_researchers": [
+            "Paul Broca",
+            "Jenny Saffran",
+            "Evelina Fedorenko",
+            "Noam Chomsky",
+            "Lera Boroditsky"
+        ],
+
+        "connects_to": [
+            "Memory",
+            "Perception",
+            "Learning",
+            "Identity",
+            "Narrative"
+        ],
+
+        "real_world_examples": [
+            "Losing a word that is plainly there",
+            "Dreaming in a second language",
+            "A feeling you have no name for",
+            "Translation that carries everything but the point"
+        ],
+
+        "questions": [
+            "Do I think in words, or translate afterwards?",
+            "Is there a thought I cannot have in my language?",
+            "Who is speaking when I talk to myself?"
+        ],
+
+        "unresolved":
+        "Whether language is the vehicle thought travels in or the shape "
+        "thought is forced into.",
+
+        "interview_themes": [
+            "Words",
+            "Naming",
+            "Silence",
+            "Expression",
+            "Conversation"
+        ],
+
+        "evidence": [
+            {"type": "Patient Study", "title": "Broca's aphasia and the localisation of speech", "year": 1861},
+            {"type": "Genetic Study", "title": "FOXP2 mutation in a speech and language disorder", "year": 2001},
+            {"type": "Infant Study", "title": "Statistical learning by 8-month-old infants", "year": 1996},
+            {"type": "Neuroimaging", "title": "Functional specificity of the language network", "year": 2011},
+            {"type": "Psychophysics", "title": "Russian blues and categorical colour discrimination", "year": 2007}
+        ],
+
+        "investigators_note":
+        "The difficulty with this file is that the investigation is being "
+        "conducted in its own subject. Every question here had to be asked in "
+        "words, which is exactly the instrument under examination. The record "
+        "shows two findings that are not in doubt — that language depends on "
+        "particular tissue, and that children extract its structure from "
+        "input that never states it — sitting either side of a question "
+        "nobody has closed: whether the words you have determine the thoughts "
+        "you can hold. A century and a half after Broca opened Leborgne's "
+        "skull, we can say with precision where language lives and almost "
+        "nothing about how it means.",
+
+        "primary_question":
+        "Does the language you speak decide the thoughts you are able to "
+        "have?",
+
+        "why_it_matters":
+        "If thought is shaped by language, then the internal narrative this "
+        "investigation is chasing is not merely told in words — it is limited "
+        "by them, and two people with different words are not describing the "
+        "same inner life in different terms but living slightly different "
+        "ones.",
+
+        "neural_systems": [
+            {
+                "system": "Left inferior frontal gyrus (Broca's area)",
+                "role":
+                "Damage here disrupts the production of fluent, grammatically "
+                "structured speech while leaving comprehension and general "
+                "intelligence comparatively intact."
+            },
+            {
+                "system": "Posterior superior temporal cortex",
+                "role":
+                "Associated with mapping speech sound onto meaning; damage "
+                "produces fluent speech that is largely empty of content."
+            },
+            {
+                "system": "The frontotemporal language network",
+                "role":
+                "Responds to linguistic structure specifically, and not to "
+                "arithmetic, music, or general working-memory demand."
+            }
+        ],
+
+        "evidence_room": {
+
+            "what_we_know": [
+                {
+                    "claim":
+                    "Language depends on particular tissue, not on general "
+                    "intelligence spread evenly through the brain. Broca's "
+                    "patient Leborgne could produce almost no articulate "
+                    "speech yet understood what was said to him; autopsy "
+                    "found a lesion in the left frontal lobe. Damage to a "
+                    "specific region takes speech and leaves the person.",
+                    "citation": "broca_1861"
+                },
+                {
+                    "claim":
+                    "A mutation in a single gene can produce a severe, "
+                    "inherited speech and language disorder. In the KE family, "
+                    "affected members across three generations carry a point "
+                    "mutation in FOXP2 — evidence that language development "
+                    "has identifiable genetic dependencies.",
+                    "citation": "lai_2001"
+                },
+                {
+                    "claim":
+                    "There is a maturational window. Age of arrival predicts "
+                    "ultimate grammatical attainment in a second language, "
+                    "with performance declining steadily for those who begin "
+                    "after childhood — a limit on acquisition that experience "
+                    "alone does not remove.",
+                    "citation": "johnson_newport_1989"
+                }
+            ],
+
+            "evidence_suggests": [
+                {
+                    "claim":
+                    "Infants extract structure from raw statistics. After two "
+                    "minutes of a continuous, unbroken speech stream, "
+                    "8-month-olds distinguished recurring 'words' from "
+                    "syllable sequences that merely straddled a boundary — "
+                    "segmenting on transitional probability alone, with no "
+                    "pauses, stress, or meaning to help them.",
+                    "citation": "saffran_1996"
+                },
+                {
+                    "claim":
+                    "The language network appears functionally selective. "
+                    "Regions that respond to sentences over nonsense strings "
+                    "show little response to arithmetic, music, or "
+                    "general-purpose cognitive demand, suggesting machinery "
+                    "specialised for language rather than borrowed from "
+                    "thought in general.",
+                    "citation": "fedorenko_2011"
+                },
+                {
+                    "claim":
+                    "Words appear to reach into perception itself. Russian "
+                    "makes an obligatory lexical distinction between lighter "
+                    "and darker blue; Russian speakers discriminated colours "
+                    "faster across that boundary than within it, and the "
+                    "advantage disappeared under a verbal interference task.",
+                    "citation": "winawer_2007"
+                }
+            ],
+
+            "disagreement": [
+                {
+                    "claim":
+                    "What, if anything, is uniquely linguistic is openly "
+                    "contested. One influential position holds that the only "
+                    "component special to human language is recursion, with "
+                    "the rest shared with other systems and species.",
+                    "citation": "hauser_2002"
+                },
+                {
+                    "claim":
+                    "That position was answered directly: that far more of "
+                    "language — speech perception, the lexicon, morphology, "
+                    "syntax beyond recursion — bears the marks of "
+                    "special-purpose adaptation. The exchange remains "
+                    "unresolved and is one of the field's defining arguments.",
+                    "citation": "pinker_jackendoff_2005"
+                },
+                {
+                    "claim":
+                    "How far linguistic relativity extends is disputed. "
+                    "Reported effects of a language's metaphors for time on "
+                    "its speakers' reasoning have been influential and also "
+                    "difficult to replicate consistently, leaving the "
+                    "strength of the effect unsettled.",
+                    "citation": "boroditsky_2001"
+                }
+            ],
+
+            "unknown": [
+                {
+                    "claim":
+                    "How a pattern of neural activity comes to be *about* "
+                    "something is unknown. The brain regions that carry "
+                    "language can be located to the millimetre; by what means "
+                    "a signal in them refers to a thing in the world is not a "
+                    "solved problem, and it is not obvious what solving it "
+                    "would look like.",
+                    "citation": "fedorenko_2011"
+                },
+                {
+                    "claim":
+                    "Whether thought requires language remains open. People "
+                    "report wordless thinking, and the language network is "
+                    "quiet during some demanding reasoning, but there is no "
+                    "accepted method for examining a thought without "
+                    "rendering it into words first — the measurement destroys "
+                    "the thing measured.",
+                    "citation": "hauser_2002"
+                },
+                {
+                    "claim":
+                    "How a child arrives at a grammar from the input actually "
+                    "available is unresolved. Statistical learning is "
+                    "demonstrably powerful and demonstrably insufficient on "
+                    "its own; what supplies the remainder — richer input, "
+                    "innate constraint, or something not yet described — is "
+                    "UNKNOWN.",
+                    "citation": "saffran_1996"
+                }
+            ]
+        },
+
+        "open_questions": [
+            {
+                "question":
+                "Does the language you speak shape the thoughts you can have?",
+                "what_science_knows":
+                "Language is processed by identifiable, functionally "
+                "selective neural systems, and losing them takes specific "
+                "linguistic abilities rather than thought in general.",
+                "what_evidence_suggests":
+                "Lexical distinctions measurably affect perceptual "
+                "performance — Russian speakers discriminate blues faster "
+                "across a boundary their language marks, and the advantage "
+                "vanishes when verbal resources are occupied.",
+                "where_evidence_disagrees":
+                "Whether such effects reach thought itself or only the "
+                "strategies used in a task is argued, and the more sweeping "
+                "relativity results have proven hard to replicate.",
+                "what_remains_unknown":
+                "Nobody has devised a way to examine a thought without first "
+                "putting it into language, so whether the words are the "
+                "container or the content is UNKNOWN."
+            },
+            {
+                "question":
+                "Is language a dedicated faculty, or ordinary machinery doing "
+                "an extraordinary job?",
+                "what_science_knows":
+                "Language depends on specific tissue and has identifiable "
+                "genetic dependencies; damage and mutation both disrupt it in "
+                "structured, repeatable ways.",
+                "what_evidence_suggests":
+                "The frontotemporal language network responds to linguistic "
+                "structure and not to arithmetic, music, or general cognitive "
+                "load — while infants also segment speech using "
+                "domain-general statistical learning.",
+                "where_evidence_disagrees":
+                "Whether recursion is the only uniquely linguistic component "
+                "or much of language is special-purpose adaptation is a live, "
+                "openly-argued dispute between leading accounts.",
+                "what_remains_unknown":
+                "No experiment yet separates machinery built for language "
+                "from general machinery that language has colonised."
+            }
+        ],
+
+        "connected_files": [
+            "Memory",
+            "Perception",
+            "Learning",
+            "Identity",
+            "Narrative"
+        ],
+
+        "next_case": "Memory",
+
+        "citations": [
+            {
+                "key": "broca_1861",
+                "author": "Broca, P.",
+                "year": 1861,
+                "title":
+                "Remarques sur le siège de la faculté du langage articulé, "
+                "suivies d'une observation d'aphémie (perte de la parole)",
+                "source":
+                "Bulletin de la Société Anatomique de Paris, 330–357"
+            },
+            {
+                "key": "lai_2001",
+                "author": "Lai, C. S. L., Fisher, S. E., Hurst, J. A., "
+                          "Vargha-Khadem, F., & Monaco, A. P.",
+                "year": 2001,
+                "title":
+                "A forkhead-domain gene is mutated in a severe speech and "
+                "language disorder",
+                "source": "Nature, 413(6855), 519–523"
+            },
+            {
+                "key": "johnson_newport_1989",
+                "author": "Johnson, J. S., & Newport, E. L.",
+                "year": 1989,
+                "title":
+                "Critical period effects in second language learning: The "
+                "influence of maturational state on the acquisition of "
+                "English as a second language",
+                "source": "Cognitive Psychology, 21(1), 60–99"
+            },
+            {
+                "key": "saffran_1996",
+                "author": "Saffran, J. R., Aslin, R. N., & Newport, E. L.",
+                "year": 1996,
+                "title": "Statistical learning by 8-month-old infants",
+                "source": "Science, 274(5294), 1926–1928"
+            },
+            {
+                "key": "fedorenko_2011",
+                "author": "Fedorenko, E., Behr, M. K., & Kanwisher, N.",
+                "year": 2011,
+                "title":
+                "Functional specificity for high-level linguistic processing "
+                "in the human brain",
+                "source":
+                "Proceedings of the National Academy of Sciences, 108(39), "
+                "16428–16433"
+            },
+            {
+                "key": "winawer_2007",
+                "author": "Winawer, J., Witthoft, N., Frank, M. C., Wu, L., "
+                          "Wade, A. R., & Boroditsky, L.",
+                "year": 2007,
+                "title":
+                "Russian blues reveal effects of language on color "
+                "discrimination",
+                "source":
+                "Proceedings of the National Academy of Sciences, 104(19), "
+                "7780–7785"
+            },
+            {
+                "key": "hauser_2002",
+                "author": "Hauser, M. D., Chomsky, N., & Fitch, W. T.",
+                "year": 2002,
+                "title":
+                "The faculty of language: What is it, who has it, and how did "
+                "it evolve?",
+                "source": "Science, 298(5598), 1569–1579"
+            },
+            {
+                "key": "pinker_jackendoff_2005",
+                "author": "Pinker, S., & Jackendoff, R.",
+                "year": 2005,
+                "title":
+                "The faculty of language: What's special about it?",
+                "source": "Cognition, 95(2), 201–236"
+            },
+            {
+                "key": "boroditsky_2001",
+                "author": "Boroditsky, L.",
+                "year": 2001,
+                "title":
+                "Does language shape thought? Mandarin and English speakers' "
+                "conceptions of time",
+                "source": "Cognitive Psychology, 43(1), 1–22"
+            }
+        ]
     },
 
     "Social Cognition": {
@@ -2996,7 +3378,7 @@ concepts = {
             "Decision Making"
         ],
 
-        "next_case": "Memory",
+        "next_case": "Language",
 
         "citations": [
             {
