@@ -7,10 +7,97 @@
    forms filled by hand, ink blue-black script, and ONE faded
    evidence-red reserved strictly for stamps and the word UNKNOWN.
 
-   Self-contained: system serif/typewriter stacks (no network
-   fonts) + locally bundled SVG grain textures in /static/textures.
+   Self-contained: EB Garamond + Courier Prime self-hosted as
+   woff2 in /static/fonts (both SIL OFL 1.1, licences committed
+   alongside) + locally bundled SVG grain textures in
+   /static/textures. Nothing is fetched from the network.
    Design must not depend on motion (that is NESC-15).
    ========================================================== */
+
+/* ==========================================================
+   Self-hosted type (NESC-14)
+
+   Editorial serif : EB Garamond  — SIL Open Font License 1.1
+                     static/fonts/OFL-EBGaramond.txt
+   Typewriter face : Courier Prime — SIL Open Font License 1.1
+                     static/fonts/OFL-CourierPrime.txt
+
+   Both are bundled as woff2 under /static/fonts. Nothing here
+   touches the network at runtime: no CDN, no @import, no
+   Google Fonts call. EB Garamond ships as a variable roman +
+   variable italic (weight axis 400–800); Courier Prime as two
+   static weights. Latin + Latin-Extended subsets only.
+   ========================================================== */
+
+/* -- EB Garamond, roman ------------------------------------ */
+@font-face {
+  font-family: "EB Garamond";
+  font-style: normal;
+  font-weight: 400 800;
+  font-display: swap;
+  src: url("../fonts/eb-garamond-var-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "EB Garamond";
+  font-style: normal;
+  font-weight: 400 800;
+  font-display: swap;
+  src: url("../fonts/eb-garamond-var-latin-ext.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+/* -- EB Garamond, italic (marginalia, subtitles) ----------- */
+@font-face {
+  font-family: "EB Garamond";
+  font-style: italic;
+  font-weight: 400 800;
+  font-display: swap;
+  src: url("../fonts/eb-garamond-var-italic-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "EB Garamond";
+  font-style: italic;
+  font-weight: 400 800;
+  font-display: swap;
+  src: url("../fonts/eb-garamond-var-italic-latin-ext.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+/* -- Courier Prime, the case-tag typewriter ---------------- */
+@font-face {
+  font-family: "Courier Prime";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../fonts/courier-prime-400-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Courier Prime";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../fonts/courier-prime-400-latin-ext.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: "Courier Prime";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("../fonts/courier-prime-700-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Courier Prime";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("../fonts/courier-prime-700-latin-ext.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
 
 :root {
   /* -- the vault: near-black desk & charcoals ------------- */
@@ -51,9 +138,9 @@
   --brass-soft: #b89a63;
 
   /* Typewriter for tags / form labels / institutional chrome */
-  --mono: "Courier New", "Courier", ui-monospace, "SF Mono", "Menlo", "Consolas", monospace;
+  --mono: "Courier Prime", "Courier New", "Courier", ui-monospace, "SF Mono", "Menlo", monospace;
   /* Editorial serif, rare-manuscript feel, for reading matter */
-  --serif: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", "Hoefler Text", Georgia, "Times New Roman", serif;
+  --serif: "EB Garamond", "Iowan Old Style", "Palatino Linotype", "Hoefler Text", Georgia, "Times New Roman", serif;
 
   --grain-paper: url("../textures/paper-grain.svg");
   --grain-vault: url("../textures/vault-grain.svg");
@@ -212,12 +299,12 @@ h1, h2, h3 { font-weight: 700; letter-spacing: 0.04em; margin: 0; color: var(--i
 }
 .lede {
   font-family: var(--serif);
-  font-size: 20px;
+  font-size: 21px;
   line-height: 1.6;
   color: var(--ink-soft);
 }
 .serif { font-family: var(--serif); }
-.prose { font-family: var(--serif); font-size: 17px; line-height: 1.72; color: var(--ink-soft); }
+.prose { font-family: var(--serif); font-size: 18px; line-height: 1.72; color: var(--ink-soft); }
 .muted { color: var(--ink-faint); }
 .rule { height: 1px; background: var(--line); border: 0; margin: 34px 0; }
 .rule-strong {
@@ -535,7 +622,7 @@ h1, h2, h3 { font-weight: 700; letter-spacing: 0.04em; margin: 0; color: var(--i
 }
 .fields .k { font-family: var(--mono); color: var(--ink-faint); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; padding-top: 5px; }
 /* filled "by hand" in ink blue-black serif */
-.fields .v { font-family: var(--serif); font-size: 17px; color: var(--hand); }
+.fields .v { font-family: var(--serif); font-size: 18px; color: var(--hand); }
 .fields .v.empty { color: var(--ink-faint); font-family: var(--mono); font-size: 12px; letter-spacing: 0.16em; }
 
 /* ---- Q&A transcript -------------------------------------- */
@@ -552,7 +639,7 @@ h1, h2, h3 { font-weight: 700; letter-spacing: 0.04em; margin: 0; color: var(--i
 .qa .prompt { font-family: var(--mono); color: var(--ink-soft); margin: 6px 0 10px; white-space: pre-line; }
 .qa .a {
   font-family: var(--serif);
-  font-size: 17px;
+  font-size: 18px;
   line-height: 1.72;
   color: var(--hand);
   border-left: 3px solid var(--ink);
@@ -840,4 +927,204 @@ a.back:hover { color: var(--brass); }
   .masthead nav { display: none; }
   .masthead-inner { flex-wrap: wrap; }
   .drawer { grid-template-columns: 1fr; }
+}
+
+/* ==========================================================
+   NESC-15 — the tactile layer
+   Motion here models materials: paper has weight, ink dries,
+   string sags, a clip locks. Everything below is an ENHANCEMENT:
+   remove the JS or the motion and the page still reads. Every
+   rule is switched off (or made instant) under
+   prefers-reduced-motion, and every interactive affordance is
+   reachable and visible from the keyboard.
+   ========================================================== */
+
+/* ---- The vault lamp: cursor physics with weight ----------- */
+/* A pool of lamplight that lags behind the pointer with drag
+   and easing rather than snapping to it. Purely decorative,
+   never intercepts a click. Mounted by tactile.js only when
+   motion is allowed and a fine pointer is present. */
+.vault-lamp {
+  position: fixed;
+  top: 0; left: 0;
+  width: 460px; height: 460px;
+  margin: -230px 0 0 -230px;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 5;
+  opacity: 0;
+  mix-blend-mode: soft-light;
+  background: radial-gradient(circle at 50% 50%,
+      rgba(255, 236, 196, 0.55) 0%,
+      rgba(255, 226, 170, 0.22) 34%,
+      rgba(255, 220, 160, 0.07) 58%,
+      transparent 72%);
+  transition: opacity 420ms ease, width 260ms ease, height 260ms ease;
+  will-change: transform;
+}
+.vault-lamp.lit { opacity: 1; }
+.vault-lamp.pressed { width: 380px; height: 380px; margin: -190px 0 0 -190px; }
+
+/* ---- Evidence cards: arrive askew, snap into place -------- */
+/* Filed by hand: a card lands slightly off-square, then locks
+   square with a short overshoot and a settle. */
+.snap {
+  --snap-rot: -1.1deg;
+  opacity: 0;
+  transform: translate3d(0, 16px, 0) rotate(var(--snap-rot)) scale(0.985);
+  transition:
+    opacity 340ms ease,
+    transform 620ms cubic-bezier(0.16, 1.2, 0.3, 1);
+}
+.snap.snapped { opacity: 1; transform: none; }
+
+/* the soft mechanical lock — a brief pressure flash on seating */
+@keyframes lock-seat {
+  0%   { box-shadow: 4px 5px 0 rgba(23,31,43,0.09), inset 0 0 0 0 rgba(23,31,43,0); }
+  22%  { box-shadow: 1px 2px 0 rgba(23,31,43,0.22), inset 0 0 0 2px rgba(156,124,67,0.55); }
+  100% { box-shadow: 4px 5px 0 rgba(23,31,43,0.09), inset 0 0 0 0 rgba(23,31,43,0); }
+}
+.locked { animation: lock-seat 300ms ease-out; }
+
+/* ---- Draggable parchment sheets --------------------------- */
+.sheet { position: relative; touch-action: manipulation; }
+.sheet.dragging {
+  z-index: 12;
+  cursor: grabbing;
+  box-shadow: 10px 16px 0 rgba(23,31,43,0.10), 0 30px 46px -22px rgba(0,0,0,0.75);
+}
+.sheet.returning { z-index: 11; }
+
+/* the brass clip doubles as the grip; it is a real button */
+.grip {
+  cursor: grab;
+  background: transparent;
+  padding: 0;
+  appearance: none;
+}
+.grip::after {
+  /* generous invisible hit area around a small brass prop */
+  content: "";
+  position: absolute;
+  inset: -12px -16px -10px -16px;
+}
+.grip:hover { border-color: var(--brass-soft); }
+.grip:focus-visible {
+  outline: 2px solid var(--stamp);
+  outline-offset: 6px;
+}
+.sheet.dragging .grip { cursor: grabbing; }
+
+.grip-hint {
+  font-family: var(--mono);
+  font-size: 9.5px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+/* ---- Redacted ink that dissolves under the cursor --------- */
+/* The text underneath is always in the DOM and always in the
+   accessibility tree — the ink is an overlay, never a lock. */
+.redacted {
+  position: relative;
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  padding: 1px 6px;
+  border: 0;
+  background: transparent;
+  cursor: help;
+  text-align: left;
+}
+.redacted::after {
+  content: "";
+  position: absolute;
+  inset: -1px -3px;
+  background:
+    repeating-linear-gradient(91deg, rgba(23,31,43,0.94) 0 7px, rgba(23,31,43,0.86) 7px 12px),
+    var(--ink);
+  box-shadow: 0 0 2px 1px rgba(23,31,43,0.45);
+  transform-origin: left center;
+  transition: opacity 460ms ease, filter 460ms ease, transform 460ms ease;
+  pointer-events: none;
+}
+.redacted:hover::after,
+.redacted:focus-visible::after,
+.redacted.dissolved::after {
+  opacity: 0;
+  filter: blur(3px);
+  transform: scaleY(0.72);
+}
+.redacted:focus-visible { outline: 2px solid var(--stamp); outline-offset: 3px; }
+
+/* ---- Marginalia that warms under the cursor --------------- */
+/* --glow is written by tactile.js from pointer proximity
+   (0 = far, 1 = under the nib). Default 0: fully legible ink. */
+.marginalia {
+  --glow: 0;
+  position: relative;
+  transition: color 260ms ease, text-shadow 260ms ease;
+  color: color-mix(in srgb, var(--hand) calc(100% - var(--glow) * 26%), #0d1b3d);
+  text-shadow:
+    0 0 calc(var(--glow) * 10px) rgba(58, 92, 168, calc(var(--glow) * 0.42)),
+    0 0 calc(var(--glow) * 26px) rgba(156, 124, 67, calc(var(--glow) * 0.22));
+}
+
+/* ---- Corkboard threads: sag, then pull taut --------------- */
+/* connections.js upgrades each straight <line> into a sagging
+   <path>; lighting a node takes up the slack. */
+.thread { transition: opacity 0.14s ease, stroke-width 0.14s ease, d 420ms cubic-bezier(0.2, 0.9, 0.25, 1); }
+path.thread { fill: none; }
+
+/* ---- Ambient audio toggle (muted by default; no assets) --- */
+.audio-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--mono);
+  font-size: 9.5px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #8d8474;
+  background: transparent;
+  border: 1px solid #3a352c;
+  padding: 5px 10px;
+  cursor: pointer;
+  transition: color 0.16s ease, border-color 0.16s ease;
+}
+.audio-toggle:hover { color: var(--paper); border-color: var(--brass); }
+.audio-toggle:focus-visible { outline: 2px solid var(--brass); outline-offset: 3px; }
+.audio-toggle .lamp {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: #4b463c;
+  box-shadow: inset 0 0 0 1px rgba(0,0,0,0.6);
+}
+.audio-toggle[aria-pressed="true"] { color: var(--paper); border-color: var(--brass); }
+.audio-toggle[aria-pressed="true"] .lamp { background: var(--brass-soft); box-shadow: 0 0 6px rgba(184,154,99,0.8); }
+
+/* ---- Focus states on everything interactive --------------- */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid var(--stamp);
+  outline-offset: 3px;
+}
+.masthead a:focus-visible, .audio-toggle:focus-visible { outline-color: var(--brass); }
+.node:focus-visible .tag { stroke: var(--stamp); stroke-width: 2.5; }
+
+/* ---- Reduced motion: materials still, content intact ------ */
+@media (prefers-reduced-motion: reduce) {
+  .vault-lamp { display: none !important; }
+  .snap { opacity: 1; transform: none; transition: none; }
+  .locked { animation: none; }
+  .sheet.dragging { box-shadow: 4px 5px 0 rgba(23,31,43,0.09); }
+  .redacted::after { transition: none; }
+  .marginalia { transition: none; text-shadow: none; }
+  .thread { transition: none; }
 }

@@ -19,7 +19,17 @@
         <div class="row">
           <div class="k">{{ field }}</div>
           {% set val = info.get(field) %}
-          <div class="v {% if not val %}empty{% endif %}">{{ val or 'Withheld' }}</div>
+          {% if val %}
+            <div class="v">{{ val }}</div>
+          {% else %}
+            {# Struck through with ink at intake. The reading underneath is
+               always in the DOM and always in the accessibility tree — the
+               ink is an overlay that dissolves, never a lock on content. #}
+            <div class="v empty">
+              <button type="button" class="redacted" aria-expanded="false"
+                      aria-label="Withheld at intake — never recorded">Withheld at intake</button>
+            </div>
+          {% endif %}
         </div>
       {% endfor %}
     </div>
@@ -39,7 +49,10 @@
       {% if answer %}
         <div class="a">{{ answer }}</div>
       {% else %}
-        <div class="a blank">— no answer given —</div>
+        <div class="a blank">
+          <button type="button" class="redacted" aria-expanded="false"
+                  aria-label="No answer was given to this question">— no answer given —</button>
+        </div>
       {% endif %}
     {% endfor %}
   </div>
@@ -50,10 +63,15 @@
 <div class="overline">Cross-reference · Concept atlas</div>
 {% if matches %}
   <p class="prose" style="margin-top:0">The account appears to touch the following questions of the mind.</p>
+  <p class="grip-hint">Each lead is clipped to the file — take one by its brass clip to lift it off the desk; let go and it files itself back.</p>
   <div class="grid grid-2" style="margin-top:18px">
     {% for m in matches %}
-      <div class="lead">
-        <h4>{{ m.concept }}{% if not m.defined %} <span class="tag tag-unknown" style="font-size:9px">Not yet investigated</span>{% endif %}</h4>
+      <div class="lead sheet" data-sheet>
+        {# The brass clip is the grip: pick the card up, drag it, let go
+           and it springs back and seats. Keyboard: arrows nudge, Escape files. #}
+        <button type="button" class="clip grip" data-grip aria-pressed="false"
+                aria-label="Pick up the evidence card for {{ m.concept }}. Drag to move it; release, or press Escape, to file it back."></button>
+        <h4 style="margin-top:8px">{{ m.concept }}{% if not m.defined %} <span class="tag tag-unknown" style="font-size:9px">Not yet investigated</span>{% endif %}</h4>
         <div class="score">Signal strength · {{ m.score | int }}</div>
         <div class="chips">
           {% for e in m.evidence %}<span class="chip">{{ e }}</span>{% endfor %}
