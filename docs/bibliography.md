@@ -17,7 +17,18 @@ reference added in the NESC-03 content pass was confirmed against Crossref
 metadata (authors, year, title, journal, volume/issue/pages) before it was
 written into a concept; the two references not indexed in Crossref in their
 original form (Chalmers 1995, Nagel 1974) were confirmed against the
-publishers' own records. Verify any new reference against a primary source
+publishers' own records.
+
+All 75 entries were re-audited against the Crossref REST API (author list,
+year, title, journal, volume, issue, page range). Broca 1861 is not properly
+indexed in Crossref and was confirmed against the Max Planck Institute's
+bibliographic record (Bulletin de la Société Anatomique de Paris, vol. 6,
+330–357); Chalmers 1995 was confirmed against the author's own published
+record (Journal of Consciousness Studies 2(3), 200–219) and Nagel 1974
+against the Philosophical Review record via JSTOR/Crossref
+(doi:10.2307/2183914).
+
+Verify any new reference against a primary source
 (journal, DOI) before it is displayed. If a claim cannot be traced to a real
 paper, the Evidence Room entry reads UNKNOWN instead.
 
@@ -33,7 +44,7 @@ paper, the Evidence Room entry reads UNKNOWN instead.
 | `bonanno_2004` | Bonanno, G. A (2004). Loss, trauma, and human resilience: Have we underestimated the human capacity to thrive after extremely aversive events?. *American Psychologist, 59(1), 20–28*. |
 | `boroditsky_2001` | Boroditsky, L (2001). Does language shape thought? Mandarin and English speakers' conceptions of time. *Cognitive Psychology, 43(1), 1–22*. |
 | `brewin_2000` | Brewin, C. R., Andrews, B., & Valentine, J. D (2000). Meta-analysis of risk factors for posttraumatic stress disorder in trauma-exposed adults. *Journal of Consulting and Clinical Psychology, 68(5), 748–766*. |
-| `broca_1861` | Broca, P (1861). Remarques sur le siège de la faculté du langage articulé, suivies d'une observation d'aphémie (perte de la parole). *Bulletin de la Société Anatomique de Paris, 330–357*. |
+| `broca_1861` | Broca, P (1861). Remarques sur le siège de la faculté du langage articulé, suivies d'une observation d'aphémie (perte de la parole). *Bulletin de la Société Anatomique de Paris, 6, 330–357*. |
 | `cameron_pierce_1994` | Cameron, J., & Pierce, W. D (1994). Reinforcement, reward, and intrinsic motivation: A meta-analysis. *Review of Educational Research, 64(3), 363–423*. |
 | `chalmers_1995` | Chalmers, D. J (1995). Facing up to the problem of consciousness. *Journal of Consciousness Studies, 2(3), 200–219*. |
 | `cherry_1953` | Cherry, E. C (1953). Some experiments on the recognition of speech, with one and with two ears. *The Journal of the Acoustical Society of America, 25(5), 975–979*. |
@@ -134,11 +145,31 @@ paper, the Evidence Room entry reads UNKNOWN instead.
   Valentine 2000 (risk factors); Bonanno 2004 (resilience); Gilbertson et al.
   2002 (twin hippocampal volume); Kindt, Soeter & Vervliet 2009 and Nader et
   al. 2000 (reconsolidation).
+- **009 Habit** — Adams 1982 (reinforcer devaluation); Knowlton, Mangels &
+  Squire 1996 (neostriatal habit learning); Yin & Knowlton 2006 (basal
+  ganglia); Graybiel 2008 (chunking); Tricomi, Balleine & O'Doherty 2009
+  (human overtraining); Wood & Rünger 2016 (definitions); de Wit et al. 2018
+  (failures of human habit induction).
+- **011 Language** — Broca 1861 (Leborgne); Lai et al. 2001 (FOXP2); Johnson
+  & Newport 1989 (critical period); Saffran, Aslin & Newport 1996
+  (statistical learning); Fedorenko, Behr & Kanwisher 2011 (selectivity);
+  Winawer et al. 2007 (Russian blues); Hauser, Chomsky & Fitch 2002 and
+  Pinker & Jackendoff 2005 (the recursion dispute); Boroditsky 2001
+  (relativity).
+- **012 Social Cognition** — Premack & Woodruff 1978 (theory of mind);
+  Wimmer & Perner 1983 (false belief); Saxe & Kanwisher 2003 (TPJ); Frith &
+  Frith 2006 (mentalizing network); Dunbar 1998 (social brain); Eyal,
+  Steffel & Epley 2018 (perspective mistaking); Rizzolatti & Craighero 2004
+  and Hickok 2009 (mirror neurons, and the reply); Kovács, Téglás & Endress
+  2010 and Kulke et al. 2018 (implicit ToM, and the replication failure).
+- **013 Motivation** — Berridge & Robinson 1998 (incentive salience);
+  Schultz, Dayan & Montague 1997 (prediction error); Salamone & Correa 2012
+  (effort); Deci 1971, Deci, Koestner & Ryan 1999 and Cameron & Pierce 1994
+  (the undermining dispute); Nisbett & Wilson 1977 (introspective access).
 - **014 Prediction** — Schultz, Dayan & Montague 1997 (reward prediction
   error); Rao & Ballard 1999 (predictive coding); Kok, Jehee & de Lange 2012
   (expectation sharpening); Friston 2010 (free-energy principle).
 
-Still stubs, no citations yet: **009 Habit**, **011 Language**, **012 Social
-Cognition**, **013 Motivation**, **015 Narrative**.
+Still a stub, no citations yet: **015 Narrative**.
 
 _Expand this list per new concept as the investigation grows._

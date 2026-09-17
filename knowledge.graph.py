@@ -3120,11 +3120,12 @@ concepts = {
                 },
                 {
                     "claim":
-                    "There is a maturational window. Age of arrival predicts "
-                    "ultimate grammatical attainment in a second language, "
-                    "with performance declining steadily for those who begin "
-                    "after childhood — a limit on acquisition that experience "
-                    "alone does not remove.",
+                    "There is a maturational window. Among immigrants to the "
+                    "United States, grammatical attainment in English declined "
+                    "linearly with age of arrival up to puberty; those who "
+                    "arrived after puberty scored low but highly variably, "
+                    "with no further relation to age — a limit on acquisition "
+                    "that experience alone does not remove.",
                     "citation": "johnson_newport_1989"
                 }
             ],
@@ -3288,7 +3289,7 @@ concepts = {
                 "Remarques sur le siège de la faculté du langage articulé, "
                 "suivies d'une observation d'aphémie (perte de la parole)",
                 "source":
-                "Bulletin de la Société Anatomique de Paris, 330–357"
+                "Bulletin de la Société Anatomique de Paris, 6, 330–357"
             },
             {
                 "key": "lai_2001",
