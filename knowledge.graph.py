@@ -3384,17 +3384,287 @@ concepts = {
     },
 
     "Motivation": {
-        "definition": "",
-        "narrative_role": "",
-        "paradox": "",
-        "brain_regions": [],
-        "key_experiments": [],
-        "landmark_researchers": [],
-        "connects_to": [],
-        "real_world_examples": [],
-        "questions": [],
-        "unresolved": "",
-        "interview_themes": []
+
+        "definition":
+        "The set of processes that decide what a person pursues, how hard they pursue it, and how long they keep going after the pleasure has gone.",
+
+        "narrative_role":
+        "Motivation is where the internal narrative is put to the test: the story supplies the reason, but something older and quieter supplies the push — and the two are not always talking about the same thing.",
+
+        "paradox":
+        "Wanting something and enjoying it are produced by different machinery, so it is entirely possible to chase what you no longer like.",
+
+        "brain_regions": [
+            "Nucleus Accumbens",
+            "Ventral Tegmental Area",
+            "Ventral Pallidum",
+            "Orbitofrontal Cortex",
+            "Anterior Cingulate Cortex"
+        ],
+
+        "key_experiments": [
+            "Dopamine depletion and effort-based choice in rodents",
+            "Incentive-salience ('wanting' vs. 'liking') hedonic reaction tests",
+            "Reward-prediction-error recordings in midbrain dopamine neurons",
+            "Externally mediated reward and free-choice persistence (the puzzle studies)",
+            "Meta-analyses of tangible reward and intrinsic motivation",
+            "Verbal reports of the causes of one's own preferences"
+        ],
+
+        "landmark_researchers": [
+            "Kent Berridge",
+            "Terry Robinson",
+            "Wolfram Schultz",
+            "Edward Deci",
+            "Richard Ryan",
+            "John Salamone",
+            "Richard Nisbett"
+        ],
+
+        "connects_to": [
+            "Decision Making",
+            "Emotion",
+            "Habit",
+            "Learning",
+            "Prediction",
+            "Identity"
+        ],
+
+        "real_world_examples": [
+            "Wanting something you know you will not enjoy",
+            "Losing interest in a hobby once you are paid for it",
+            "Scrolling long past the point of pleasure",
+            "Finishing a thing only because it was started",
+            "Explaining an ambition you cannot trace the origin of"
+        ],
+
+        "questions": [
+            "Do I want this, or do I only want to have wanted it?",
+            "Where does a want begin, if not in a reason?",
+            "If nothing were watching, what would I still do?"
+        ],
+
+        "unresolved":
+        "Whether the reasons people give for what they pursue play any causal part in the pursuing, or are assembled afterwards to explain it.",
+
+        "interview_themes": [
+            "Ambition",
+            "Desire",
+            "Drive",
+            "Wanting",
+            "Reward",
+            "Effort",
+            "Purpose"
+        ],
+
+        "evidence": [
+            {
+                "type": "Review",
+                "title": "Incentive salience: wanting separated from liking",
+                "year": 1998
+            },
+            {
+                "type": "Electrophysiology",
+                "title": "Reward prediction error in dopamine neurons",
+                "year": 1997
+            },
+            {
+                "type": "Behavioral Experiment",
+                "title": "Externally mediated reward and intrinsic motivation",
+                "year": 1971
+            },
+            {
+                "type": "Meta-Analysis",
+                "title": "Extrinsic rewards and intrinsic motivation — two opposed syntheses",
+                "year": 1999
+            },
+            {
+                "type": "Review",
+                "title": "Mesolimbic dopamine and the willingness to work",
+                "year": 2012
+            },
+            {
+                "type": "Review",
+                "title": "Verbal reports on mental processes",
+                "year": 1977
+            }
+        ],
+
+        "investigators_note":
+        "This file was opened expecting to find the engine of the story and found instead that the story arrives late. Two things in the record are not seriously disputed: that the system which makes a thing attractive is separable from the system which makes it pleasant, and that people asked why they wanted something will answer fluently and confidently whether or not they have access to the answer. Put those together and the shape of the problem appears. A participant says they are driven by a childhood promise, a debt, a person they are trying to become — and the account may be entirely sincere and still be a reconstruction laid over machinery that was never verbal. Nothing here says the reasons are false. It says the reasons are testimony, not mechanism, and this investigation should stop treating the two as the same document.",
+
+        "primary_question":
+        "Do the reasons people give for what they pursue actually move them, or are those reasons written afterwards to explain a pull that came from somewhere else?",
+
+        "why_it_matters":
+        "The central loop of this investigation runs experience → memory and narrative → identity → decisions → new experience. Motivation is the joint where narrative is supposed to become action, and it is the joint where the evidence is thinnest. If wanting can run without liking, and if the explanation for a want can be assembled after the fact, then a person can spend years pursuing something the story says they chose and the machinery never asked about — and can rebuild the story again each time the pursuit changes, without ever noticing which one is leading.",
+
+        "neural_systems": [
+            {
+                "system": "Mesolimbic dopamine projection (ventral tegmental area to nucleus accumbens)",
+                "role": "Implicated in the vigour and persistence of reward-seeking and in the willingness to pay an effort cost — rather than in the pleasure obtained when the reward arrives."
+            },
+            {
+                "system": "Midbrain dopamine neurons as an error signal",
+                "role": "Fire to outcomes better than predicted and pause to outcomes worse than predicted, providing a teaching signal that shifts over training from the reward itself to whatever reliably precedes it."
+            },
+            {
+                "system": "Hedonic hotspots in nucleus accumbens shell and ventral pallidum",
+                "role": "Small opioid- and endocannabinoid-sensitive sites that amplify the hedonic impact of a reward — anatomically far more restricted than the systems governing how hard an animal will work for it."
+            },
+            {
+                "system": "Orbitofrontal and anterior cingulate cortex",
+                "role": "Associated with representing the current value of an outcome and with weighing effort against expected gain when deciding whether a pursuit is worth continuing."
+            }
+        ],
+
+        "evidence_room": {
+            "what_we_know": [
+                {
+                    "claim": "Wanting and liking are dissociable. Manipulations that sharply reduce dopamine function can leave the orofacial hedonic reactions to a sweet taste intact while collapsing the pursuit of it, and manipulations that amplify dopamine can raise pursuit without raising the hedonic reaction — evidence that the attractiveness of a reward (incentive salience) and the pleasure of consuming it are produced by overlapping but separable systems.",
+                    "citation": "berridge_robinson_1998"
+                },
+                {
+                    "claim": "Midbrain dopamine neurons do not simply report reward. They fire to rewards that are better than predicted, fall silent for rewards exactly as predicted, and dip below baseline when a predicted reward fails to arrive — the signature of a prediction error, and over training the response transfers backwards from the reward to the cue that reliably announces it.",
+                    "citation": "schultz_1997"
+                },
+                {
+                    "claim": "People report the causes of their own preferences and choices confidently and often wrongly. Across a range of studies, participants influenced by a factor they were demonstrably sensitive to denied its influence, and cited plausible causes that had none — indicating that introspective reports of why one wanted something draw on commonsense theories about what ought to have mattered, not on privileged access to the process.",
+                    "citation": "nisbett_wilson_1977"
+                }
+            ],
+            "evidence_suggests": [
+                {
+                    "claim": "Mesolimbic dopamine looks less like a pleasure signal and more like a signal governing the exertion of effort. Animals with reduced accumbens dopamine still prefer the richer reward and still consume it readily, but stop paying a high work cost to obtain it and shift to whatever is freely available — suggesting the system sets how much effort a goal is worth rather than how good it feels.",
+                    "citation": "salamone_correa_2012"
+                },
+                {
+                    "claim": "Paying someone for something they already did willingly can reduce how much they do it once the payment stops. Participants paid for solving puzzles spent less of a subsequent unobserved free-choice period on them than unpaid participants — the first experimental demonstration that an external reward can displace, rather than add to, an existing internal reason.",
+                    "citation": "deci_1971"
+                },
+                {
+                    "claim": "The narrative account of a want and the machinery of the want can come apart in the same person at the same moment. Where introspective reports are accurate, this appears to be because the person's commonsense theory of what should have influenced them happened to be correct — accuracy without access, which is a much weaker result than it looks.",
+                    "citation": "nisbett_wilson_1977"
+                }
+            ],
+            "disagreement": [
+                {
+                    "claim": "A large meta-analysis concluded that tangible rewards reliably undermine intrinsic motivation — particularly expected rewards contingent on doing, completing, or performing a task well — and that the effect is robust enough to be a genuine risk in classrooms and workplaces.",
+                    "citation": "deci_koestner_ryan_1999"
+                },
+                {
+                    "claim": "An earlier meta-analysis of a broadly overlapping literature reached close to the opposite conclusion: that reinforcement does not generally harm intrinsic motivation, that verbal praise increases it, and that the apparent undermining effect is narrow and partly an artefact of how studies were selected and pooled. Both syntheses are competent, both are cited, and the dispute over coding decisions and moderators has never fully closed.",
+                    "citation": "cameron_pierce_1994"
+                },
+                {
+                    "claim": "What dopamine actually encodes remains argued. Prediction-error accounts, incentive-salience accounts, and effort-and-activation accounts each explain large parts of the data and disagree about what the signal is for; the popular reading of dopamine as the brain's pleasure chemical is rejected by researchers on all sides of that argument.",
+                    "citation": "salamone_correa_2012"
+                }
+            ],
+            "unknown": [
+                {
+                    "claim": "It is unknown whether a stated reason for a pursuit has any causal role in that pursuit. The reasons can be recorded, and the machinery can be measured, but no method exists for showing that a particular verbal reason was the thing that moved a particular person on a particular day. The record on this reads UNKNOWN.",
+                    "citation": "nisbett_wilson_1977"
+                },
+                {
+                    "claim": "Why a want survives the loss of the liking is not understood. That incentive salience can be attached to something that no longer gives pleasure is well documented; what determines which pursuits detach in this way, in which people, and whether they can be re-coupled, is not.",
+                    "citation": "berridge_robinson_1998"
+                },
+                {
+                    "claim": "How an internal reason is represented in the brain at all is unknown. Prediction errors, effort costs, and hedonic impact are all measurable; a value that a person holds — the thing an interview answer is reaching for — has no established neural description, so the step from narrative to motivation cannot currently be traced in tissue.",
+                    "citation": "schultz_1997"
+                }
+            ]
+        },
+
+        "open_questions": [
+            {
+                "question": "Is wanting something the same as liking it?",
+                "what_science_knows": "Pursuit and pleasure can be separated experimentally: the hedonic reaction to a reward and the effort spent obtaining it respond differently to the same neurochemical manipulations, and the anatomy supporting hedonic impact is far more restricted than the anatomy supporting pursuit.",
+                "what_evidence_suggests": "Mesolimbic dopamine appears to govern how much effort a goal is worth rather than how good it feels, which would explain pursuits that continue long after the enjoyment has gone.",
+                "where_evidence_disagrees": "Whether that signal is best described as prediction error, incentive salience, or effort-related activation is an open argument between accounts that each capture much of the data.",
+                "what_remains_unknown": "What determines whether a given want detaches from its liking in a given person — and whether the two can be deliberately re-coupled — is UNKNOWN."
+            },
+            {
+                "question": "Do the reasons people give for their ambitions cause them?",
+                "what_science_knows": "Verbal reports about the causes of one's own preferences are frequently inaccurate in demonstrable, repeatable ways: people deny influences they were measurably subject to and name causes that had no effect.",
+                "what_evidence_suggests": "Such reports appear to be generated from plausible theories about what should have mattered rather than from access to the process itself — the explanation is constructed after the behaviour, in the same way a narrative is constructed after an experience.",
+                "where_evidence_disagrees": "How far this generalises from laboratory judgements to long-running life projects is contested; deliberate, effortful goals may be better introspected than snap preferences, and no clean test separates the two.",
+                "what_remains_unknown": "Whether a sincere, well-examined reason ever does part of the causal work is UNKNOWN. It cannot currently be measured without asking, and asking is the unreliable instrument."
+            },
+            {
+                "question": "Can paying someone for something take away their reason for doing it?",
+                "what_science_knows": "Adding an expected, contingent external reward to an activity someone already performed freely can reduce the time they spend on it afterwards when nobody is measuring and no reward is on offer.",
+                "what_evidence_suggests": "The undermining appears strongest for rewards that are expected, tangible, and contingent on doing or completing the task, and weakest or absent for unexpected rewards and verbal praise.",
+                "where_evidence_disagrees": "Two large meta-analyses of overlapping literatures reached opposed conclusions about whether the effect is general or narrow, and the argument over how studies were coded and pooled has never been settled.",
+                "what_remains_unknown": "What is actually lost when an internal reason is displaced — whether the want itself weakens, the story about the want changes, or only the behaviour outside the reward — is UNKNOWN."
+            }
+        ],
+
+        "connected_files": [
+            "Decision Making",
+            "Prediction",
+            "Habit",
+            "Emotion",
+            "Learning",
+            "Identity",
+            "Narrative"
+        ],
+
+        "next_case":
+        "Social Cognition",
+
+        "citations": [
+            {
+                "key": "berridge_robinson_1998",
+                "author": "Berridge, K. C., & Robinson, T. E.",
+                "year": 1998,
+                "title": "What is the role of dopamine in reward: hedonic impact, reward learning, or incentive salience?",
+                "source": "Brain Research Reviews, 28(3), 309–369"
+            },
+            {
+                "key": "schultz_1997",
+                "author": "Schultz, W., Dayan, P., & Montague, P. R.",
+                "year": 1997,
+                "title": "A neural substrate of prediction and reward",
+                "source": "Science, 275(5306), 1593–1599"
+            },
+            {
+                "key": "salamone_correa_2012",
+                "author": "Salamone, J. D., & Correa, M.",
+                "year": 2012,
+                "title": "The mysterious motivational functions of mesolimbic dopamine",
+                "source": "Neuron, 76(3), 470–485"
+            },
+            {
+                "key": "deci_1971",
+                "author": "Deci, E. L.",
+                "year": 1971,
+                "title": "Effects of externally mediated rewards on intrinsic motivation",
+                "source": "Journal of Personality and Social Psychology, 18(1), 105–115"
+            },
+            {
+                "key": "deci_koestner_ryan_1999",
+                "author": "Deci, E. L., Koestner, R., & Ryan, R. M.",
+                "year": 1999,
+                "title": "A meta-analytic review of experiments examining the effects of extrinsic rewards on intrinsic motivation",
+                "source": "Psychological Bulletin, 125(6), 627–668"
+            },
+            {
+                "key": "cameron_pierce_1994",
+                "author": "Cameron, J., & Pierce, W. D.",
+                "year": 1994,
+                "title": "Reinforcement, reward, and intrinsic motivation: A meta-analysis",
+                "source": "Review of Educational Research, 64(3), 363–423"
+            },
+            {
+                "key": "nisbett_wilson_1977",
+                "author": "Nisbett, R. E., & Wilson, T. D.",
+                "year": 1977,
+                "title": "Telling more than we can know: Verbal reports on mental processes",
+                "source": "Psychological Review, 84(3), 231–259"
+            }
+        ],
     },
 
     "Prediction": {

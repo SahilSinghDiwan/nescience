@@ -28,15 +28,19 @@ paper, the Evidence Room entry reads UNKNOWN instead.
 | `adams_1982` | Adams, C. D (1982). Variations in the sensitivity of instrumental responding to reinforcer devaluation. *The Quarterly Journal of Experimental Psychology Section B, 34(2), 77–98*. |
 | `barrett_2006` | Barrett, L. F (2006). Are emotions natural kinds?. *Perspectives on Psychological Science, 1(1), 28–58*. |
 | `bechara_1994` | Bechara, A., Damasio, A. R., Damasio, H., & Anderson, S. W (1994). Insensitivity to future consequences following damage to human prefrontal cortex. *Cognition, 50(1–3), 7–15*. |
+| `berridge_robinson_1998` | Berridge, K. C., & Robinson, T. E (1998). What is the role of dopamine in reward: hedonic impact, reward learning, or incentive salience?. *Brain Research Reviews, 28(3), 309–369*. |
 | `bliss_lomo_1973` | Bliss, T. V. P., & Lømo, T (1973). Long-lasting potentiation of synaptic transmission in the dentate area of the anaesthetized rabbit following stimulation of the perforant path. *The Journal of Physiology, 232(2), 331–356*. |
 | `bonanno_2004` | Bonanno, G. A (2004). Loss, trauma, and human resilience: Have we underestimated the human capacity to thrive after extremely aversive events?. *American Psychologist, 59(1), 20–28*. |
 | `boroditsky_2001` | Boroditsky, L (2001). Does language shape thought? Mandarin and English speakers' conceptions of time. *Cognitive Psychology, 43(1), 1–22*. |
 | `brewin_2000` | Brewin, C. R., Andrews, B., & Valentine, J. D (2000). Meta-analysis of risk factors for posttraumatic stress disorder in trauma-exposed adults. *Journal of Consulting and Clinical Psychology, 68(5), 748–766*. |
 | `broca_1861` | Broca, P (1861). Remarques sur le siège de la faculté du langage articulé, suivies d'une observation d'aphémie (perte de la parole). *Bulletin de la Société Anatomique de Paris, 330–357*. |
+| `cameron_pierce_1994` | Cameron, J., & Pierce, W. D (1994). Reinforcement, reward, and intrinsic motivation: A meta-analysis. *Review of Educational Research, 64(3), 363–423*. |
 | `chalmers_1995` | Chalmers, D. J (1995). Facing up to the problem of consciousness. *Journal of Consciousness Studies, 2(3), 200–219*. |
 | `cherry_1953` | Cherry, E. C (1953). Some experiments on the recognition of speech, with one and with two ears. *The Journal of the Acoustical Society of America, 25(5), 975–979*. |
 | `corbetta_shulman_2002` | Corbetta, M., & Shulman, G. L (2002). Control of goal-directed and stimulus-driven attention in the brain. *Nature Reviews Neuroscience, 3(3), 201–215*. |
 | `de_wit_2018` | de Wit, S., Kindt, M., Knot, S. L., Verhoeven, A. A. C., Robbins, T. W., Gasull-Camos, J., Evans, M., Mirza, H., & Gillan, C. M (2018). Shifting the balance between goals and habits: Five failures in experimental habit induction. *Journal of Experimental Psychology: General, 147(7), 1043–1065*. |
+| `deci_1971` | Deci, E. L (1971). Effects of externally mediated rewards on intrinsic motivation. *Journal of Personality and Social Psychology, 18(1), 105–115*. |
+| `deci_koestner_ryan_1999` | Deci, E. L., Koestner, R., & Ryan, R. M (1999). A meta-analytic review of experiments examining the effects of extrinsic rewards on intrinsic motivation. *Psychological Bulletin, 125(6), 627–668*. |
 | `dehaene_changeux_2011` | Dehaene, S., & Changeux, J.-P (2011). Experimental and theoretical approaches to conscious processing. *Neuron, 70(2), 200–227*. |
 | `desimone_duncan_1995` | Desimone, R., & Duncan, J (1995). Neural mechanisms of selective visual attention. *Annual Review of Neuroscience, 18, 193–222*. |
 | `ekman_friesen_1971` | Ekman, P., & Friesen, W. V (1971). Constants across cultures in the face and emotion. *Journal of Personality and Social Psychology, 17(2), 124–129*. |
@@ -64,6 +68,7 @@ paper, the Evidence Room entry reads UNKNOWN instead.
 | `mcgurk_macdonald_1976` | McGurk, H., & MacDonald, J (1976). Hearing lips and seeing voices. *Nature, 264(5588), 746–748*. |
 | `nader_2000` | Nader, K., Schafe, G. E., & LeDoux, J. E (2000). Fear memories require protein synthesis in the amygdala for reconsolidation after retrieval. *Nature, 406(6797), 722–726*. |
 | `nagel_1974` | Nagel, T (1974). What is it like to be a bat?. *The Philosophical Review, 83(4), 435–450*. |
+| `nisbett_wilson_1977` | Nisbett, R. E., & Wilson, T. D (1977). Telling more than we can know: Verbal reports on mental processes. *Psychological Review, 84(3), 231–259*. |
 | `oregan_1999` | O'Regan, J. K., Rensink, R. A., & Clark, J. J (1999). Change-blindness as a result of 'mudsplashes'. *Nature, 398(6722), 34*. |
 | `owen_2006` | Owen, A. M., Coleman, M. R., Boly, M., Davis, M. H., Laureys, S., & Pickard, J. D (2006). Detecting awareness in the vegetative state. *Science, 313(5792), 1402*. |
 | `pinker_jackendoff_2005` | Pinker, S., & Jackendoff, R (2005). The faculty of language: What's special about it?. *Cognition, 95(2), 201–236*. |
@@ -72,6 +77,7 @@ paper, the Evidence Room entry reads UNKNOWN instead.
 | `rao_ballard_1999` | Rao, R. P. N., & Ballard, D. H (1999). Predictive coding in the visual cortex: A functional interpretation of some extra-classical receptive-field effects. *Nature Neuroscience, 2(1), 79–87*. |
 | `rescorla_1988` | Rescorla, R. A (1988). Pavlovian conditioning: It's not what you think it is. *American Psychologist, 43(3), 151–160*. |
 | `saffran_1996` | Saffran, J. R., Aslin, R. N., & Newport, E. L (1996). Statistical learning by 8-month-old infants. *Science, 274(5294), 1926–1928*. |
+| `salamone_correa_2012` | Salamone, J. D., & Correa, M (2012). The mysterious motivational functions of mesolimbic dopamine. *Neuron, 76(3), 470–485*. |
 | `schachter_singer_1962` | Schachter, S., & Singer, J. E (1962). Cognitive, social, and physiological determinants of emotional state. *Psychological Review, 69(5), 379–399*. |
 | `schultz_1997` | Schultz, W., Dayan, P., & Montague, P. R (1997). A neural substrate of prediction and reward. *Science, 275(5306), 1593–1599*. |
 | `scoville_milner_1957` | Scoville, W. B., & Milner, B (1957). Loss of recent memory after bilateral hippocampal lesions. *Journal of Neurology, Neurosurgery & Psychiatry, 20(1), 11–21*. |
