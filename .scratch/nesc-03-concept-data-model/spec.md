@@ -40,3 +40,22 @@ Social Cognition, Narrative.** Two of those are pinned as stubs by existing
 tests (`test_is_defined_contract` names Narrative, `test_stub_concept_reads_unknown`
 fetches /atlas/Habit), so authoring either means repointing those tests at a
 concept that is still unwritten.
+
+## Status note (2026-09-17)
+Content tail closed out: **Habit** (009), **Motivation** (013) and **Social
+Cognition** (012) are now fully authored against the schema — 14 of 15
+concepts, 75 verified citations (22 new, each confirmed against Crossref or
+the publisher before it was written in). Each was drafted by a separate agent
+and spliced in as its own commit.
+
+`test_stub_concept_reads_unknown` moved from /atlas/Habit to /atlas/Narrative.
+The case sequence now closes a full loop: Language -> Habit -> Motivation ->
+Social Cognition -> Memory.
+
+**Narrative is deliberately left a stub.** Two tests pin the
+"mapped-but-UNKNOWN" contract to a real unauthored concept, so at least one
+must stay unwritten, and §3 of the brief calls narrative a *mechanism, not the
+whole subject* — leaving the exhibit's own central mechanism marked UNKNOWN is
+consistent with what it argues. Authoring it is a content decision for the
+human: it needs either a new deliberate stub concept to carry the test
+contract, or that contract dropped.
