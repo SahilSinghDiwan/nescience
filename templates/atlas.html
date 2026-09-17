@@ -16,8 +16,8 @@
 <div class="atlas-grid">
   {% for name, concept in defined %}
     <a class="atlas-card" href="{{ url_for('atlas_concept', name=name) }}">
-      <div class="crosshair">＋</div>
-      <h4>{{ name }}</h4>
+      <div class="crosshair" aria-hidden="true">＋</div>
+      <h2>{{ name }}</h2>
       <p>{{ concept.definition }}</p>
     </a>
   {% endfor %}

@@ -331,7 +331,10 @@ h1, h2, h3 { font-weight: 700; letter-spacing: 0.04em; margin: 0; color: var(--i
   text-transform: uppercase;
   transform: rotate(-3.5deg);
   border-radius: 2px;
-  opacity: 0.86;
+  /* The stamp is text, not ornament: at 0.86 the composite over the sheet
+     measured 4.34:1 — under AA. 0.90 is the least fade that clears 4.5
+     (4.66:1) and is indistinguishable from 0.86 by eye. */
+  opacity: 0.90;
   background:
     repeating-linear-gradient(96deg, rgba(154,51,39,0.05) 0 2px, transparent 2px 5px);
   text-shadow: 0 0 1px rgba(154,51,39,0.25);
@@ -351,7 +354,8 @@ h1, h2, h3 { font-weight: 700; letter-spacing: 0.04em; margin: 0; color: var(--i
   color: var(--stamp);
   text-align: center;
   transform: rotate(-8deg);
-  opacity: 0.82;
+  /* 0.82 put the seal's lettering at 4.03:1 on the sheet. 0.90 -> 4.66:1. */
+  opacity: 0.90;
   padding: 8px;
 }
 .seal .seal-top { font-family: var(--mono); font-size: 8px; letter-spacing: 0.28em; text-transform: uppercase; }
@@ -581,8 +585,13 @@ h1, h2, h3 { font-weight: 700; letter-spacing: 0.04em; margin: 0; color: var(--i
   margin: 2px 0 6px;
 }
 .drawer .desc { font-family: var(--serif); font-size: 14.5px; line-height: 1.55; color: #4a3f27; margin: 0 0 12px; }
-.drawer .go { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-soft); }
-.drawer .go .tag-progress { color: var(--stamp); border-color: var(--stamp); }
+/* On manila (not parchment) --ink-soft only reaches 4.42:1 at 10.5px; --ink
+   is 7.11:1 on the same panel and is the tone the folder already uses. */
+.drawer .go { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink); }
+/* The evidence-red keeps its reserved job, but read straight off manila it was
+   3.13:1. Sat on the paper-4 label ground the base .tag already uses, the same
+   red reaches 6.30:1 — a printed tag stuck to the folder, not a recoloured one. */
+.drawer .go .tag-progress { color: var(--stamp); border-color: var(--stamp); background: var(--paper-4); }
 
 /* ---- Meta / stats strip ---------------------------------- */
 
@@ -706,7 +715,7 @@ textarea { min-height: 130px; line-height: 1.65; }
   padding: 18px 20px;
   box-shadow: 4px 5px 0 rgba(23,31,43,0.09);
 }
-.lead h4 { font-family: var(--serif); font-size: 18px; letter-spacing: 0.04em; margin: 0 0 4px; }
+.lead h3, .lead h4 { font-family: var(--serif); font-size: 18px; letter-spacing: 0.04em; margin: 0 0 4px; }
 .lead .score { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-faint); }
 .chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 12px 0; }
 .chip {
@@ -726,7 +735,7 @@ textarea { min-height: 130px; line-height: 1.65; }
 /* ---- Concept / atlas ------------------------------------- */
 
 .section { margin-top: 30px; }
-.section h3 { font-family: var(--mono); font-size: 12px; letter-spacing: 0.26em; text-transform: uppercase; color: var(--ink-faint); margin-bottom: 12px; }
+.section h2, .section h3 { font-family: var(--mono); font-size: 12px; letter-spacing: 0.26em; text-transform: uppercase; color: var(--ink-faint); margin-bottom: 12px; }
 .section ul { margin: 0; padding-left: 18px; }
 .section li { font-family: var(--serif); font-size: 16px; margin: 5px 0; color: var(--ink-soft); }
 .pill-row { display: flex; flex-wrap: wrap; gap: 8px; }
@@ -755,7 +764,7 @@ textarea { min-height: 130px; line-height: 1.65; }
   transition: transform 0.12s ease, box-shadow 0.12s ease;
 }
 .atlas-card:hover { transform: translate(-2px,-2px); box-shadow: 7px 7px 0 rgba(23,31,43,0.12); }
-.atlas-card h4 { font-family: var(--serif); font-size: 19px; letter-spacing: 0.04em; margin: 8px 0 6px; }
+.atlas-card h2, .atlas-card h4 { font-family: var(--serif); font-size: 19px; letter-spacing: 0.04em; margin: 8px 0 6px; }
 .atlas-card p { font-family: var(--serif); font-size: 14px; color: var(--ink-soft); margin: 0; }
 
 .brainmark { display: block; margin: 0 auto 8px; opacity: 0.9; color: var(--ink); }
@@ -1146,8 +1155,9 @@ path.thread { fill: none; }
   transition: top 0.12s ease;
 }
 .skip-link:focus { top: 10px; }
-/* The skip target itself must not draw a ring when focused programmatically. */
-main:focus { outline: none; }
+/* Containers focused programmatically (the skip target, and each interview
+   step as the stepper moves) carry the announcement, not a ring. */
+main:focus, .step:focus { outline: none; }
 
 a:focus-visible,
 button:focus-visible,

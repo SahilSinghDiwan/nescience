@@ -73,7 +73,7 @@
            and it springs back and seats. Keyboard: arrows nudge, Escape files. #}
         <button type="button" class="clip grip" data-grip aria-pressed="false"
                 aria-label="Pick up the evidence card for {{ m.concept }}. Drag to move it; release, or press Escape, to file it back."></button>
-        <h4 style="margin-top:8px">{{ m.concept }}{% if not m.defined %} <span class="tag tag-unknown" style="font-size:9px">Not yet investigated</span>{% endif %}</h4>
+        <h3 style="margin-top:8px">{{ m.concept }}{% if not m.defined %} <span class="tag tag-unknown" style="font-size:9px">Not yet investigated</span>{% endif %}</h3>
         <div class="score">Signal strength · {{ m.score | int }}</div>
         <div class="chips">
           {% for e in m.evidence %}<span class="chip">{{ e }}</span>{% endfor %}

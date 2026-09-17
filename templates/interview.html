@@ -4,14 +4,15 @@
 {% block content %}
 <div class="stage" id="stage">
 
-  <div class="progress">
+  {# The step counter changes without a page load, so it is announced. #}
+  <div class="progress" role="status" aria-live="polite">
     <span id="progress-label">Intake</span>
     <span id="progress-count"></span>
   </div>
   <div class="progress-bar"><span id="progress-fill"></span></div>
 
   <!-- Step 0 — Intro -->
-  <section class="step active" data-step="intro">
+  <section tabindex="-1" class="step active" data-step="intro">
     <div style="margin-top:34px">
       <div class="stamp">Confidential</div>
     </div>
@@ -31,7 +32,7 @@
   </section>
 
   <!-- Participant information -->
-  <section class="step" data-step="participant">
+  <section tabindex="-1" class="step" data-step="participant">
     <div class="qnum">Intake · Participant Information</div>
     <h2 class="qtext" style="font-size:22px">For the record.</h2>
     <p class="muted" style="font-size:13px">Only what you are comfortable sharing. All fields may be left blank.</p>
@@ -48,10 +49,12 @@
   <!-- One step per question -->
   {% for module, questions in modules %}
     {% for number, question in questions %}
-      <section class="step" data-step="q{{ number }}" data-module="{{ module }}">
+      <section tabindex="-1" class="step" data-step="q{{ number }}" data-module="{{ module }}">
         <div class="qnum">{{ module }} · Question {{ '%02d' % number }}</div>
-        <div class="qtext">{{ question }}</div>
+        <div class="qtext" id="qtext-{{ number }}">{{ question }}</div>
+        {# The question is the field's label; a placeholder is not one. #}
         <textarea data-module="{{ module }}" data-key="Question {{ number }}"
+                  aria-labelledby="qtext-{{ number }}"
                   placeholder="Type your answer… or leave blank"></textarea>
         <div class="controls">
           <button class="btn btn-ghost" type="button" data-back>← Back</button>
@@ -62,7 +65,7 @@
   {% endfor %}
 
   <!-- Seal + publication consent -->
-  <section class="step" data-step="seal">
+  <section tabindex="-1" class="step" data-step="seal">
     <div style="margin-top:20px"><div class="stamp">Ready to file</div></div>
     <h2 class="qtext" style="margin-top:24px; font-size:24px">That is the end of the interview.</h2>
     <p class="prose">
@@ -85,13 +88,13 @@
     <div class="controls">
       <button class="btn btn-ghost" type="button" data-back>← Back</button>
     </div>
-    <p class="muted" id="submit-error" style="color:var(--stamp); margin-top:14px; display:none"></p>
+    <p class="muted" id="submit-error" role="alert" style="color:var(--stamp); margin-top:14px; display:none"></p>
   </section>
 
   <!-- Completion (filled by JS) -->
-  <section class="step" data-step="done">
+  <section tabindex="-1" class="step" data-step="done">
     <div class="overline">Testimony filed</div>
-    <h1 class="display" style="font-size:44px">CODE <span id="done-code" class="case-no">—</span></h1>
+    <h2 class="display" style="font-size:44px">CODE <span id="done-code" class="case-no">—</span></h2>
     <p class="prose" id="done-publication">Your testimony is on record.</p>
     <p class="prose" style="margin-top:-6px">Cross-checking against the concept atlas returned the following leads.</p>
     <div id="leads" class="grid" style="margin-top:26px"></div>

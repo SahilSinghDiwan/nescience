@@ -5,6 +5,13 @@
 // ==========================================================
 
 (function () {
+  // JS-driven motion: a CSS media query cannot stop scrollTo({behavior:"smooth"}),
+  // so the setting is read here too.
+  var reduceMq = window.matchMedia
+    ? window.matchMedia("(prefers-reduced-motion: reduce)")
+    : null;
+  function reduced() { return !!(reduceMq && reduceMq.matches); }
+
   var stage = document.getElementById("stage");
   var steps = Array.prototype.slice.call(stage.querySelectorAll(".step"));
   var postUrl = JSON.parse(document.getElementById("post-url").textContent);
@@ -22,10 +29,16 @@
     steps[current].classList.remove("active");
     current = index;
     steps[current].classList.add("active");
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    window.scrollTo({ top: 0, behavior: reduced() ? "auto" : "smooth" });
 
+    // Focus must land inside the new step. The button that was just clicked is
+    // now inside a display:none section, so without this focus falls back to
+    // <body> and a keyboard or screen-reader visitor loses their place — which
+    // is exactly what happened on every step that has no field (the seal, the
+    // completion record).
     var focusable = steps[current].querySelector("textarea, input[type=text]");
-    if (focusable) setTimeout(function () { focusable.focus(); }, 60);
+    var target = focusable || steps[current];
+    setTimeout(function () { target.focus(); }, 60);
 
     updateProgress();
   }
