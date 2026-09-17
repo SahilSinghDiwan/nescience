@@ -25,6 +25,7 @@ paper, the Evidence Room entry reads UNKNOWN instead.
 
 | Key | Reference |
 |-----|-----------|
+| `adams_1982` | Adams, C. D (1982). Variations in the sensitivity of instrumental responding to reinforcer devaluation. *The Quarterly Journal of Experimental Psychology Section B, 34(2), 77–98*. |
 | `barrett_2006` | Barrett, L. F (2006). Are emotions natural kinds?. *Perspectives on Psychological Science, 1(1), 28–58*. |
 | `bechara_1994` | Bechara, A., Damasio, A. R., Damasio, H., & Anderson, S. W (1994). Insensitivity to future consequences following damage to human prefrontal cortex. *Cognition, 50(1–3), 7–15*. |
 | `bliss_lomo_1973` | Bliss, T. V. P., & Lømo, T (1973). Long-lasting potentiation of synaptic transmission in the dentate area of the anaesthetized rabbit following stimulation of the perforant path. *The Journal of Physiology, 232(2), 331–356*. |
@@ -35,6 +36,7 @@ paper, the Evidence Room entry reads UNKNOWN instead.
 | `chalmers_1995` | Chalmers, D. J (1995). Facing up to the problem of consciousness. *Journal of Consciousness Studies, 2(3), 200–219*. |
 | `cherry_1953` | Cherry, E. C (1953). Some experiments on the recognition of speech, with one and with two ears. *The Journal of the Acoustical Society of America, 25(5), 975–979*. |
 | `corbetta_shulman_2002` | Corbetta, M., & Shulman, G. L (2002). Control of goal-directed and stimulus-driven attention in the brain. *Nature Reviews Neuroscience, 3(3), 201–215*. |
+| `de_wit_2018` | de Wit, S., Kindt, M., Knot, S. L., Verhoeven, A. A. C., Robbins, T. W., Gasull-Camos, J., Evans, M., Mirza, H., & Gillan, C. M (2018). Shifting the balance between goals and habits: Five failures in experimental habit induction. *Journal of Experimental Psychology: General, 147(7), 1043–1065*. |
 | `dehaene_changeux_2011` | Dehaene, S., & Changeux, J.-P (2011). Experimental and theoretical approaches to conscious processing. *Neuron, 70(2), 200–227*. |
 | `desimone_duncan_1995` | Desimone, R., & Duncan, J (1995). Neural mechanisms of selective visual attention. *Annual Review of Neuroscience, 18, 193–222*. |
 | `ekman_friesen_1971` | Ekman, P., & Friesen, W. V (1971). Constants across cultures in the face and emotion. *Journal of Personality and Social Psychology, 17(2), 124–129*. |
@@ -43,6 +45,7 @@ paper, the Evidence Room entry reads UNKNOWN instead.
 | `friston_2010` | Friston, K (2010). The free-energy principle: A unified brain theory?. *Nature Reviews Neuroscience, 11(2), 127–138*. |
 | `gazzaniga_1962` | Gazzaniga, M. S., Bogen, J. E., & Sperry, R. W (1962). Some functional effects of sectioning the cerebral commissures in man. *Proceedings of the National Academy of Sciences, 48(10), 1765–1769*. |
 | `gilbertson_2002` | Gilbertson, M. W., Shenton, M. E., Ciszewski, A., Kasai, K., Lasko, N. B., Orr, S. P., & Pitman, R. K (2002). Smaller hippocampal volume predicts pathologic vulnerability to psychological trauma. *Nature Neuroscience, 5(11), 1242–1247*. |
+| `graybiel_2008` | Graybiel, A. M (2008). Habits, rituals, and the evaluative brain. *Annual Review of Neuroscience, 31, 359–387*. |
 | `hauser_2002` | Hauser, M. D., Chomsky, N., & Fitch, W. T (2002). The faculty of language: What is it, who has it, and how did it evolve?. *Science, 298(5598), 1569–1579*. |
 | `hubel_wiesel_1962` | Hubel, D. H., & Wiesel, T. N (1962). Receptive fields, binocular interaction and functional architecture in the cat's visual cortex. *The Journal of Physiology, 160(1), 106–154*. |
 | `johnson_newport_1989` | Johnson, J. S., & Newport, E. L (1989). Critical period effects in second language learning: The influence of maturational state on the acquisition of English as a second language. *Cognitive Psychology, 21(1), 60–99*. |
@@ -76,8 +79,11 @@ paper, the Evidence Room entry reads UNKNOWN instead.
 | `soon_2008` | Soon, C. S., Brass, M., Heinze, H.-J., & Haynes, J.-D (2008). Unconscious determinants of free decisions in the human brain. *Nature Neuroscience, 11(5), 543–545*. |
 | `tononi_2004` | Tononi, G (2004). An information integration theory of consciousness. *BMC Neuroscience, 5, 42*. |
 | `treisman_gelade_1980` | Treisman, A. M., & Gelade, G (1980). A feature-integration theory of attention. *Cognitive Psychology, 12(1), 97–136*. |
+| `tricomi_2009` | Tricomi, E., Balleine, B. W., & O'Doherty, J. P (2009). A specific role for posterior dorsolateral striatum in human habit learning. *European Journal of Neuroscience, 29(11), 2225–2232*. |
 | `tversky_kahneman_1974` | Tversky, A., & Kahneman, D (1974). Judgment under uncertainty: Heuristics and biases. *Science, 185(4157), 1124–1131*. |
 | `winawer_2007` | Winawer, J., Witthoft, N., Frank, M. C., Wu, L., Wade, A. R., & Boroditsky, L (2007). Russian blues reveal effects of language on color discrimination. *Proceedings of the National Academy of Sciences, 104(19), 7780–7785*. |
+| `wood_runger_2016` | Wood, W., & Rünger, D (2016). Psychology of habit. *Annual Review of Psychology, 67, 289–314*. |
+| `yin_knowlton_2006` | Yin, H. H., & Knowlton, B. J (2006). The role of the basal ganglia in habit formation. *Nature Reviews Neuroscience, 7(6), 464–476*. |
 
 ## Concepts covered
 

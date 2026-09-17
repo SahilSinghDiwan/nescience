@@ -2386,17 +2386,273 @@ concepts = {
     },
 
     "Habit": {
-        "definition": "",
-        "narrative_role": "",
-        "paradox": "",
-        "brain_regions": [],
-        "key_experiments": [],
-        "landmark_researchers": [],
-        "connects_to": [],
-        "real_world_examples": [],
-        "questions": [],
-        "unresolved": "",
-        "interview_themes": []
+
+        "definition":
+        "A learned response that has been repeated until it is triggered by the situation rather than chosen for its outcome — behaviour that runs on context instead of intention.",
+
+        "narrative_role":
+        "Habit is the part of a life the internal narrative does not author. It is where the story a person tells about deciding parts company with what actually moved them.",
+
+        "paradox":
+        "The better you learn to do something on purpose, the less purpose has to do with your doing it.",
+
+        "brain_regions": [
+            "Dorsolateral Striatum (Putamen)",
+            "Dorsomedial Striatum (Caudate)",
+            "Basal Ganglia",
+            "Infralimbic Cortex",
+            "Substantia Nigra"
+        ],
+
+        "key_experiments": [
+            "Reinforcer devaluation after extended instrumental training",
+            "Probabilistic classification ('weather prediction') in amnesia and Parkinson's disease",
+            "Overtraining and outcome devaluation with fMRI in humans",
+            "Striatal task-bracketing during maze-running overtraining",
+            "Five attempted inductions of experimental habit in humans"
+        ],
+
+        "landmark_researchers": [
+            "Anthony Dickinson",
+            "Christopher Adams",
+            "Barbara Knowlton",
+            "Bernard Balleine",
+            "Ann Graybiel",
+            "Wendy Wood",
+            "Sanne de Wit"
+        ],
+
+        "connects_to": [
+            "Learning",
+            "Decision Making",
+            "Motivation",
+            "Identity",
+            "Memory"
+        ],
+
+        "real_world_examples": [
+            "Driving home when you meant to go somewhere else",
+            "Reaching for the phone before deciding to",
+            "A route walked so often you arrive without remembering the walk",
+            "Reaching for the light switch in a room whose bulb is broken",
+            "Smoking a cigarette you did not want"
+        ],
+
+        "questions": [
+            "How much of what I did today did I choose?",
+            "If I explain why I did it afterwards, is the explanation the reason?",
+            "Why is a habit easier to replace than to delete?"
+        ],
+
+        "unresolved":
+        "Whether a habit is a separate kind of behaviour with its own machinery, or simply a goal-directed act whose reasons have stopped being consulted.",
+
+        "interview_themes": [
+            "Routine",
+            "Repetition",
+            "Ritual",
+            "Autopilot",
+            "Change"
+        ],
+
+        "evidence": [
+            {
+                "type": "Animal Experiment",
+                "title": "Instrumental responding after reinforcer devaluation",
+                "year": 1982
+            },
+            {
+                "type": "Patient Study",
+                "title": "Neostriatal habit learning in amnesia and Parkinson's disease",
+                "year": 1996
+            },
+            {
+                "type": "Theoretical Review",
+                "title": "The basal ganglia and the goal-directed/habitual divide",
+                "year": 2006
+            },
+            {
+                "type": "Neuroimaging",
+                "title": "Overtraining and outcome devaluation in humans",
+                "year": 2009
+            },
+            {
+                "type": "Replication Study",
+                "title": "Five failures in experimental habit induction",
+                "year": 2018
+            }
+        ],
+
+        "investigators_note":
+        "This file is the one that embarrasses the rest of the investigation. Everywhere else the exhibit traces a line from experience through memory into a story and out again as a decision. Habit is the evidence that a large share of behaviour skips the story entirely. The action is triggered by the room, the hour, the cigarette packet on the table — and the account of why it happened is assembled afterwards, by a narrator who was not consulted at the time and does not know it. What makes the file harder still is that the laboratory finding is solid in rats and slippery in people: the paradigm that defines habit has proven difficult to reproduce in healthy human volunteers. So we are left with a phenomenon everyone recognises from their own life and a measure that will not reliably show it.",
+
+        "primary_question":
+        "How much of a life is authored by the story a person tells about it, and how much simply runs?",
+
+        "why_it_matters":
+        "Everything people try hardest to change about themselves — what they eat, drink, scroll, avoid, repeat — sits in this file. If those actions are driven by context rather than by intention, then insight into one's own reasons is not the lever it feels like, and the loop this exhibit is chasing has a stretch in it the narrator never touches.",
+
+        "neural_systems": [
+            {
+                "system": "Dorsomedial striatum (human caudate)",
+                "role": "Supports goal-directed action — behaviour still sensitive to the current value of its outcome and to the action–outcome contingency."
+            },
+            {
+                "system": "Dorsolateral striatum (human posterior putamen)",
+                "role": "Associated with stimulus–response habit: activity here grows with extended training, as behaviour comes to be cued by the situation rather than steered by its consequence."
+            },
+            {
+                "system": "Basal ganglia loops and their dopaminergic input",
+                "role": "Chunk repeated action sequences into single retrievable units, with striatal ensembles marking the beginning and end of a learned routine rather than its middle."
+            },
+            {
+                "system": "Infralimbic / ventromedial prefrontal cortex",
+                "role": "Implicated in the expression and suppression of established habits — a cortical switch that determines which striatal system is in control of the same behaviour."
+            }
+        ],
+
+        "evidence_room": {
+            "what_we_know": [
+                {
+                    "claim": "Amount of training changes the kind of behaviour, not just its strength. Rats trained briefly on a lever press stopped pressing once the food earned by that press was made aversive; rats given extended training kept pressing for a reward they no longer wanted. The same action, learned the same way, becomes insensitive to its own outcome with repetition.",
+                    "citation": "adams_1982"
+                },
+                {
+                    "claim": "Habit learning and declarative memory are separable systems in the human brain. On a probabilistic classification task, amnesic patients learned the cue–outcome associations at a normal rate while being unable to recall the training episode; patients with Parkinson's disease showed the opposite dissociation — intact memory for the task, impaired gradual learning. The striatum, not the medial temporal lobe, carries this form of learning.",
+                    "citation": "knowlton_1996"
+                }
+            ],
+            "evidence_suggests": [
+                {
+                    "claim": "The two modes of control appear to map onto different striatal territory. Converging lesion and recording work in rodents places goal-directed control in dorsomedial striatum and habitual control in dorsolateral striatum, with behaviour shifting from one to the other as training extends — an anatomical division of labour rather than a single strengthening process.",
+                    "citation": "yin_knowlton_2006"
+                },
+                {
+                    "claim": "Repetition compresses a sequence of actions into a unit. As a routine is overtrained, striatal ensembles come to fire at the start and end of the whole sequence rather than throughout it — a 'chunking' signature suggesting a habit is stored as one package that, once begun, tends to run to completion.",
+                    "citation": "graybiel_2008"
+                },
+                {
+                    "claim": "A comparable shift has been reported in people. After three days of overtraining, participants continued responding for a food outcome they had just been fed to satiety, and activity in posterior dorsolateral striatum increased across training — the closest human analogue of the animal devaluation result.",
+                    "citation": "tricomi_2009"
+                }
+            ],
+            "disagreement": [
+                {
+                    "claim": "The human devaluation paradigm may not be reliable. A coordinated series of five experiments explicitly designed to induce habit in healthy volunteers — varying training duration, schedule, and context — failed to produce the expected outcome-insensitivity. The authors conclude the field's standard laboratory measure of habit is not dependably reproducible in humans, which puts the human evidence for the two-system account under active dispute.",
+                    "citation": "de_wit_2018"
+                },
+                {
+                    "claim": "Researchers disagree about what habit even names. One tradition defines it negatively, by insensitivity to outcome value in a laboratory task; another defines it as a learned context–response association whose real signature is being cued by a stable environment in everyday life. The two definitions do not pick out the same behaviours, and arguments about the strength of the evidence are often arguments about which definition is in use.",
+                    "citation": "wood_runger_2016"
+                },
+                {
+                    "claim": "Whether habitual and goal-directed control are two systems competing for the same behaviour, or one graded process measured two ways, is unsettled. The anatomical dissociation is read by some as decisive and by others as compatible with a single learning mechanism whose expression varies with how strongly the action is trained.",
+                    "citation": "yin_knowlton_2006"
+                }
+            ],
+            "unknown": [
+                {
+                    "claim": "There is no established way to tell, for a particular action in a particular person's day, whether it was habitual or chosen. The laboratory criterion requires devaluing an outcome and watching what happens next; ordinary life provides no such test, and self-report cannot supply one, because the report is produced by the system that was bypassed.",
+                    "citation": "de_wit_2018"
+                },
+                {
+                    "claim": "How long a habit takes to form in a human being, and what determines that duration, is not known with any precision. Estimates vary widely across behaviours and individuals, and no mechanism has been identified that predicts the point at which an intended action stops requiring the intention.",
+                    "citation": "wood_runger_2016"
+                },
+                {
+                    "claim": "It is unknown whether an established habit can be erased or only overlaid. Old responses return under stress, fatigue, and reinstated context long after a replacement has been trained, which is consistent with the original chunk remaining intact and merely suppressed — but no method exists to look and confirm it is still there.",
+                    "citation": "graybiel_2008"
+                }
+            ]
+        },
+
+        "open_questions": [
+            {
+                "question": "If a habit runs without the narrative, what is the narrative for?",
+                "what_science_knows": "Behaviour that begins as goal-directed can become insensitive to the value of its own outcome with extended training, and the striatal learning that supports it can proceed in people who cannot consciously recall the training at all.",
+                "what_evidence_suggests": "Control appears to migrate across striatal territory with repetition, and overtrained routines are stored as compressed sequences that tend to complete once triggered — implying the reasons a person gives were not the proximate cause of the act.",
+                "where_evidence_disagrees": "Whether this is genuinely two systems or one graded process is argued, and the human demonstrations that support the strong version have repeatedly failed to replicate.",
+                "what_remains_unknown": "What function the after-the-fact account serves — whether it steers future behaviour, maintains a coherent self, or does nothing causal at all — is UNKNOWN."
+            },
+            {
+                "question": "Can a habit be removed, or only outvoted?",
+                "what_science_knows": "New responses can be trained to compete with old ones, and prefrontal regions are implicated in which response is expressed on a given occasion.",
+                "what_evidence_suggests": "The reappearance of old responses under stress and in the original context suggests the earlier learning survives intact beneath the replacement rather than being overwritten.",
+                "where_evidence_disagrees": "Researchers disagree over whether relapse reflects a preserved habit structure or simply the ordinary context-dependence of any learned behaviour, and the animal and human literatures do not align cleanly.",
+                "what_remains_unknown": "No technique can determine whether a specific habit still exists in a brain that is no longer performing it."
+            },
+            {
+                "question": "Why will the laboratory not show in people what it shows plainly in rats?",
+                "what_science_knows": "Outcome devaluation after extended training is a robust, repeatedly demonstrated effect in rodents and the defining operational test of habit.",
+                "what_evidence_suggests": "Human participants may bring instructions, verbal rules, and explicit strategies into the task that keep behaviour tethered to its outcome, and the training given in a laboratory session may be trivial next to the repetitions behind a real habit.",
+                "where_evidence_disagrees": "Some read the replication failures as a problem with the paradigm and its statistical power; others read them as evidence that the two-system account has been over-extended from animals to human behaviour.",
+                "what_remains_unknown": "Whether human habit as lived is the same phenomenon the animal paradigm measures — and therefore whether the most familiar experience in this file has ever actually been captured in a laboratory — is UNKNOWN."
+            }
+        ],
+
+        "connected_files": [
+            "Learning",
+            "Decision Making",
+            "Motivation",
+            "Identity",
+            "Memory",
+            "Narrative"
+        ],
+
+        "next_case":
+        "Motivation",
+
+        "citations": [
+            {
+                "key": "adams_1982",
+                "author": "Adams, C. D.",
+                "year": 1982,
+                "title": "Variations in the sensitivity of instrumental responding to reinforcer devaluation",
+                "source": "The Quarterly Journal of Experimental Psychology Section B, 34(2), 77–98"
+            },
+            {
+                "key": "knowlton_1996",
+                "author": "Knowlton, B. J., Mangels, J. A., & Squire, L. R.",
+                "year": 1996,
+                "title": "A neostriatal habit learning system in humans",
+                "source": "Science, 273(5280), 1399–1402"
+            },
+            {
+                "key": "yin_knowlton_2006",
+                "author": "Yin, H. H., & Knowlton, B. J.",
+                "year": 2006,
+                "title": "The role of the basal ganglia in habit formation",
+                "source": "Nature Reviews Neuroscience, 7(6), 464–476"
+            },
+            {
+                "key": "graybiel_2008",
+                "author": "Graybiel, A. M.",
+                "year": 2008,
+                "title": "Habits, rituals, and the evaluative brain",
+                "source": "Annual Review of Neuroscience, 31, 359–387"
+            },
+            {
+                "key": "tricomi_2009",
+                "author": "Tricomi, E., Balleine, B. W., & O'Doherty, J. P.",
+                "year": 2009,
+                "title": "A specific role for posterior dorsolateral striatum in human habit learning",
+                "source": "European Journal of Neuroscience, 29(11), 2225–2232"
+            },
+            {
+                "key": "wood_runger_2016",
+                "author": "Wood, W., & Rünger, D.",
+                "year": 2016,
+                "title": "Psychology of habit",
+                "source": "Annual Review of Psychology, 67, 289–314"
+            },
+            {
+                "key": "de_wit_2018",
+                "author": "de Wit, S., Kindt, M., Knot, S. L., Verhoeven, A. A. C., Robbins, T. W., Gasull-Camos, J., Evans, M., Mirza, H., & Gillan, C. M.",
+                "year": 2018,
+                "title": "Shifting the balance between goals and habits: Five failures in experimental habit induction",
+                "source": "Journal of Experimental Psychology: General, 147(7), 1043–1065"
+            }
+        ],
     },
 
     "Trauma": {
@@ -3021,7 +3277,7 @@ concepts = {
             "Narrative"
         ],
 
-        "next_case": "Memory",
+        "next_case": "Habit",
 
         "citations": [
             {

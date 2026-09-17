@@ -34,7 +34,7 @@ def test_evidence_room_shows_real_reference_cards():
 
 
 def test_stub_concept_reads_unknown():
-    html = _html("/atlas/Habit")
+    html = _html("/atlas/Narrative")
     assert "UNKNOWN" in html
     assert "Evidence Room" not in html  # stubs present no finished evidence
 
