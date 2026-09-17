@@ -43,14 +43,18 @@ paper, the Evidence Room entry reads UNKNOWN instead.
 | `deci_koestner_ryan_1999` | Deci, E. L., Koestner, R., & Ryan, R. M (1999). A meta-analytic review of experiments examining the effects of extrinsic rewards on intrinsic motivation. *Psychological Bulletin, 125(6), 627–668*. |
 | `dehaene_changeux_2011` | Dehaene, S., & Changeux, J.-P (2011). Experimental and theoretical approaches to conscious processing. *Neuron, 70(2), 200–227*. |
 | `desimone_duncan_1995` | Desimone, R., & Duncan, J (1995). Neural mechanisms of selective visual attention. *Annual Review of Neuroscience, 18, 193–222*. |
+| `dunbar_1998` | Dunbar, R. I. M (1998). The social brain hypothesis. *Evolutionary Anthropology: Issues, News, and Reviews, 6(5), 178–190*. |
 | `ekman_friesen_1971` | Ekman, P., & Friesen, W. V (1971). Constants across cultures in the face and emotion. *Journal of Personality and Social Psychology, 17(2), 124–129*. |
+| `eyal_2018` | Eyal, T., Steffel, M., & Epley, N (2018). Perspective mistaking: Accurately understanding the mind of another requires getting perspective, not taking perspective. *Journal of Personality and Social Psychology, 114(4), 547–571*. |
 | `fedorenko_2011` | Fedorenko, E., Behr, M. K., & Kanwisher, N (2011). Functional specificity for high-level linguistic processing in the human brain. *Proceedings of the National Academy of Sciences, 108(39), 16428–16433*. |
 | `felitti_1998` | Felitti, V. J., Anda, R. F., Nordenberg, D., Williamson, D. F., Spitz, A. M., Edwards, V., Koss, M. P., & Marks, J. S (1998). Relationship of childhood abuse and household dysfunction to many of the leading causes of death in adults: The Adverse Childhood Experiences (ACE) Study. *American Journal of Preventive Medicine, 14(4), 245–258*. |
 | `friston_2010` | Friston, K (2010). The free-energy principle: A unified brain theory?. *Nature Reviews Neuroscience, 11(2), 127–138*. |
+| `frith_frith_2006` | Frith, C. D., & Frith, U (2006). The neural basis of mentalizing. *Neuron, 50(4), 531–534*. |
 | `gazzaniga_1962` | Gazzaniga, M. S., Bogen, J. E., & Sperry, R. W (1962). Some functional effects of sectioning the cerebral commissures in man. *Proceedings of the National Academy of Sciences, 48(10), 1765–1769*. |
 | `gilbertson_2002` | Gilbertson, M. W., Shenton, M. E., Ciszewski, A., Kasai, K., Lasko, N. B., Orr, S. P., & Pitman, R. K (2002). Smaller hippocampal volume predicts pathologic vulnerability to psychological trauma. *Nature Neuroscience, 5(11), 1242–1247*. |
 | `graybiel_2008` | Graybiel, A. M (2008). Habits, rituals, and the evaluative brain. *Annual Review of Neuroscience, 31, 359–387*. |
 | `hauser_2002` | Hauser, M. D., Chomsky, N., & Fitch, W. T (2002). The faculty of language: What is it, who has it, and how did it evolve?. *Science, 298(5598), 1569–1579*. |
+| `hickok_2009` | Hickok, G (2009). Eight problems for the mirror neuron theory of action understanding in monkeys and humans. *Journal of Cognitive Neuroscience, 21(7), 1229–1243*. |
 | `hubel_wiesel_1962` | Hubel, D. H., & Wiesel, T. N (1962). Receptive fields, binocular interaction and functional architecture in the cat's visual cortex. *The Journal of Physiology, 160(1), 106–154*. |
 | `johnson_newport_1989` | Johnson, J. S., & Newport, E. L (1989). Critical period effects in second language learning: The influence of maturational state on the acquisition of English as a second language. *Cognitive Psychology, 21(1), 60–99*. |
 | `kahneman_tversky_1979` | Kahneman, D., & Tversky, A (1979). Prospect theory: An analysis of decision under risk. *Econometrica, 47(2), 263–291*. |
@@ -58,6 +62,8 @@ paper, the Evidence Room entry reads UNKNOWN instead.
 | `kindt_2009` | Kindt, M., Soeter, M., & Vervliet, B (2009). Beyond extinction: Erasing human fear responses and preventing the return of fear. *Nature Neuroscience, 12(3), 256–258*. |
 | `knowlton_1996` | Knowlton, B. J., Mangels, J. A., & Squire, L. R (1996). A neostriatal habit learning system in humans. *Science, 273(5280), 1399–1402*. |
 | `kok_2012` | Kok, P., Jehee, J. F. M., & de Lange, F. P (2012). Less is more: Expectation sharpens representations in the primary visual cortex. *Neuron, 75(2), 265–270*. |
+| `kovacs_2010` | Kovács, Á. M., Téglás, E., & Endress, A. D (2010). The social sense: Susceptibility to others' beliefs in human infants and adults. *Science, 330(6012), 1830–1834*. |
+| `kulke_2018` | Kulke, L., von Duhn, B., Schneider, D., & Rakoczy, H (2018). Is implicit theory of mind a real and robust phenomenon? Results from a systematic replication study. *Psychological Science, 29(6), 888–900*. |
 | `lai_2001` | Lai, C. S. L., Fisher, S. E., Hurst, J. A., Vargha-Khadem, F., & Monaco, A. P (2001). A forkhead-domain gene is mutated in a severe speech and language disorder. *Nature, 413(6855), 519–523*. |
 | `ledoux_2000` | LeDoux, J. E (2000). Emotion circuits in the brain. *Annual Review of Neuroscience, 23, 155–184*. |
 | `libet_1983` | Libet, B., Gleason, C. A., Wright, E. W., & Pearl, D. K (1983). Time of conscious intention to act in relation to onset of cerebral activity (readiness-potential). *Brain, 106(3), 623–642*. |
@@ -73,11 +79,14 @@ paper, the Evidence Room entry reads UNKNOWN instead.
 | `owen_2006` | Owen, A. M., Coleman, M. R., Boly, M., Davis, M. H., Laureys, S., & Pickard, J. D (2006). Detecting awareness in the vegetative state. *Science, 313(5792), 1402*. |
 | `pinker_jackendoff_2005` | Pinker, S., & Jackendoff, R (2005). The faculty of language: What's special about it?. *Cognition, 95(2), 201–236*. |
 | `posner_1980` | Posner, M. I (1980). Orienting of attention. *Quarterly Journal of Experimental Psychology, 32(1), 3–25*. |
+| `premack_woodruff_1978` | Premack, D., & Woodruff, G (1978). Does the chimpanzee have a theory of mind?. *Behavioral and Brain Sciences, 1(4), 515–526*. |
 | `raichle_2001` | Raichle, M. E., MacLeod, A. M., Snyder, A. Z., Powers, W. J., Gusnard, D. A., & Shulman, G. L (2001). A default mode of brain function. *Proceedings of the National Academy of Sciences, 98(2), 676–682*. |
 | `rao_ballard_1999` | Rao, R. P. N., & Ballard, D. H (1999). Predictive coding in the visual cortex: A functional interpretation of some extra-classical receptive-field effects. *Nature Neuroscience, 2(1), 79–87*. |
 | `rescorla_1988` | Rescorla, R. A (1988). Pavlovian conditioning: It's not what you think it is. *American Psychologist, 43(3), 151–160*. |
+| `rizzolatti_craighero_2004` | Rizzolatti, G., & Craighero, L (2004). The mirror-neuron system. *Annual Review of Neuroscience, 27, 169–192*. |
 | `saffran_1996` | Saffran, J. R., Aslin, R. N., & Newport, E. L (1996). Statistical learning by 8-month-old infants. *Science, 274(5294), 1926–1928*. |
 | `salamone_correa_2012` | Salamone, J. D., & Correa, M (2012). The mysterious motivational functions of mesolimbic dopamine. *Neuron, 76(3), 470–485*. |
+| `saxe_kanwisher_2003` | Saxe, R., & Kanwisher, N (2003). People thinking about thinking people: The role of the temporo-parietal junction in "theory of mind". *NeuroImage, 19(4), 1835–1842*. |
 | `schachter_singer_1962` | Schachter, S., & Singer, J. E (1962). Cognitive, social, and physiological determinants of emotional state. *Psychological Review, 69(5), 379–399*. |
 | `schultz_1997` | Schultz, W., Dayan, P., & Montague, P. R (1997). A neural substrate of prediction and reward. *Science, 275(5306), 1593–1599*. |
 | `scoville_milner_1957` | Scoville, W. B., & Milner, B (1957). Loss of recent memory after bilateral hippocampal lesions. *Journal of Neurology, Neurosurgery & Psychiatry, 20(1), 11–21*. |
@@ -87,6 +96,7 @@ paper, the Evidence Room entry reads UNKNOWN instead.
 | `treisman_gelade_1980` | Treisman, A. M., & Gelade, G (1980). A feature-integration theory of attention. *Cognitive Psychology, 12(1), 97–136*. |
 | `tricomi_2009` | Tricomi, E., Balleine, B. W., & O'Doherty, J. P (2009). A specific role for posterior dorsolateral striatum in human habit learning. *European Journal of Neuroscience, 29(11), 2225–2232*. |
 | `tversky_kahneman_1974` | Tversky, A., & Kahneman, D (1974). Judgment under uncertainty: Heuristics and biases. *Science, 185(4157), 1124–1131*. |
+| `wimmer_perner_1983` | Wimmer, H., & Perner, J (1983). Beliefs about beliefs: Representation and constraining function of wrong beliefs in young children's understanding of deception. *Cognition, 13(1), 103–128*. |
 | `winawer_2007` | Winawer, J., Witthoft, N., Frank, M. C., Wu, L., Wade, A. R., & Boroditsky, L (2007). Russian blues reveal effects of language on color discrimination. *Proceedings of the National Academy of Sciences, 104(19), 7780–7785*. |
 | `wood_runger_2016` | Wood, W., & Rünger, D (2016). Psychology of habit. *Annual Review of Psychology, 67, 289–314*. |
 | `yin_knowlton_2006` | Yin, H. H., & Knowlton, B. J (2006). The role of the basal ganglia in habit formation. *Nature Reviews Neuroscience, 7(6), 464–476*. |

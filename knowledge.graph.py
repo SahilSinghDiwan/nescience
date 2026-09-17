@@ -3370,17 +3370,315 @@ concepts = {
     },
 
     "Social Cognition": {
-        "definition": "",
-        "narrative_role": "",
-        "paradox": "",
-        "brain_regions": [],
-        "key_experiments": [],
-        "landmark_researchers": [],
-        "connects_to": [],
-        "real_world_examples": [],
-        "questions": [],
-        "unresolved": "",
-        "interview_themes": []
+
+        "definition":
+        "The machinery by which a mind builds working models of other minds — inferring what another person knows, wants, feels, and believes about you — from behaviour that never states any of it.",
+
+        "narrative_role":
+        "The internal narrative is not written alone. A large part of its material is second-hand: what you believe other people think of you, which is itself a guess you made and then filed as fact.",
+
+        "paradox":
+        "You have never once observed another mind, yet almost everything you believe about yourself was assembled out of what you assumed other minds were thinking.",
+
+        "brain_regions": [
+            "Temporoparietal Junction",
+            "Medial Prefrontal Cortex",
+            "Posterior Superior Temporal Sulcus",
+            "Precuneus",
+            "Temporal Poles"
+        ],
+
+        "key_experiments": [
+            "The unexpected-transfer (false belief) task in young children",
+            "Chimpanzee inference of an actor's goal",
+            "Selective temporoparietal response to another's beliefs (fMRI)",
+            "Perspective-taking versus asking, in accuracy of reading others",
+            "Anticipatory-looking measures of implicit belief attribution, and their replication attempts"
+        ],
+
+        "landmark_researchers": [
+            "David Premack",
+            "Heinz Wimmer",
+            "Josef Perner",
+            "Uta Frith",
+            "Chris Frith",
+            "Rebecca Saxe",
+            "Robin Dunbar",
+            "Gregory Hickok"
+        ],
+
+        "connects_to": [
+            "Identity",
+            "Emotion",
+            "Narrative",
+            "Perception",
+            "Language",
+            "Memory"
+        ],
+
+        "real_world_examples": [
+            "Replaying a conversation to work out what they meant",
+            "Being certain someone is annoyed with you",
+            "Misreading a short message as cold",
+            "Rehearsing how you will be seen before you walk in",
+            "Finding out you were never on their mind at all"
+        ],
+
+        "questions": [
+            "How much of what I believe about myself came from someone else?",
+            "When I read a room, what am I actually reading?",
+            "How often am I wrong about what someone is thinking?",
+            "Who am I when nobody is modelling me?"
+        ],
+
+        "unresolved":
+        "Whether understanding another person is genuine inference about a hidden mind, or a very good prediction of behaviour that never touches the mind at all.",
+
+        "interview_themes": [
+            "Other people",
+            "Belonging",
+            "Judgement",
+            "Loneliness",
+            "Friendship",
+            "Being misunderstood"
+        ],
+
+        "evidence": [
+            {
+                "type": "Comparative Study",
+                "title": "Does the chimpanzee have a theory of mind?",
+                "year": 1978
+            },
+            {
+                "type": "Developmental Experiment",
+                "title": "The unexpected-transfer false belief task",
+                "year": 1983
+            },
+            {
+                "type": "Neuroimaging",
+                "title": "Temporoparietal junction and the attribution of belief",
+                "year": 2003
+            },
+            {
+                "type": "Review",
+                "title": "The neural basis of mentalizing",
+                "year": 2006
+            },
+            {
+                "type": "Behavioural Experiment",
+                "title": "Perspective mistaking",
+                "year": 2018
+            },
+            {
+                "type": "Replication Study",
+                "title": "Systematic replication of implicit theory of mind",
+                "year": 2018
+            }
+        ],
+
+        "investigators_note":
+        "This is the last file in the numbered sequence, and it closes the circle back to 001. The reason is uncomfortable. Every earlier case treats the self as something assembled inward — experience into memory, memory into narrative, narrative into identity. This file records that a substantial part of the raw material was never yours. It arrived as inference: your reading of what someone thought of you, formed from a face, a pause, a message with no punctuation, then stored as if it were reported speech. The research here is unusually honest about its own limits — the field's headline finding has been replicated for forty years in one form and has failed to replicate repeatedly in another, and its most famous mechanism is openly disputed. Treat any confident claim in this file, including the participant's confident claims about other people, as a hypothesis that was never tested against the mind it describes.",
+
+        "primary_question":
+        "When you understand another person, are you reading their mind — or predicting their behaviour and calling it understanding?",
+
+        "why_it_matters":
+        "The loop this exhibit follows runs experience → narrative → identity → decision → new experience. Social cognition inserts a second author into that loop. What you believe others believe about you becomes part of the story you tell yourself, and that story then shapes what you do next — including who you approach, avoid, and become. If the inference is systematically unreliable, then part of the self is built on evidence that was never checked.",
+
+        "neural_systems": [
+            {
+                "system": "Temporoparietal junction (especially right)",
+                "role": "Responds more strongly when a task requires representing what another person believes than when it requires other facts about that person — the closest thing the field has to a belief-specific region, though its selectivity is debated."
+            },
+            {
+                "system": "Medial prefrontal cortex",
+                "role": "Engaged when attributing mental states to others and, overlapping substantially, when reflecting on oneself — the anatomical hint that self-modelling and other-modelling share machinery."
+            },
+            {
+                "system": "Posterior superior temporal sulcus",
+                "role": "Tracks biological motion, gaze direction, and the intentional structure of observed action — the front end that turns movement into something that looks like a goal."
+            },
+            {
+                "system": "Precuneus and temporal poles",
+                "role": "Recruited alongside the mentalizing network; associated with retrieving social scripts, autobiographical context, and prior knowledge about the particular person being modelled."
+            }
+        ],
+
+        "evidence_room": {
+            "what_we_know": [
+                {
+                    "claim": "Typically developing children reliably pass an explicit false-belief test somewhere around their fourth or fifth year, and reliably fail it before. Shown a character who puts chocolate in one place and leaves while it is moved, younger children say he will look where the chocolate actually is; older children say he will look where he last saw it. The developmental shift itself is one of the most replicated findings in developmental psychology.",
+                    "citation": "wimmer_perner_1983"
+                },
+                {
+                    "claim": "Attributing mental states to other people engages a consistent, identifiable set of regions — medial prefrontal cortex, temporoparietal junction, posterior superior temporal sulcus, and temporal poles — across stories, cartoons, animations, and games. Whatever mentalizing is, it is not distributed evenly across the brain.",
+                    "citation": "frith_frith_2006"
+                }
+            ],
+            "evidence_suggests": [
+                {
+                    "claim": "Part of that network appears specifically tuned to the contents of another mind rather than to people in general. The temporoparietal junction responded more to passages describing what a character thought than to equally complex passages describing their appearance, their body, or physical events — suggesting a region recruited for belief as such.",
+                    "citation": "saxe_kanwisher_2003"
+                },
+                {
+                    "claim": "The capacity may have been built by group life. Across primates, the relative size of the neocortex tracks the typical size of the social group, which has been read as evidence that brains grew to manage relationships rather than to manage the physical world. The correlation is robust; the causal story it is used to tell is an interpretation.",
+                    "citation": "dunbar_1998"
+                },
+                {
+                    "claim": "Reading another person is inference, and the inference is frequently wrong. Across twenty-five experiments, deliberately taking someone's perspective did not improve accuracy about their thoughts, feelings, preferences, or the meaning of their expressions — and sometimes made it worse. What did improve accuracy was obtaining the other person's perspective directly: asking them.",
+                    "citation": "eyal_2018"
+                }
+            ],
+            "disagreement": [
+                {
+                    "claim": "The question that opened the field has never been closed. Premack and Woodruff asked whether a chimpanzee, shown an actor struggling with a problem, imputes purpose and knowledge to him, and coined the term 'theory of mind' to name the capacity. The commentary published alongside the paper argued that no behavioural result could distinguish genuine mental-state attribution from sophisticated prediction of behaviour — an objection still in force.",
+                    "citation": "premack_woodruff_1978"
+                },
+                {
+                    "claim": "Belief attribution has been reported to run automatically and early: seven-month-old infants, and adults' reaction times, appeared sensitive to an agent's belief about an object's location even when that belief was irrelevant to the task. The finding was read as evidence for an efficient, non-verbal mentalizing system operating beneath deliberate reasoning.",
+                    "citation": "kovacs_2010"
+                },
+                {
+                    "claim": "Those implicit measures have since proved fragile. Systematic replication attempts of anticipatory-looking paradigms across children and adults failed to reproduce the original belief-congruent effects, leaving the field genuinely split over whether implicit theory of mind is a real phenomenon, a much weaker one than reported, or an artefact of particular stimuli.",
+                    "citation": "kulke_2018"
+                },
+                {
+                    "claim": "The most popular proposed mechanism is contested. Mirror neurons — cells discharging both when an action is performed and when it is observed — were offered as a direct route to understanding others from the inside, and the account became widely influential.",
+                    "citation": "rizzolatti_craighero_2004"
+                },
+                {
+                    "claim": "That account was answered point by point: that the evidence does not establish mirror neurons as the basis of action understanding in monkeys or humans, that action understanding survives damage to the proposed system, and that the mapping runs in the wrong direction for the theory to work as stated. The dispute is unresolved and sits underneath most popular claims about empathy.",
+                    "citation": "hickok_2009"
+                }
+            ],
+            "unknown": [
+                {
+                    "claim": "It is unknown whether mentalizing involves representing another person's mental state at all, or whether it is a very good model of their behaviour that never refers to a mind. No behavioural or imaging result yet distinguishes the two, because both predict the same actions — and it is not clear what a decisive experiment would look like.",
+                    "citation": "premack_woodruff_1978"
+                },
+                {
+                    "claim": "How the network's activity relates to the everyday experience of understanding someone is UNKNOWN. The regions can be located reliably; that a region is more active when beliefs are involved does not say what operation it performs, nor why the operation feels from the inside like knowing what someone means.",
+                    "citation": "saxe_kanwisher_2003"
+                },
+                {
+                    "claim": "Whether self-modelling and other-modelling are one system or two is unresolved. They overlap anatomically and both recruit medial prefrontal cortex, but no method yet establishes whether you model yourself by the machinery built for reading others, read others by the machinery built for yourself, or run two processes that merely look alike from outside.",
+                    "citation": "frith_frith_2006"
+                },
+                {
+                    "claim": "How much of a person's self-concept is actually second-hand — imported from inferred judgements that were never verified with the people who supposedly held them — has no measure. There is no way at present to audit a belief about yourself back to the social inference that produced it.",
+                    "citation": "eyal_2018"
+                }
+            ]
+        },
+
+        "open_questions": [
+            {
+                "question": "When you understand another person, are you reading a mind or predicting a body?",
+                "what_science_knows": "Explicit belief attribution develops on a reliable timetable and recruits a consistent network of regions; damage and task manipulation disrupt it in structured ways.",
+                "what_evidence_suggests": "Parts of that network — the temporoparietal junction in particular — respond to the contents of another mind more than to other facts about the same person, which looks like machinery for belief rather than for people.",
+                "where_evidence_disagrees": "The objection raised in the paper that founded the field still stands: any behaviour explained by attributing a mental state can also be explained by a learned rule about behaviour, and the mirror-neuron account offered as a mechanism is itself openly disputed.",
+                "what_remains_unknown": "No experiment has been devised that separates representing a mind from predicting the body it moves. Whether the distinction is empirical or merely verbal is UNKNOWN."
+            },
+            {
+                "question": "How much of the self is made of other people's imagined opinions?",
+                "what_science_knows": "Thinking about one's own traits and thinking about another person's mental states recruit overlapping medial prefrontal regions, and social inference is continuous and largely involuntary.",
+                "what_evidence_suggests": "Inferences about what others think are frequently inaccurate, and effortful perspective-taking does not correct them — so the material imported into the self-story is unreliable at the point of entry, not merely with age.",
+                "where_evidence_disagrees": "Whether self-knowledge and other-knowledge share one mechanism or two overlapping ones is argued from the same imaging data by both sides.",
+                "what_remains_unknown": "There is no way to trace a given belief about yourself back to the social inference that produced it, so the proportion of the self that is second-hand is UNKNOWN."
+            },
+            {
+                "question": "Is belief attribution something the mind does automatically, or only when it is asked to?",
+                "what_science_knows": "Explicit, verbally tested false-belief understanding emerges around age four and is one of developmental psychology's most replicated results.",
+                "what_evidence_suggests": "Looking-time and reaction-time measures once suggested that infants and adults track others' beliefs spontaneously, without instruction and without language.",
+                "where_evidence_disagrees": "Systematic replication attempts of those implicit paradigms have largely failed, and the field is now split between researchers who treat implicit mentalizing as established and those who treat the original effects as unreplicable.",
+                "what_remains_unknown": "Whether there is a fast, non-verbal belief-tracking system at all — and if so, what it computes — is currently UNKNOWN."
+            }
+        ],
+
+        "connected_files": [
+            "Identity",
+            "Emotion",
+            "Narrative",
+            "Perception",
+            "Language",
+            "Memory"
+        ],
+
+        "next_case":
+        "Memory",
+
+        "citations": [
+            {
+                "key": "premack_woodruff_1978",
+                "author": "Premack, D., & Woodruff, G.",
+                "year": 1978,
+                "title": "Does the chimpanzee have a theory of mind?",
+                "source": "Behavioral and Brain Sciences, 1(4), 515–526"
+            },
+            {
+                "key": "wimmer_perner_1983",
+                "author": "Wimmer, H., & Perner, J.",
+                "year": 1983,
+                "title": "Beliefs about beliefs: Representation and constraining function of wrong beliefs in young children's understanding of deception",
+                "source": "Cognition, 13(1), 103–128"
+            },
+            {
+                "key": "saxe_kanwisher_2003",
+                "author": "Saxe, R., & Kanwisher, N.",
+                "year": 2003,
+                "title": "People thinking about thinking people: The role of the temporo-parietal junction in \"theory of mind\"",
+                "source": "NeuroImage, 19(4), 1835–1842"
+            },
+            {
+                "key": "frith_frith_2006",
+                "author": "Frith, C. D., & Frith, U.",
+                "year": 2006,
+                "title": "The neural basis of mentalizing",
+                "source": "Neuron, 50(4), 531–534"
+            },
+            {
+                "key": "dunbar_1998",
+                "author": "Dunbar, R. I. M.",
+                "year": 1998,
+                "title": "The social brain hypothesis",
+                "source": "Evolutionary Anthropology: Issues, News, and Reviews, 6(5), 178–190"
+            },
+            {
+                "key": "eyal_2018",
+                "author": "Eyal, T., Steffel, M., & Epley, N.",
+                "year": 2018,
+                "title": "Perspective mistaking: Accurately understanding the mind of another requires getting perspective, not taking perspective",
+                "source": "Journal of Personality and Social Psychology, 114(4), 547–571"
+            },
+            {
+                "key": "rizzolatti_craighero_2004",
+                "author": "Rizzolatti, G., & Craighero, L.",
+                "year": 2004,
+                "title": "The mirror-neuron system",
+                "source": "Annual Review of Neuroscience, 27, 169–192"
+            },
+            {
+                "key": "hickok_2009",
+                "author": "Hickok, G.",
+                "year": 2009,
+                "title": "Eight problems for the mirror neuron theory of action understanding in monkeys and humans",
+                "source": "Journal of Cognitive Neuroscience, 21(7), 1229–1243"
+            },
+            {
+                "key": "kovacs_2010",
+                "author": "Kovács, Á. M., Téglás, E., & Endress, A. D.",
+                "year": 2010,
+                "title": "The social sense: Susceptibility to others' beliefs in human infants and adults",
+                "source": "Science, 330(6012), 1830–1834"
+            },
+            {
+                "key": "kulke_2018",
+                "author": "Kulke, L., von Duhn, B., Schneider, D., & Rakoczy, H.",
+                "year": 2018,
+                "title": "Is implicit theory of mind a real and robust phenomenon? Results from a systematic replication study",
+                "source": "Psychological Science, 29(6), 888–900"
+            }
+        ],
     },
 
     "Motivation": {
