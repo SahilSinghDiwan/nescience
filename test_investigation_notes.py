@@ -11,9 +11,13 @@ from app import app
 
 @pytest.fixture
 def client():
+    # Restore the flag afterwards: leaving TESTING on leaks exception
+    # propagation into every test module that runs after this one.
+    previous = app.config["TESTING"]
     app.config["TESTING"] = True
     with app.test_client() as c:
         yield c
+    app.config["TESTING"] = previous
 
 
 # ----------------------------------------------------------

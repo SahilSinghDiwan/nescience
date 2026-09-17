@@ -158,12 +158,18 @@ def public_projection(records):
     for record in records:
         if not is_published(record):
             continue
+        code = get_code(record)
+        if not code:
+            # A published record with no code cannot be addressed publicly
+            # (/archive/witnesses/<code> has nothing to route to), so it is
+            # withheld rather than rendered as a codeless entry.
+            continue
         responses = {
             module: answers
             for module, answers in record.items()
             if module != CASE_FILE_KEY
         }
-        public.append({"code": get_code(record), "responses": responses})
+        public.append({"code": code, "responses": responses})
     return public
 
 
