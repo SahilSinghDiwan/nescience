@@ -32,10 +32,36 @@ from atlas import concepts, is_defined
 from matcher import match_interview
 
 app = Flask(__name__)
-# Needed only to sign the investigator session cookie. Supply a stable value
-# via NESCIENCE_SECRET_KEY in any real deployment; the random fallback just
-# means investigator sessions don't survive a dev-server restart.
-app.secret_key = os.environ.get("NESCIENCE_SECRET_KEY") or os.urandom(32)
+
+
+def _is_dev(env=os.environ):
+    """Dev mode is explicit: NESCIENCE_DEV=1. It relaxes the secret-key
+    requirement and the Secure cookie flag, and nothing else."""
+    return env.get("NESCIENCE_DEV") == "1"
+
+
+def resolve_secret_key(env=os.environ):
+    """The key that signs the session cookie.
+
+    gunicorn runs several worker processes; if each invented its own random
+    key, a login signed by one worker would be rejected by the other. So when
+    the investigator surface is enabled, a stable NESCIENCE_SECRET_KEY is
+    required and the app refuses to start without it. NESCIENCE_DEV=1 allows
+    a random per-process key for local single-process runs. With no
+    investigator password there is no login, so the key is unused."""
+    key = env.get("NESCIENCE_SECRET_KEY")
+    if key:
+        return key
+    if env.get("NESCIENCE_INVESTIGATOR_PASSWORD") and not _is_dev(env):
+        raise RuntimeError(
+            "NESCIENCE_SECRET_KEY must be set when "
+            "NESCIENCE_INVESTIGATOR_PASSWORD is set (or set NESCIENCE_DEV=1 "
+            "for a local, single-process run)."
+        )
+    return os.urandom(32).hex()
+
+
+app.secret_key = resolve_secret_key()
 
 MAX_ANSWER_LEN = 5000
 
@@ -562,4 +588,4 @@ def not_found(_e):
 
 
 if __name__ == "__main__":
-    app.run(debug=True, port=5001)
+    app.run(debug=_is_dev(), port=5001)

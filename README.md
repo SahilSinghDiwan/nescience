@@ -141,7 +141,8 @@ Nescience runs with no configuration for the public exhibit. Two optional variab
 | Variable | Purpose |
 |---|---|
 | `NESCIENCE_INVESTIGATOR_PASSWORD` | Password for `/investigator`. **If unset, the entire investigator surface is disabled (404)** — it can never sit open by default. |
-| `NESCIENCE_SECRET_KEY` | Signs the investigator session cookie. Set a stable random value in any real deployment; if unset, a random key is used and investigator sessions simply don't survive a restart. |
+| `NESCIENCE_SECRET_KEY` | Signs the investigator session cookie. **Required whenever `NESCIENCE_INVESTIGATOR_PASSWORD` is set** — the app refuses to start without it, because gunicorn's workers must share one key. |
+| `NESCIENCE_DEV` | Set to `1` for local runs only: allows a random per-process secret key and drops the `Secure` cookie flag. Never set in a deployment. |
 | `NESCIENCE_DATA_DIR` | Directory holding `participants.json`. Used by the container to keep testimony on a mounted volume; unset, it defaults to the project directory. |
 
 ```bash

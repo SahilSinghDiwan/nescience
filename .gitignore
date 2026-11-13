@@ -12,6 +12,9 @@ env/
 # Collected interview data (auto-created at runtime; may contain personal testimony)
 participants.json
 
+# Local secrets (copy .env.example to .env)
+.env
+
 # OS / editor
 .DS_Store
 Thumbs.db
