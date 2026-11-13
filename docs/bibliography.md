@@ -5,7 +5,7 @@ every factual claim must trace to an entry here (brief §11) — **no invented o
 unattributed studies**.
 
 The machine-readable source of truth is each concept's `citations` list in
-`knowledge.graph.py`; `bibliography.py` aggregates those into a keyed registry
+`knowledge_graph.py`; `bibliography.py` aggregates those into a keyed registry
 and this file mirrors them for humans. When you add a citation to a concept,
 add it here too (same key). `bibliography.unresolved_citation_keys()` fails
 loudly if an Evidence Room / Open Question references a key with no reference.

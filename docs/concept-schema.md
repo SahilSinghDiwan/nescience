@@ -1,7 +1,7 @@
-# Concept schema (`knowledge.graph.py`)
+# Concept schema (`knowledge_graph.py`)
 
 This document defines the shape of every entry in the `concepts` dict in
-`knowledge.graph.py`. It was expanded in **NESC-03** to support the deep
+`knowledge_graph.py`. It was expanded in **NESC-03** to support the deep
 **Case File** and **Evidence Room** surfaces. The expansion is *additive*:
 the original v1.0 keys are unchanged, and `atlas.py` / `matcher.py` still read
 them exactly as before. Author future concepts against this contract, using
@@ -116,7 +116,7 @@ lenses used by the Evidence Room (NESC-10):
 
 ## Reference implementation
 
-**001 MEMORY** in `knowledge.graph.py` is fully authored against this schema.
+**001 MEMORY** in `knowledge_graph.py` is fully authored against this schema.
 Its Evidence Room draws on four verified sources:
 
 - Scoville & Milner (1957) — patient H.M. → `what_we_know`

@@ -8,7 +8,7 @@
 #   Investigator -> explores the archive + the concept atlas
 #
 # A participant's testimony is matched against the concept atlas
-# (knowledge.graph.py) via each concept's interview_themes, turning
+# (knowledge_graph.py) via each concept's interview_themes, turning
 # raw answers into "leads" the investigation can follow.
 # ==========================================================
 
@@ -173,7 +173,7 @@ def _module_order():
 
 def _numbered_protocol():
     """Yield (module, [(question_number, question_text), ...]) with the
-    same global numbering the CLI uses, so client and server agree."""
+    same global numbering the client uses, so client and server agree."""
     n = 1
     out = []
     for module in _module_order():
@@ -187,7 +187,7 @@ def _numbered_protocol():
 
 def _sanitise_interview(payload):
     """Turn an untrusted client payload into a clean interview record
-    with the same shape the CLI produces."""
+    with the shape the interview form produces."""
     record = {}
 
     # Participant information
@@ -206,7 +206,7 @@ def _sanitise_interview(payload):
             answers[key] = str(submitted.get(key, ""))[:MAX_ANSWER_LEN].strip()
         record[module] = answers
 
-    # Case metadata (string-only so the CLI archive view still renders it)
+    # Case metadata
     record["Case File"] = {
         "Recorded": datetime.datetime.now().strftime("%Y-%m-%d %H:%M"),
     }

@@ -13,7 +13,7 @@ Nescience is an interdisciplinary project about **what we do not yet understand 
 A working Flask exhibit already exists. Extend it; follow its patterns.
 
 - `app.py` — Flask app (port 5001). Routes: `/` landing, `/interview` + `/api/interview`, `/archive` + `/archive/<index>`, `/atlas` + `/atlas/<name>`. **Add** a private, password-gated `/investigator` surface (see §11a).
-- `atlas.py` — loads concepts from `knowledge.graph.py`; exposes `is_defined()`, `defined_concepts()`, `stub_concepts()`. "Defined" = has a non-empty definition; stubs are shown as mapped-but-UNKNOWN.
+- `atlas.py` — loads concepts from `knowledge_graph.py`; exposes `is_defined()`, `defined_concepts()`, `stub_concepts()`. "Defined" = has a non-empty definition; stubs are shown as mapped-but-UNKNOWN.
 - `matcher.py` — `match_interview(record)` scores concepts against `interview_themes`, name, examples, connections, brain regions; returns ranked leads with the matched phrases as evidence.
 - `database.py` — stores interview records + `load_interviews()`.
 - Templates in `templates/`, one committed monochrome stylesheet `static/css/nescience.css`, stepper `static/js/interview.js`. **No network assets** — everything self-contained.

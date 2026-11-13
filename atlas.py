@@ -1,30 +1,12 @@
 # ==========================================================
 # NESCIENCE — Atlas loader
 #
-# knowledge.graph.py has a dot in its filename, so it cannot
-# be imported with a normal `import` statement. This module
-# loads it by file path and re-exposes the `concepts` dict so
-# the rest of the project can treat the knowledge graph as an
-# ordinary importable module: `from atlas import concepts`.
+# Re-exposes the concept dictionary from knowledge_graph.py and adds
+# the "defined vs. stub" helpers, so the rest of the project can
+# write `from atlas import concepts`.
 # ==========================================================
 
-import importlib.util
-import os
-
-_HERE = os.path.dirname(os.path.abspath(__file__))
-_GRAPH_PATH = os.path.join(_HERE, "knowledge.graph.py")
-
-_spec = importlib.util.spec_from_file_location("knowledge_graph", _GRAPH_PATH)
-_module = importlib.util.module_from_spec(_spec)
-_spec.loader.exec_module(_module)
-
-# The full concept dictionary, exactly as authored in knowledge.graph.py
-concepts = _module.concepts
-
-# Re-export the browsing helpers too, in case they are useful elsewhere.
-show_concept = _module.show_concept
-get_connections = _module.get_connections
-explore = _module.explore
+from knowledge_graph import concepts, show_concept, get_connections, explore  # noqa: F401
 
 
 def is_defined(name):

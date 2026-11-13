@@ -7,7 +7,7 @@
 - **Depends on:** —
 
 ## Summary
-Expand each concept's schema in `knowledge.graph.py` to support the deep **Case File** and **Evidence Room** structures, and fully author the first case (**001 MEMORY**) as the reference implementation.
+Expand each concept's schema in `knowledge_graph.py` to support the deep **Case File** and **Evidence Room** structures, and fully author the first case (**001 MEMORY**) as the reference implementation.
 
 ## Why
 The current concept dict has definition/regions/researchers/questions/unresolved. The brief needs richer, epistemically-structured content per concept (§7 Case File anatomy; §11 four tiers; §7/§9 connections). Memory is the first complete case; others follow the same shape.

@@ -51,13 +51,13 @@ Browser ──► Flask (app.py) ──► protocol.py     (the interview script
                 │
                 ├─► database.py                 (persistence → participants.json)
                 │
-                ├─► atlas.py ──► knowledge.graph.py   (the concept atlas)
+                ├─► atlas.py ──► knowledge_graph.py   (the concept atlas)
                 │
                 └─► matcher.py                  (testimony ⇄ concept bridge)
 ```
 
-### The concept atlas — `knowledge.graph.py` + `atlas.py`
-`knowledge.graph.py` is the heart of the project: a dictionary of mind concepts (Memory, Identity, Emotion, …), each with a definition, brain regions, landmark researchers, real-world examples, open questions, what remains **unresolved**, and — crucially — a list of `interview_themes` (the words to listen for in testimony).
+### The concept atlas — `knowledge_graph.py` + `atlas.py`
+`knowledge_graph.py` is the heart of the project: a dictionary of mind concepts (Memory, Identity, Emotion, …), each with a definition, brain regions, landmark researchers, real-world examples, open questions, what remains **unresolved**, and — crucially — a list of `interview_themes` (the words to listen for in testimony).
 
 The filename contains a dot, so Python can't `import` it normally. **`atlas.py`** loads it by file path (via `importlib`) and re-exposes it cleanly:
 - `concepts` — the full dictionary
@@ -74,11 +74,11 @@ This is what connects a human's answers to the knowledge graph. `match_interview
 
 It's deliberately transparent — every match shows its evidence, so nothing is a black box. Matching is recomputed on demand rather than stored, so improving the matcher instantly re-scores the whole archive.
 
-### The interview — `protocol.py` + `interview.py`
-`protocol.py` defines the interview: participant fields, an introduction, and five modules of open-ended questions (Experience, The Story, Decisions, The Unknown, Reflection). On the web, the questions are rendered as a one-at-a-time stepper (`static/js/interview.js`). `interview.py` is the original CLI version of the same flow.
+### The interview — `protocol.py`
+`protocol.py` defines the interview: participant fields, an introduction, and five modules of open-ended questions (Experience, The Story, Decisions, The Unknown, Reflection). On the web, the questions are rendered as a one-at-a-time stepper (`static/js/interview.js`).
 
 ### Persistence — `database.py`
-Interviews are stored as JSON in `participants.json`. Each saved record keeps the original structure plus a small `Case File` metadata block (timestamp). `load_interviews()` is the shared read path for both the web app and the CLI. *(The file is auto-created on first save and is git-ignored — it may contain personal testimony.)*
+Interviews are stored as JSON in `participants.json`. Each saved record keeps the original structure plus a small `Case File` metadata block (timestamp). `load_interviews()` is the read path; `save_interview()` appends under a file lock and replaces the file atomically, and refuses to overwrite a file it cannot parse (a timestamped copy is kept beside it). *(The file is auto-created on first save and is git-ignored — it may contain personal testimony.)*
 
 ### Routes — `app.py`
 
@@ -179,13 +179,11 @@ flask --app app run --port 5001
 ```
 nescience/
 ├── app.py                # Flask app: routes, persistence glue, matching
-├── atlas.py              # Loads knowledge.graph.py + defined/stub helpers
+├── atlas.py              # Loads knowledge_graph.py + defined/stub helpers
 ├── matcher.py            # Bridges testimony → concepts via interview_themes
 ├── protocol.py           # The interview script (fields, intro, 5 modules)
 ├── database.py           # JSON persistence (save/load interviews)
-├── knowledge.graph.py    # The concept atlas (the knowledge graph itself)
-├── interview.py          # Original CLI interview flow
-├── main.py               # Original CLI entry point (menu)
+├── knowledge_graph.py    # The concept atlas (the knowledge graph itself)
 ├── requirements.txt
 ├── templates/            # Jinja2: landing, interview, archive, case, atlas, concept, 404
 └── static/
@@ -197,23 +195,11 @@ nescience/
 
 ## Extending it
 
-**Investigate a new concept:** open `knowledge.graph.py` and fill in one of the empty template stubs (e.g. `Decision Making`, `Attention`, `Trauma`). Give it a `definition` — that alone promotes it from *mapped* to *investigated* — and populate `interview_themes` so it starts catching relevant testimony. No other file needs to change; the atlas, matcher, and pages pick it up automatically.
+**Investigate a new concept:** open `knowledge_graph.py` and fill in one of the empty template stubs (e.g. `Decision Making`, `Attention`, `Trauma`). Give it a `definition` — that alone promotes it from *mapped* to *investigated* — and populate `interview_themes` so it starts catching relevant testimony. No other file needs to change; the atlas, matcher, and pages pick it up automatically.
 
-**Change the interview:** edit `protocol.py`. Add or reword questions inside the modules; the web stepper and CLI both regenerate from it. Question numbering is global and stays in sync across client and server.
+**Change the interview:** edit `protocol.py`. Add or reword questions inside the modules; the web stepper regenerates from it. Question numbering is global and stays in sync across client and server.
 
 **Tune the matching:** adjust the weights in `matcher.py`'s `_signals_for()` to change how strongly each field (themes, name, examples, connections) pulls a concept into the leads.
-
----
-
-## The original CLI
-
-The terminal prototype still works and shares the same data file:
-
-```bash
-python3 main.py
-```
-
-It offers the same interview and an archive viewer, printed in plain text.
 
 ---
 

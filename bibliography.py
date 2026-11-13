@@ -3,7 +3,7 @@
 #
 # Every factual claim in the exhibit must trace to a real, verifiable
 # paper (see brief §11). The per-concept `citations` lists in
-# knowledge.graph.py are the source of truth; this module aggregates
+# knowledge_graph.py are the source of truth; this module aggregates
 # them into one keyed registry, mirrors docs/bibliography.md, and lets
 # the Evidence Room / Open Questions resolve a citation key into a
 # reference card. An unknown key is *surfaced* (see

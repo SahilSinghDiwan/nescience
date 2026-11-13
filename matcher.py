@@ -2,7 +2,7 @@
 # NESCIENCE — Evidence matcher
 #
 # Bridges a participant's interview (raw human testimony) to the
-# concept atlas (knowledge.graph.py). It reads the free-text answers,
+# concept atlas (knowledge_graph.py). It reads the free-text answers,
 # looks for the signals each concept declares in `interview_themes`
 # (plus supporting vocabulary), and returns the concepts the testimony
 # appears to touch — the "leads" an investigator would follow next.
