@@ -1,8 +1,8 @@
 # ==========================================================
 # NESCIENCE — container image for the exhibit
 #
-# The exhibit is deliberately self-contained: one dependency
-# (Flask) and every asset committed under static/. That makes
+# The exhibit is deliberately self-contained: Flask plus gunicorn,
+# pinned in requirements.txt, and every asset committed under static/. That makes
 # the image small and the build fully offline after pip.
 # ==========================================================
 
@@ -17,7 +17,7 @@ WORKDIR /exhibit
 
 # Dependencies first, so editing the exhibit doesn't re-run pip.
 COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt gunicorn
+RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
