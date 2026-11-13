@@ -11,6 +11,7 @@
 import json
 
 import pytest
+import testutil
 
 import app as flaskapp
 import database
@@ -143,14 +144,14 @@ def test_investigator_disabled_when_no_password(client, monkeypatch):
     monkeypatch.delenv("NESCIENCE_INVESTIGATOR_PASSWORD", raising=False)
     assert client.get("/investigator").status_code == 404
     assert client.get("/investigator/case/0").status_code == 404
-    assert client.post("/investigator/login", data={"password": "x"}).status_code == 404
+    assert testutil.login(client, "x").status_code == 404
 
 
 def test_investigator_requires_password(gated_client):
     r = gated_client.get("/investigator")
     assert r.status_code == 401
     assert "INVESTIGATOR" in r.get_data(as_text=True)
-    assert gated_client.post("/investigator/login", data={"password": "wrong"}).status_code == 401
+    assert testutil.login(gated_client, "wrong").status_code == 401
 
 
 def test_investigator_login_grants_full_access(gated_client):
@@ -161,7 +162,7 @@ def test_investigator_login_grants_full_access(gated_client):
     # gated before login
     assert gated_client.get("/investigator/case/0").status_code == 401
     # log in
-    r = gated_client.post("/investigator/login", data={"password": "letmein"})
+    r = testutil.login(gated_client, "letmein")
     assert r.status_code in (301, 302)
     ledger = gated_client.get("/investigator").get_data(as_text=True)
     assert "Alex" in ledger  # real name visible only to the investigator

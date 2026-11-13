@@ -17,6 +17,7 @@ import hashlib
 import hmac
 import math
 import os
+import secrets
 from functools import wraps
 
 from flask import (
@@ -27,6 +28,7 @@ import bibliography
 import database
 import identity
 import notes
+import ratelimit
 from protocol import INTERVIEW_PROTOCOL
 from atlas import concepts, is_defined
 from matcher import match_interview
@@ -63,7 +65,70 @@ def resolve_secret_key(env=os.environ):
 
 app.secret_key = resolve_secret_key()
 
+
+def session_cookie_config(env=os.environ):
+    """Flags for the investigator session cookie: never readable by page
+    scripts, not sent on cross-site POSTs, and HTTPS-only outside dev."""
+    return {
+        "SESSION_COOKIE_HTTPONLY": True,
+        "SESSION_COOKIE_SAMESITE": "Lax",
+        "SESSION_COOKIE_SECURE": not _is_dev(env),
+    }
+
+
+app.config.update(session_cookie_config())
+
 MAX_ANSWER_LEN = 5000
+
+# A full interview is a few dozen answers of at most MAX_ANSWER_LEN
+# characters; 512 KB is generous for that and small enough to refuse abuse.
+app.config["MAX_CONTENT_LENGTH"] = 512 * 1024
+
+# In-process limits per client address (see ratelimit.py for the caveats).
+login_limiter = ratelimit.RateLimiter(limit=10, window_seconds=15 * 60)
+interview_limiter = ratelimit.RateLimiter(limit=30, window_seconds=60 * 60)
+
+
+def _client_key():
+    return request.remote_addr or "unknown"
+
+
+def _too_many(message):
+    """A 429, as JSON for the API and plain text elsewhere."""
+    if request.path.startswith("/api/"):
+        resp = jsonify({"error": message})
+    else:
+        resp = app.response_class(message, mimetype="text/plain")
+    resp.status_code = 429
+    resp.headers["Retry-After"] = "900"
+    return resp
+
+
+# ----------------------------------------------------------
+# CSRF — the login and logout forms carry a per-session token. The token is
+# created when a form is first rendered and checked on every state-changing
+# investigator POST.
+# ----------------------------------------------------------
+
+def _csrf_token():
+    token = session.get("_csrf")
+    if not token:
+        token = secrets.token_urlsafe(32)
+        session["_csrf"] = token
+    return token
+
+
+def _csrf_ok():
+    expected = session.get("_csrf", "")
+    supplied = request.form.get("csrf_token", "")
+    return bool(expected) and hmac.compare_digest(
+        supplied.encode("utf-8"), expected.encode("utf-8")
+    )
+
+
+@app.context_processor
+def _inject_csrf():
+    return {"csrf_token": _csrf_token}
 
 
 # ----------------------------------------------------------
@@ -181,6 +246,8 @@ def interview():
 
 @app.route("/api/interview", methods=["POST"])
 def api_interview():
+    if not interview_limiter.allow(_client_key()):
+        return _too_many("Too many submissions. Please try again later.")
     payload = request.get_json(silent=True)
     if not isinstance(payload, dict):
         return jsonify({"error": "Invalid submission."}), 400
@@ -518,18 +585,27 @@ def atlas_concept(name):
 
 @app.route("/investigator/login", methods=["POST"])
 def investigator_login():
-    if _investigator_password() is None:
+    configured = _investigator_password()
+    if configured is None:
         abort(404)
+    if not login_limiter.allow(_client_key()):
+        return _too_many("Too many attempts. Please wait and try again.")
+    if not _csrf_ok():
+        abort(400)
     supplied = request.form.get("password", "")
-    if hmac.compare_digest(supplied, _investigator_password()):
+    # Compare bytes: compare_digest raises TypeError on non-ASCII str.
+    if hmac.compare_digest(supplied.encode("utf-8"), configured.encode("utf-8")):
+        session.clear()  # fresh session on privilege change
         session["investigator"] = True
         return redirect(url_for("investigator"))
     return render_template("investigator_login.html", error="Incorrect password."), 401
 
 
-@app.route("/investigator/logout")
+@app.route("/investigator/logout", methods=["POST"])
 def investigator_logout():
-    session.pop("investigator", None)
+    if not _csrf_ok():
+        abort(400)
+    session.clear()
     return redirect(url_for("landing"))
 
 
@@ -580,6 +656,11 @@ def investigator_case(index):
         modules=_numbered_protocol(),
         matches=match_interview(record),
     )
+
+
+@app.errorhandler(413)
+def too_large(_e):
+    return jsonify({"error": "That submission is too large."}), 413
 
 
 @app.errorhandler(404)

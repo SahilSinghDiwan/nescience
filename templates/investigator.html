@@ -8,7 +8,10 @@
 </div>
 <div style="display:flex; align-items:baseline; justify-content:space-between; gap:16px; flex-wrap:wrap">
   <h1 class="display" style="font-size:clamp(28px,5vw,40px)">CASE LEDGER</h1>
-  <a class="back" href="{{ url_for('investigator_logout') }}">Sign out →</a>
+  <form method="post" action="{{ url_for('investigator_logout') }}" style="margin:0">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <button class="back" type="submit" style="background:none;border:0;padding:0;font:inherit;color:inherit;cursor:pointer;text-decoration:underline">Sign out →</button>
+  </form>
 </div>
 <p class="prose" style="max-width:640px">
   Every record on file — {{ count }} in total — including real names, publication

@@ -18,6 +18,7 @@ import hashlib
 import json
 
 import pytest
+import testutil
 
 import app as flaskapp
 import database
@@ -290,7 +291,7 @@ def test_investigator_surface_is_disabled_when_password_is_blank(client, monkeyp
     monkeypatch.setenv("NESCIENCE_INVESTIGATOR_PASSWORD", "")
     assert client.get("/investigator").status_code == 404
     # An empty submitted password must not satisfy an empty configured one.
-    assert client.post("/investigator/login", data={"password": ""}).status_code == 404
+    assert testutil.login(client, "").status_code == 404
 
 
 def test_locked_investigator_pages_leak_no_record_data(gated):
@@ -306,7 +307,7 @@ def test_locked_investigator_pages_leak_no_record_data(gated):
 
 def test_wrong_password_leaks_neither_records_nor_the_password(gated):
     _file(gated, SENTINEL, published=False, answer="my private confession")
-    r = gated.post("/investigator/login", data={"password": "wrong"})
+    r = testutil.login(gated, "wrong")
     body = r.get_data(as_text=True)
     assert r.status_code == 401
     assert "Zebulon" not in body
@@ -337,7 +338,7 @@ def test_session_signed_with_another_key_is_rejected(gated):
 
 
 def test_a_live_session_does_not_survive_disabling_the_surface(gated, monkeypatch):
-    gated.post("/investigator/login", data={"password": "letmein"})
+    testutil.login(gated, "letmein")
     assert gated.get("/investigator").status_code == 200
     monkeypatch.delenv("NESCIENCE_INVESTIGATOR_PASSWORD", raising=False)
     assert gated.get("/investigator").status_code == 404
@@ -345,9 +346,9 @@ def test_a_live_session_does_not_survive_disabling_the_surface(gated, monkeypatc
 
 def test_logout_revokes_access(gated):
     _file(gated, SENTINEL, published=False)
-    gated.post("/investigator/login", data={"password": "letmein"})
+    testutil.login(gated, "letmein")
     assert gated.get("/investigator").status_code == 200
-    gated.get("/investigator/logout")
+    testutil.logout(gated)
     r = gated.get("/investigator")
     assert r.status_code == 401
     assert "Zebulon" not in r.get_data(as_text=True)

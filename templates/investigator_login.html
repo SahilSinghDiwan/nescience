@@ -18,6 +18,7 @@
 {% endif %}
 
 <form method="post" action="{{ url_for('investigator_login') }}" style="margin-top:22px; max-width:420px">
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
   <label class="field-label" for="password">Password</label>
   <input type="password" id="password" name="password" autocomplete="off" autofocus>
   <div class="controls">
