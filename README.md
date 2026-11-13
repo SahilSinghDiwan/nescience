@@ -147,7 +147,7 @@ Nescience runs with no configuration for the public exhibit. Two optional variab
 
 ```bash
 # enable the private investigator surface for a local session
-NESCIENCE_INVESTIGATOR_PASSWORD='choose-a-strong-password' \
+NESCIENCE_INVESTIGATOR_PASSWORD='<your-password-here>' \
 NESCIENCE_SECRET_KEY="$(python3 -c 'import secrets; print(secrets.token_hex(32))')" \
 flask --app app run --port 5001
 ```
