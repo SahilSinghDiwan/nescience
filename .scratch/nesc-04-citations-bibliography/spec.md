@@ -1,7 +1,7 @@
 # NESC-04 — Citations & bibliography system
 
 - **Status:** done
-- **Labels:** ready-for-agent
+- **Labels:** resolved
 - **Priority:** P1 (blocks NESC-09 display)
 - **Brief refs:** §11
 - **Depends on:** NESC-03

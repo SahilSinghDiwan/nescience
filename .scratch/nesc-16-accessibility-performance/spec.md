@@ -1,7 +1,7 @@
 # NESC-16 — Accessibility & performance pass
 
 - **Status:** done
-- **Labels:** ready-for-agent
+- **Labels:** resolved
 - **Priority:** P2 (cross-cutting)
 - **Brief refs:** §12
 - **Depends on:** NESC-14, NESC-15

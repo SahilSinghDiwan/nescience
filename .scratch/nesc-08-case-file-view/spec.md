@@ -1,7 +1,7 @@
 # NESC-08 — Case File view (deep concept)
 
 - **Status:** done
-- **Labels:** ready-for-agent
+- **Labels:** resolved
 - **Priority:** P1
 - **Brief refs:** §7
 - **Depends on:** NESC-03

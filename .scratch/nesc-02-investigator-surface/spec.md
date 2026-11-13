@@ -1,7 +1,7 @@
 # NESC-02 — Investigator surface (password-gated)
 
 - **Status:** done
-- **Labels:** ready-for-agent
+- **Labels:** resolved (login now CSRF-protected, rate-limited, POST logout)
 - **Priority:** P0
 - **Brief refs:** §2, §11a
 - **Depends on:** NESC-01

@@ -1,7 +1,7 @@
 # NESC-14 — Aesthetic overhaul → vault/casebook design system
 
 - **Status:** done
-- **Labels:** ready-for-agent
+- **Labels:** resolved
 - **Priority:** P1 (can start in parallel with Phase 0)
 - **Brief refs:** §5, §7, §12
 - **Depends on:** —

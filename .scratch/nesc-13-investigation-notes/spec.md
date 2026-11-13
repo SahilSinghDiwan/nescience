@@ -1,7 +1,7 @@
 # NESC-13 — Investigation Notes
 
 - **Status:** done
-- **Labels:** ready-for-agent
+- **Labels:** resolved
 - **Priority:** P2
 - **Brief refs:** §7 (hub entry [006])
 - **Depends on:** —

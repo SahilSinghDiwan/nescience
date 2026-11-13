@@ -1,7 +1,7 @@
 # NESC-12 — Connections: corkboard graph
 
 - **Status:** done
-- **Labels:** ready-for-agent
+- **Labels:** resolved; remaining: the three §9 pathways are not explicit in the graph layout, and there is no multi-step chain walk beyond highlighting a node's threads
 - **Priority:** P2
 - **Brief refs:** §9, §6
 - **Depends on:** NESC-03

@@ -1,7 +1,7 @@
 # NESC-10 — Open Questions surface
 
 - **Status:** done
-- **Labels:** ready-for-agent
+- **Labels:** resolved
 - **Priority:** P1
 - **Brief refs:** §7, §11
 - **Depends on:** NESC-03

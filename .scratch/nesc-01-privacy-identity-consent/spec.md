@@ -1,7 +1,7 @@
 # NESC-01 — Privacy, identity & consent model
 
 - **Status:** done
-- **Labels:** ready-for-agent
+- **Labels:** resolved
 - **Priority:** P0 (foundation — blocks NESC-05, NESC-11)
 - **Brief refs:** §11a, §8
 - **Depends on:** —

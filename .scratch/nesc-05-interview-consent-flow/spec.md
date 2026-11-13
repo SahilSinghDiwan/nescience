@@ -1,7 +1,7 @@
 # NESC-05 — Interview: name field + publication consent
 
 - **Status:** done
-- **Labels:** ready-for-agent
+- **Labels:** resolved
 - **Priority:** P0
 - **Brief refs:** §8, §11a
 - **Depends on:** NESC-01

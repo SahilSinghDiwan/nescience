@@ -1,7 +1,7 @@
 # NESC-11 — Witness Accounts (public, code-only)
 
 - **Status:** done
-- **Labels:** ready-for-agent
+- **Labels:** resolved
 - **Priority:** P1
 - **Brief refs:** §7, §8, §11a
 - **Depends on:** NESC-01, NESC-05

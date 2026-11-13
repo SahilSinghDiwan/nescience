@@ -1,7 +1,7 @@
 # NESC-06 — Landing as an "active file"
 
 - **Status:** done
-- **Labels:** ready-for-agent
+- **Labels:** resolved
 - **Priority:** P1
 - **Brief refs:** §7, §5
 - **Depends on:** — (visual polish aligns with NESC-14)

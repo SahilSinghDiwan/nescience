@@ -1,7 +1,7 @@
 # NESC-09 — Evidence Room: four epistemic tiers
 
 - **Status:** done
-- **Labels:** ready-for-agent
+- **Labels:** resolved
 - **Priority:** P1
 - **Brief refs:** §7, §11
 - **Depends on:** NESC-03, NESC-04

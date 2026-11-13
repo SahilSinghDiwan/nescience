@@ -1,7 +1,7 @@
 # NESC-15 — Tactile interactions + ambient audio
 
 - **Status:** done
-- **Labels:** ready-for-agent
+- **Labels:** resolved
 - **Priority:** P2 (layer onto working structure — never before it)
 - **Brief refs:** §6
 - **Depends on:** NESC-14

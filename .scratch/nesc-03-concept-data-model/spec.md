@@ -1,7 +1,7 @@
 # NESC-03 — Concept data-model expansion + author Memory fully
 
 - **Status:** done
-- **Labels:** ready-for-agent
+- **Labels:** resolved; remaining: Narrative is still an unwritten stub (14 of 15 concepts authored)
 - **Priority:** P0 (blocks NESC-04, 08, 09, 10, 12)
 - **Brief refs:** §7, §9, §11
 - **Depends on:** —
