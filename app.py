@@ -167,12 +167,20 @@ def api_interview():
     # already exist, and the participant's publication choice is recorded.
     name = str(payload.get("name", ""))[:MAX_ANSWER_LEN].strip()
     published = bool(payload.get("published", False))
-    existing = database.load_interviews()
-    code = identity.apply_identity(record, name, published, existing)
+    # The code is derived from the records that already exist, so it is
+    # assigned inside the storage lock: two simultaneous submissions from
+    # the same name cannot be handed the same code.
+    assigned = {}
 
-    database.save_interview(record)
+    def _assign(existing):
+        assigned["code"] = identity.apply_identity(record, name, published, existing)
 
-    index = len(existing)  # position of the record just appended
+    try:
+        index = database.save_interview(record, prepare=_assign)
+    except database.StoreCorruptError:
+        app.logger.error("participants.json is damaged; submission refused")
+        return jsonify({"error": "The archive is temporarily unavailable."}), 503
+    code = assigned["code"]
     matches = match_interview(record)
 
     return jsonify(
