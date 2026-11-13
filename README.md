@@ -86,11 +86,22 @@ Interviews are stored as JSON in `participants.json`. Each saved record keeps th
 |---|---|---|
 | `GET /` | — | Landing page: the question, the loop, two entrances |
 | `GET /interview` | Participant | The one-question-at-a-time interview |
-| `POST /api/interview` | Participant | Save testimony, run the matcher, return leads |
-| `GET /archive` | Investigator | All cases on record (newest first) |
-| `GET /archive/<index>` | Investigator | A single case file: transcript + matched concepts |
-| `GET /atlas` | Investigator | The concept atlas (investigated vs. mapped) |
-| `GET /atlas/<name>` | Investigator | A concept file, or an `UNKNOWN` stub |
+| `POST /api/interview` | Participant | Save testimony, run the matcher, return leads (rate-limited, size-capped) |
+| `GET /archive` | Public | The archive hub: six ways into the investigation |
+| `GET /archive/witnesses` | Public | Witness accounts: published testimony only, shown by code, never by name |
+| `GET /archive/witnesses/<code>` | Public | One published witness account, under its code |
+| `GET /archive/<index>` | Public | Redirects to the witness view if that record is published; 404 otherwise |
+| `GET /archive/evidence-room` | Public | Every exhibit across investigated concepts, sorted into four evidence tiers with references |
+| `GET /archive/connections` | Public | The corkboard: concepts as nodes, connections as threads |
+| `GET /archive/open-questions` | Public | Unresolved questions gathered from every investigated concept |
+| `GET /archive/notes` | Public | Investigation notes: the methodology drawer (markdown under `docs/notes/`) |
+| `GET /archive/notes/<slug>` | Public | One methodology note |
+| `GET /atlas` | Public | The concept atlas (investigated vs. mapped) |
+| `GET /atlas/<name>` | Public | A concept file, or an `UNKNOWN` stub |
+| `GET /investigator` | Investigator | Full case ledger with real names and the name-to-code map (login form until signed in; 404 unless a password is configured) |
+| `GET /investigator/case/<index>` | Investigator | One full case file, including private fields and unpublished testimony |
+| `POST /investigator/login` | Investigator | Sign in (CSRF token required, rate-limited) |
+| `POST /investigator/logout` | Investigator | Sign out (CSRF token required) |
 
 ---
 
@@ -113,6 +124,13 @@ flask --app app run --port 5001
 ```
 
 Then open **http://127.0.0.1:5001** in your browser.
+
+### Run the tests
+
+```bash
+pip install -r requirements-dev.txt
+python -m pytest
+```
 
 > During development you can enable auto-reload with `flask --app app run --port 5001 --debug`.
 
