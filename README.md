@@ -114,10 +114,10 @@ Interviews are stored as JSON in `participants.json`. Each saved record keeps th
 git clone https://github.com/SahilSinghDiwan/nescience.git
 cd nescience
 
-# 2. Create a virtual environment and install dependencies
-python3 -m venv .venv
-source .venv/bin/activate          # Windows: .venv\Scripts\activate
-pip install -r requirements.txt
+# 2. Create a conda environment and install dependencies
+conda create -n nescience python=3.12 uv
+conda activate nescience
+uv pip install -r requirements.txt
 
 # 3. Run the exhibit
 flask --app app run --port 5001
@@ -128,7 +128,7 @@ Then open **http://127.0.0.1:5001** in your browser.
 ### Run the tests
 
 ```bash
-pip install -r requirements-dev.txt
+uv pip install -r requirements-dev.txt
 python -m pytest
 ```
 
